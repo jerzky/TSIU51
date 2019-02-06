@@ -11,9 +11,9 @@
     <OutputFileExtension>.obj</OutputFileExtension>
     <OutputDirectory>$(MSBuildProjectDirectory)\$(Configuration)</OutputDirectory>
     <Language>ASSEMBLY</Language>
-    <AssemblyName>TSIU51</AssemblyName>
-    <Name>TSIU51</Name>
-    <RootNamespace>TSIU51</RootNamespace>
+    <AssemblyName>TSIU51-1</AssemblyName>
+    <Name>TSIU51-1</Name>
+    <RootNamespace>TSIU51-1</RootNamespace>
     <ToolchainFlavour>Native</ToolchainFlavour>
     <EntryFile>$(MSBuildProjectDirectory)\main.asm</EntryFile>
     <KeepTimersRunning>true</KeepTimersRunning>
