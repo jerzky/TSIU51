@@ -1,0 +1,37 @@
+<ASSEMBLER_INFO>
+ <VERSION>2.2.7</VERSION>
+ <DEVICE>"ATmega16A"</DEVICE>
+ <WORKING_DIR>C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TestStepper\TestStepper\Debug</WORKING_DIR>
+ <INCLUDE_PATH>
+  <DIR>C:/Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.2.209\avrasm\inc</DIR>
+  <DIR>C:\Program Files (x86)\Atmel\Studio\7.0\toolchain\avr8\avrassembler\Include</DIR>
+  <DIR></DIR>
+ </INCLUDE_PATH>
+ <SOURCE_FILE>C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TestStepper\TestStepper\main.asm</SOURCE_FILE>
+ <INCLUDED_FILES>
+  <FILE>C:/Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.2.209\avrasm\inc\m16adef.inc</FILE>
+ </INCLUDED_FILES>
+ <OBJECT_FILES>
+  <FILE>C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TestStepper\TestStepper\Debug\TestStepper.obj</FILE>
+ </OBJECT_FILES>
+ <HEX_FILES>
+  <FILE>TestStepper.hex</FILE>
+ </HEX_FILES>
+ <OUTPUT_FILES>
+  <FILE>TestStepper.map</FILE>
+  <FILE>TestStepper.lss</FILE>
+ </OUTPUT_FILES>
+ <LABELS>
+  <STEP_DATA><FILE>C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TestStepper\TestStepper\main.asm</FILE><LINE>11</LINE></STEP_DATA>
+  <STEP_DATA_REVERSE><FILE>C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TestStepper\TestStepper\main.asm</FILE><LINE>12</LINE></STEP_DATA_REVERSE>
+  <START><FILE>C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TestStepper\TestStepper\main.asm</FILE><LINE>38</LINE></START>
+  <NORMAL><FILE>C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TestStepper\TestStepper\main.asm</FILE><LINE>28</LINE></NORMAL>
+  <LOOP><FILE>C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TestStepper\TestStepper\main.asm</FILE><LINE>46</LINE></LOOP>
+  <REVERSE><FILE>C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TestStepper\TestStepper\main.asm</FILE><LINE>33</LINE></REVERSE>
+  <START_NORMAL><FILE>C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TestStepper\TestStepper\main.asm</FILE><LINE>42</LINE></START_NORMAL>
+  <OUTPUT><FILE>C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TestStepper\TestStepper\main.asm</FILE><LINE>50</LINE></OUTPUT>
+  <DELAY><FILE>C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TestStepper\TestStepper\main.asm</FILE><LINE>57</LINE></DELAY>
+  <DELAY_OUTER><FILE>C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TestStepper\TestStepper\main.asm</FILE><LINE>59</LINE></DELAY_OUTER>
+  <DELAY_INNER><FILE>C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TestStepper\TestStepper\main.asm</FILE><LINE>61</LINE></DELAY_INNER>
+ </LABELS>
+</ASSEMBLER_INFO>
