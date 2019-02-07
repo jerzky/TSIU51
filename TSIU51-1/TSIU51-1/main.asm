@@ -16,9 +16,9 @@ COLD:
 	out		DDRA,r16
 	ldi		r16,$B7
 	out		DDRB,r16
-	ldi		r16,$80
+	ldi		r16,$83
 	out		DDRC,r18
-	ldi		r16,$00
+	ldi		r16,$CF
 	out		DDRD,r16
 	ret
 
