@@ -1,0 +1,44 @@
+<ASSEMBLER_INFO>
+ <VERSION>2.2.7</VERSION>
+ <DEVICE>"ATmega16A"</DEVICE>
+ <WORKING_DIR>C:\Users\Fredrik\Documents\Atmel Studio\7.0\TSIU51\TSIU51-1\TSIU51-1\Debug</WORKING_DIR>
+ <INCLUDE_PATH>
+  <DIR>C:/Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.2.209\avrasm\inc</DIR>
+  <DIR>C:\Program Files (x86)\Atmel\Studio\7.0\toolchain\avr8\avrassembler\Include</DIR>
+  <DIR></DIR>
+ </INCLUDE_PATH>
+ <SOURCE_FILE>C:\Users\Fredrik\Documents\Atmel Studio\7.0\TSIU51\TSIU51-1\TSIU51-1\main.asm</SOURCE_FILE>
+ <INCLUDED_FILES>
+  <FILE>C:/Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.2.209\avrasm\inc\m16adef.inc</FILE>
+ </INCLUDED_FILES>
+ <OBJECT_FILES>
+  <FILE>C:\Users\Fredrik\Documents\Atmel Studio\7.0\TSIU51\TSIU51-1\TSIU51-1\Debug\TSIU51-1.obj</FILE>
+ </OBJECT_FILES>
+ <HEX_FILES>
+  <FILE>TSIU51-1.hex</FILE>
+ </HEX_FILES>
+ <OUTPUT_FILES>
+  <FILE>TSIU51-1.map</FILE>
+  <FILE>TSIU51-1.lss</FILE>
+ </OUTPUT_FILES>
+ <LABELS>
+  <COLD><FILE>C:\Users\Fredrik\Documents\Atmel Studio\7.0\TSIU51\TSIU51-1\TSIU51-1\main.asm</FILE><LINE>13</LINE></COLD>
+  <BUTTON_PRESSED><FILE>C:\Users\Fredrik\Documents\Atmel Studio\7.0\TSIU51\TSIU51-1\TSIU51-1\main.asm</FILE><LINE>104</LINE></BUTTON_PRESSED>
+  <INIT><FILE>C:\Users\Fredrik\Documents\Atmel Studio\7.0\TSIU51\TSIU51-1\TSIU51-1\main.asm</FILE><LINE>130</LINE></INIT>
+  <WARM><FILE>C:\Users\Fredrik\Documents\Atmel Studio\7.0\TSIU51\TSIU51-1\TSIU51-1\main.asm</FILE><LINE>22</LINE></WARM>
+  <LEFT_CHECK_DONE><FILE>C:\Users\Fredrik\Documents\Atmel Studio\7.0\TSIU51\TSIU51-1\TSIU51-1\main.asm</FILE><LINE>29</LINE></LEFT_CHECK_DONE>
+  <LEFT><FILE>C:\Users\Fredrik\Documents\Atmel Studio\7.0\TSIU51\TSIU51-1\TSIU51-1\main.asm</FILE><LINE>40</LINE></LEFT>
+  <RIGHT_CHECK_DONE><FILE>C:\Users\Fredrik\Documents\Atmel Studio\7.0\TSIU51\TSIU51-1\TSIU51-1\main.asm</FILE><LINE>35</LINE></RIGHT_CHECK_DONE>
+  <RIGHT><FILE>C:\Users\Fredrik\Documents\Atmel Studio\7.0\TSIU51\TSIU51-1\TSIU51-1\main.asm</FILE><LINE>72</LINE></RIGHT>
+  <LEFT_LOOP><FILE>C:\Users\Fredrik\Documents\Atmel Studio\7.0\TSIU51\TSIU51-1\TSIU51-1\main.asm</FILE><LINE>42</LINE></LEFT_LOOP>
+  <LEFT_DONE><FILE>C:\Users\Fredrik\Documents\Atmel Studio\7.0\TSIU51\TSIU51-1\TSIU51-1\main.asm</FILE><LINE>69</LINE></LEFT_DONE>
+  <LEFT_CHECK_1><FILE>C:\Users\Fredrik\Documents\Atmel Studio\7.0\TSIU51\TSIU51-1\TSIU51-1\main.asm</FILE><LINE>49</LINE></LEFT_CHECK_1>
+  <LEFT_CHECK_2><FILE>C:\Users\Fredrik\Documents\Atmel Studio\7.0\TSIU51\TSIU51-1\TSIU51-1\main.asm</FILE><LINE>52</LINE></LEFT_CHECK_2>
+  <RIGHT_LOOP><FILE>C:\Users\Fredrik\Documents\Atmel Studio\7.0\TSIU51\TSIU51-1\TSIU51-1\main.asm</FILE><LINE>74</LINE></RIGHT_LOOP>
+  <RIGHT_DONE><FILE>C:\Users\Fredrik\Documents\Atmel Studio\7.0\TSIU51\TSIU51-1\TSIU51-1\main.asm</FILE><LINE>101</LINE></RIGHT_DONE>
+  <RIGHT_CHECK_1><FILE>C:\Users\Fredrik\Documents\Atmel Studio\7.0\TSIU51\TSIU51-1\TSIU51-1\main.asm</FILE><LINE>81</LINE></RIGHT_CHECK_1>
+  <RIGHT_CHECK_2><FILE>C:\Users\Fredrik\Documents\Atmel Studio\7.0\TSIU51\TSIU51-1\TSIU51-1\main.asm</FILE><LINE>84</LINE></RIGHT_CHECK_2>
+  <OUTER><FILE>C:\Users\Fredrik\Documents\Atmel Studio\7.0\TSIU51\TSIU51-1\TSIU51-1\main.asm</FILE><LINE>108</LINE></OUTER>
+  <INNER><FILE>C:\Users\Fredrik\Documents\Atmel Studio\7.0\TSIU51\TSIU51-1\TSIU51-1\main.asm</FILE><LINE>110</LINE></INNER>
+ </LABELS>
+</ASSEMBLER_INFO>
