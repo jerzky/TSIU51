@@ -11,6 +11,10 @@
 	rjmp		BUTTON_PRESSED
 
 COLD:
+	ldi		r16,$FF
+INITIAL_DELAY:	
+	dec		r16
+	brne	INITIAL_DELAY
 	ldi		r16,HIGH(RAMEND)
 	out		SPH,r16
 	ldi		r16,LOW(RAMEND)
@@ -20,6 +24,40 @@ COLD:
 
 
 WARM:
+	rcall	ROTARY_TEST
+	//rcall	DISPLAY_TEST
+	rjmp	WARM
+
+
+
+DISPLAY_TEST:
+	/*
+	sätt a0-a4 rätt
+	sätt ce låg
+	vänta
+	sätt d0-d7
+	vänta
+	sätt ce hög
+	*/
+	cbi		PORTC,0		//a3-1
+	sbi		PORTC,1		//a4-1
+	clr		r16
+	out		PORTB,r16	//a0-a2 - 0 (Längst till vänster)
+	sbi		PORTD,6
+	//rcall	SHORT_DELAY
+	cbi		PORTC,7
+	//rcall	SHORT_DELAY
+	//ldi		r16,$58
+	//out		PORTA,r16
+	//rcall	SHORT_DELAY
+	sbi		PORTC,7
+	//rcall	SHORT_DELAY
+	//rcall	SHORT_DELAY
+	ret
+
+
+
+ROTARY_TEST:
 			//D6, D7 är knappen
 	sbis	PIND,7
 	rjmp	LEFT_CHECK_DONE
@@ -34,8 +72,8 @@ LEFT_CHECK_DONE:
 	rcall	RIGHT
 RIGHT_CHECK_DONE:
 	out		PORTD,r18
+	ret
 
-	rjmp	WARM
 
 LEFT:
 	ldi		r16,$FF
@@ -77,6 +115,9 @@ RIGHT_CHECK_2:
 RIGHT_DONE:
 	ret	
 
+
+
+
 BUTTON_PRESSED:
 	ldi		r16,$00
 	out		PORTD,r16
@@ -92,18 +133,20 @@ INNER:
 	reti
 
 
-
-	/*
-	sätt a0-a4 rätt
-	sätt ce låg
-	vänta
-	sätt d0-d7
-	vänta
-	sätt ce hög
-	*/
+SHORT_DELAY:
+	push	r16
+	ldi		r16,$FF
+SHORT_DELAY_LOOP:
+	dec		r16
+	brne	SHORT_DELAY_LOOP
+	pop		r16
+	ret	
 
 
 	INIT:
+	sbi		PORTC,7	//Sätt ce hög för skärmen
+	sbi		PORTD,5		//Flash 1
+	rcall	SHORT_DELAY
 	ldi		r16,$FF
 	out		DDRA,r16
 	ldi		r16,$B7
@@ -123,5 +166,6 @@ INNER:
 	out		GICR,r16
 	//aktivera avbrott globalt
 	sei
+
 
 	ret

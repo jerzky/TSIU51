@@ -1,5 +1,5 @@
 
-AVRASM ver. 2.2.7  C:\Users\Fredrik\Documents\Atmel Studio\7.0\TSIU51\TSIU51-1\TSIU51-1\main.asm Thu Feb 07 14:46:54 2019
+AVRASM ver. 2.2.7  C:\Users\Fredrik\Documents\Atmel Studio\7.0\TSIU51\TSIU51-1\TSIU51-1\main.asm Fri Feb 08 10:54:39 2019
 
 [builtin](2): Including file 'C:/Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.2.209\avrasm\inc\m16adef.inc'
 [builtin](2): Including file 'C:/Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.2.209\avrasm\inc\m16adef.inc'
@@ -879,115 +879,29 @@ AVRASM ver. 2.2.7  C:\Users\Fredrik\Documents\Atmel Studio\7.0\TSIU51\TSIU51-1\T
                                  	.org		0
 000000 c004                      	rjmp		COLD
                                  	.org		INT1addr
-000004 c02e                      	rjmp		BUTTON_PRESSED
+000004 c03b                      	rjmp		BUTTON_PRESSED
                                  
                                  COLD:
-000005 e004                      	ldi		r16,HIGH(RAMEND)
-000006 bf0e                      	out		SPH,r16
-000007 e50f                      	ldi		r16,LOW(RAMEND)
-000008 bf0d                      	out		SPL,r16
-000009 d033                      	rcall	INIT
-00000a e023                      	ldi		r18,3		//TEMP
+000005 ef0f                      	ldi		r16,$FF
+                                 INITIAL_DELAY:	
+000006 950a                      	dec		r16
+000007 f7f1                      	brne	INITIAL_DELAY
+000008 e004                      	ldi		r16,HIGH(RAMEND)
+000009 bf0e                      	out		SPH,r16
+00000a e50f                      	ldi		r16,LOW(RAMEND)
+00000b bf0d                      	out		SPL,r16
+00000c d043                      	rcall	INIT
+00000d e023                      	ldi		r18,3		//TEMP
                                  
                                  
                                  WARM:
-                                 			//D6, D7 är knappen
-00000b 9b87                      	sbis	PIND,7
-00000c c003                      	rjmp	LEFT_CHECK_DONE
-00000d 9986                      	sbic	PIND,6
-00000e c001                      	rjmp	LEFT_CHECK_DONE
-00000f d007                      	rcall	LEFT
-                                 LEFT_CHECK_DONE:
-000010 9b86                      	sbis	PIND,6
-000011 c003                      	rjmp	RIGHT_CHECK_DONE
-000012 9987                      	sbic	PIND,7
-000013 c001                      	rjmp	RIGHT_CHECK_DONE
-000014 d010                      	rcall	RIGHT
-                                 RIGHT_CHECK_DONE:
-000015 bb22                      	out		PORTD,r18
-                                 
-000016 cff4                      	rjmp	WARM
-                                 
-                                 LEFT:
-000017 ef0f                      	ldi		r16,$FF
-                                 LEFT_LOOP:
-000018 950a                      	dec		r16
-000019 f7f1                      	brne	LEFT_LOOP
-00001a 9987                      	sbic	PIND,7
-00001b c008                      	rjmp	LEFT_DONE
-00001c 9523                      	inc		r18
-00001d 7027                      	andi	r18,$07
-                                 LEFT_CHECK_1:
-00001e 9986                      	sbic	PIND,6
-00001f cffe                      	rjmp	LEFT_CHECK_1
-                                 LEFT_CHECK_2:
-000020 9b87                      	sbis	PIND,7
-000021 cffe                      	rjmp	LEFT_CHECK_2
-000022 9b86                      	sbis	PIND,6
-000023 cffc                      	rjmp	LEFT_CHECK_2
-                                 	/*
-                                 LEFT_DELAY_LOOP:
-                                 	ldi		r16,$10
-                                 LEFT_DELAY_LOOP_OUTER:
-                                 	dec		r16
-                                 	ldi		r17,$FF
-                                 LEFT_DELAY_LOOP_INNER:
-                                 	dec		r17
-                                 	brne	LEFT_DELAY_LOOP_INNER
-                                 	dec		r16
-                                 	brne	LEFT_DELAY_LOOP_OUTER
-                                 	*/
-                                 LEFT_DONE:
-000024 9508                      	ret	
-                                 
-                                 RIGHT:
-000025 ef0f                      	ldi		r16,$FF
-                                 RIGHT_LOOP:
-000026 950a                      	dec		r16
-000027 f7f1                      	brne	RIGHT_LOOP
-000028 9986                      	sbic	PIND,6
-000029 c008                      	rjmp	RIGHT_DONE
-00002a 952a                      	dec		r18
-00002b 7027                      	andi	r18,$07
-                                 RIGHT_CHECK_1:
-00002c 9987                      	sbic	PIND,7
-00002d cffe                      	rjmp	RIGHT_CHECK_1
-                                 RIGHT_CHECK_2:
-00002e 9b86                      	sbis	PIND,6
-00002f cffe                      	rjmp	RIGHT_CHECK_2
-000030 9b87                      	sbis	PIND,7
-000031 cffc                      	rjmp	RIGHT_CHECK_2
-                                 	/*
-                                 RIGHT_DELAY_LOOP:
-                                 	ldi		r16,$10
-                                 RIGHT_DELAY_LOOP_OUTER:
-                                 	dec		r16
-                                 	ldi		r17,$FF
-                                 RIGHT_DELAY_LOOP_INNER:
-                                 	dec		r17
-                                 	brne	RIGHT_DELAY_LOOP_INNER
-                                 	dec		r16
-                                 	brne	RIGHT_DELAY_LOOP_OUTER
-                                 	*/
-                                 RIGHT_DONE:
-000032 9508                      	ret	
-                                 
-                                 BUTTON_PRESSED:
-000033 e000                      	ldi		r16,$00
-000034 bb02                      	out		PORTD,r16
-000035 ef0f                      	ldi		r16,$FF
-                                 OUTER:
-000036 ef1f                      	ldi		r17,$FF
-                                 INNER:
-000037 951a                      	dec		r17
-000038 f7f1                      	brne	INNER
-000039 950a                      	dec		r16
-00003a f7d9                      	brne	OUTER
-00003b bb02                      	out		PORTD,r16
-00003c 9518                      	reti
+00000e d009                      	rcall	ROTARY_TEST
+                                 	//rcall	DISPLAY_TEST
+00000f cffe                      	rjmp	WARM
                                  
                                  
                                  
+                                 DISPLAY_TEST:
                                  	/*
                                  	sätt a0-a4 rätt
                                  	sätt ce låg
@@ -996,28 +910,134 @@ AVRASM ver. 2.2.7  C:\Users\Fredrik\Documents\Atmel Studio\7.0\TSIU51\TSIU51-1\T
                                  	vänta
                                  	sätt ce hög
                                  	*/
+000010 98a8                      	cbi		PORTC,0		//a3-1
+000011 9aa9                      	sbi		PORTC,1		//a4-1
+000012 2700                      	clr		r16
+000013 bb08                      	out		PORTB,r16	//a0-a2 - 0 (Längst till vänster)
+000014 9a96                      	sbi		PORTD,6
+                                 	//rcall	SHORT_DELAY
+000015 98af                      	cbi		PORTC,7
+                                 	//rcall	SHORT_DELAY
+                                 	//ldi		r16,$58
+                                 	//out		PORTA,r16
+                                 	//rcall	SHORT_DELAY
+000016 9aaf                      	sbi		PORTC,7
+                                 	//rcall	SHORT_DELAY
+                                 	//rcall	SHORT_DELAY
+000017 9508                      	ret
+                                 
+                                 
+                                 
+                                 ROTARY_TEST:
+                                 			//D6, D7 är knappen
+000018 9b87                      	sbis	PIND,7
+000019 c003                      	rjmp	LEFT_CHECK_DONE
+00001a 9986                      	sbic	PIND,6
+00001b c001                      	rjmp	LEFT_CHECK_DONE
+00001c d007                      	rcall	LEFT
+                                 LEFT_CHECK_DONE:
+00001d 9b86                      	sbis	PIND,6
+00001e c003                      	rjmp	RIGHT_CHECK_DONE
+00001f 9987                      	sbic	PIND,7
+000020 c001                      	rjmp	RIGHT_CHECK_DONE
+000021 d010                      	rcall	RIGHT
+                                 RIGHT_CHECK_DONE:
+000022 bb22                      	out		PORTD,r18
+000023 9508                      	ret
+                                 
+                                 
+                                 LEFT:
+000024 ef0f                      	ldi		r16,$FF
+                                 LEFT_LOOP:
+000025 950a                      	dec		r16
+000026 f7f1                      	brne	LEFT_LOOP
+000027 9987                      	sbic	PIND,7
+000028 c008                      	rjmp	LEFT_DONE
+000029 9523                      	inc		r18
+00002a 7027                      	andi	r18,$07
+                                 LEFT_CHECK_1:
+00002b 9986                      	sbic	PIND,6
+00002c cffe                      	rjmp	LEFT_CHECK_1
+                                 LEFT_CHECK_2:
+00002d 9b87                      	sbis	PIND,7
+00002e cffe                      	rjmp	LEFT_CHECK_2
+00002f 9b86                      	sbis	PIND,6
+000030 cffc                      	rjmp	LEFT_CHECK_2
+                                 LEFT_DONE:
+000031 9508                      	ret	
+                                 
+                                 RIGHT:
+000032 ef0f                      	ldi		r16,$FF
+                                 RIGHT_LOOP:
+000033 950a                      	dec		r16
+000034 f7f1                      	brne	RIGHT_LOOP
+000035 9986                      	sbic	PIND,6
+000036 c008                      	rjmp	RIGHT_DONE
+000037 952a                      	dec		r18
+000038 7027                      	andi	r18,$07
+                                 RIGHT_CHECK_1:
+000039 9987                      	sbic	PIND,7
+00003a cffe                      	rjmp	RIGHT_CHECK_1
+                                 RIGHT_CHECK_2:
+00003b 9b86                      	sbis	PIND,6
+00003c cffe                      	rjmp	RIGHT_CHECK_2
+00003d 9b87                      	sbis	PIND,7
+00003e cffc                      	rjmp	RIGHT_CHECK_2
+                                 RIGHT_DONE:
+00003f 9508                      	ret	
+                                 
+                                 
+                                 
+                                 
+                                 BUTTON_PRESSED:
+000040 e000                      	ldi		r16,$00
+000041 bb02                      	out		PORTD,r16
+000042 ef0f                      	ldi		r16,$FF
+                                 OUTER:
+000043 ef1f                      	ldi		r17,$FF
+                                 INNER:
+000044 951a                      	dec		r17
+000045 f7f1                      	brne	INNER
+000046 950a                      	dec		r16
+000047 f7d9                      	brne	OUTER
+000048 bb02                      	out		PORTD,r16
+000049 9518                      	reti
+                                 
+                                 
+                                 SHORT_DELAY:
+00004a 930f                      	push	r16
+00004b ef0f                      	ldi		r16,$FF
+                                 SHORT_DELAY_LOOP:
+00004c 950a                      	dec		r16
+00004d f7f1                      	brne	SHORT_DELAY_LOOP
+00004e 910f                      	pop		r16
+00004f 9508                      	ret	
                                  
                                  
                                  	INIT:
-00003d ef0f                      	ldi		r16,$FF
-00003e bb0a                      	out		DDRA,r16
-00003f eb07                      	ldi		r16,$B7
-000040 bb07                      	out		DDRB,r16
-000041 e803                      	ldi		r16,$83
-000042 bb24                      	out		DDRC,r18
-000043 e307                      	ldi		r16,$37
-000044 bb01                      	out		DDRD,r16
-000045 e007                      	ldi		r16,$07
-000046 bb02                      	out		PORTD,r16
+000050 9aaf                      	sbi		PORTC,7	//Sätt ce hög för skärmen
+000051 9a95                      	sbi		PORTD,5		//Flash 1
+000052 dff7                      	rcall	SHORT_DELAY
+000053 ef0f                      	ldi		r16,$FF
+000054 bb0a                      	out		DDRA,r16
+000055 eb07                      	ldi		r16,$B7
+000056 bb07                      	out		DDRB,r16
+000057 e803                      	ldi		r16,$83
+000058 bb24                      	out		DDRC,r18
+000059 e307                      	ldi		r16,$37
+00005a bb01                      	out		DDRD,r16
+00005b e007                      	ldi		r16,$07
+00005c bb02                      	out		PORTD,r16
                                  
                                  	//konfigurera avbrott
-000047 e808                      	ldi		r16,(1<<ISC11)|(0<<ISC10)|(1<<INT1)
-000048 bf05                      	out		MCUCR,r16
+00005d e808                      	ldi		r16,(1<<ISC11)|(0<<ISC10)|(1<<INT1)
+00005e bf05                      	out		MCUCR,r16
                                  	//aktivera avbrott
-000049 e800                      	ldi		r16,(1<<INT1)
-00004a bf0b                      	out		GICR,r16
+00005f e800                      	ldi		r16,(1<<INT1)
+000060 bf0b                      	out		GICR,r16
                                  	//aktivera avbrott globalt
-00004b 9478                      	sei
+000061 9478                      	sei
+                                 
                                  
 
 
@@ -1038,7 +1058,7 @@ counted separately from r26..r31 here.
 "ATmega16A" register use summary:
 x  :   0 y  :   0 z  :   0 r0 :   0 r1 :   0 r2 :   0 r3 :   0 r4 :   0 
 r5 :   0 r6 :   0 r7 :   0 r8 :   0 r9 :   0 r10:   0 r11:   0 r12:   0 
-r13:   0 r14:   0 r15:   0 r16:  26 r17:   2 r18:   7 r19:   0 r20:   0 
+r13:   0 r14:   0 r15:   0 r16:  34 r17:   2 r18:   7 r19:   0 r20:   0 
 r21:   0 r22:   0 r23:   0 r24:   0 r25:   0 r26:   0 r27:   0 r28:   0 
 r29:   0 r30:   0 r31:   0 
 Registers used: 3 out of 35 (8.6%)
@@ -1048,27 +1068,27 @@ Registers used: 3 out of 35 (8.6%)
 andi  :   2 asr   :   0 bclr  :   0 bld   :   0 brbc  :   0 brbs  :   0 
 brcc  :   0 brcs  :   0 break :   0 breq  :   0 brge  :   0 brhc  :   0 
 brhs  :   0 brid  :   0 brie  :   0 brlo  :   0 brlt  :   0 brmi  :   0 
-brne  :   4 brpl  :   0 brsh  :   0 brtc  :   0 brts  :   0 brvc  :   0 
-brvs  :   0 bset  :   0 bst   :   0 call  :   0 cbi   :   0 cbr   :   0 
-clc   :   0 clh   :   0 cli   :   0 cln   :   0 clr   :   0 cls   :   0 
+brne  :   6 brpl  :   0 brsh  :   0 brtc  :   0 brts  :   0 brvc  :   0 
+brvs  :   0 bset  :   0 bst   :   0 call  :   0 cbi   :   2 cbr   :   0 
+clc   :   0 clh   :   0 cli   :   0 cln   :   0 clr   :   1 cls   :   0 
 clt   :   0 clv   :   0 clz   :   0 com   :   0 cp    :   0 cpc   :   0 
-cpi   :   0 cpse  :   0 dec   :   5 eor   :   0 fmul  :   0 fmuls :   0 
+cpi   :   0 cpse  :   0 dec   :   7 eor   :   0 fmul  :   0 fmuls :   0 
 fmulsu:   0 icall :   0 ijmp  :   0 in    :   0 inc   :   1 jmp   :   0 
-ld    :   0 ldd   :   0 ldi   :  15 lds   :   0 lpm   :   0 lsl   :   0 
+ld    :   0 ldd   :   0 ldi   :  17 lds   :   0 lpm   :   0 lsl   :   0 
 lsr   :   0 mov   :   0 movw  :   0 mul   :   0 muls  :   0 mulsu :   0 
-neg   :   0 nop   :   0 or    :   0 ori   :   0 out   :  12 pop   :   0 
-push  :   0 rcall :   3 ret   :   3 reti  :   1 rjmp  :  15 rol   :   0 
-ror   :   0 sbc   :   0 sbci  :   0 sbi   :   0 sbic  :   6 sbis  :   6 
+neg   :   0 nop   :   0 or    :   0 ori   :   0 out   :  13 pop   :   1 
+push  :   1 rcall :   5 ret   :   6 reti  :   1 rjmp  :  15 rol   :   0 
+ror   :   0 sbc   :   0 sbci  :   0 sbi   :   5 sbic  :   6 sbis  :   6 
 sbiw  :   0 sbr   :   0 sbrc  :   0 sbrs  :   0 sec   :   0 seh   :   0 
 sei   :   1 sen   :   0 ser   :   0 ses   :   0 set   :   0 sev   :   0 
 sez   :   0 sleep :   0 spm   :   0 st    :   0 std   :   0 sts   :   0 
 sub   :   0 subi  :   0 swap  :   0 tst   :   0 wdr   :   0 
-Instructions used: 13 out of 113 (11.5%)
+Instructions used: 18 out of 113 (15.9%)
 
 "ATmega16A" memory use summary [bytes]:
 Segment   Begin    End      Code   Data   Used    Size   Use%
 ---------------------------------------------------------------
-[.cseg] 0x000000 0x00009a    148      0    148   16384   0.9%
+[.cseg] 0x000000 0x0000c6    192      0    192   16384   1.2%
 [.dseg] 0x000060 0x000060      0      0      0    1024   0.0%
 [.eseg] 0x000000 0x000000      0      0      0     512   0.0%
 
