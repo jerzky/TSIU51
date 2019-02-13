@@ -25,7 +25,7 @@ INITIAL_DELAY:
 
 WARM:
 	rcall	ROTARY_TEST
-	rcall	DISPLAY_TEST
+	//rcall	DISPLAY_TEST
 	rjmp	WARM
 
 
@@ -41,15 +41,15 @@ DISPLAY_TEST:
 	*/
 	sbi		PORTC,0		//a3-1
 	sbi		PORTC,1		//a4-1
-	clr		r16
+	ldi		r16,$00
 	out		PORTB,r16	//a0-a2 - 0 (Längst till vänster)
 	rcall	SHORT_DELAY
-	cbi		PORTC,7
+	cbi		PORTC,7 //ce låg
 	rcall	SHORT_DELAY
 	ldi		r16,$58
 	out		PORTA,r16
 	rcall	SHORT_DELAY
-	sbi		PORTC,7
+	sbi		PORTC,7 //ce hög
 	rcall	SHORT_DELAY
 	rcall	SHORT_DELAY
 	ret
@@ -143,17 +143,17 @@ SHORT_DELAY_LOOP:
 
 
 	INIT:
-	sbi		PORTC,7	//Sätt ce hög för skärmen
-	sbi		PORTD,5		//Flash hög
 	rcall	SHORT_DELAY
 	ldi		r16,$FF
 	out		DDRA,r16
 	ldi		r16,$B7
 	out		DDRB,r16
 	ldi		r16,$83
-	out		DDRC,r18
+	out		DDRC,r16
 	ldi		r16,$37
 	out		DDRD,r16
+	sbi		PORTC,7	//Sätt ce hög för skärmen
+	sbi		PORTD,5		//Flash hög
 
 	//konfigurera avbrott
 	ldi		r16,(1<<ISC11)|(0<<ISC10)|(1<<INT1)
