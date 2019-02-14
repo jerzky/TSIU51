@@ -14,8 +14,8 @@ BOKSTAV: .db "ABCDEFGHIJKLMNOPQRSTUVWXYZ",$13,$15,$17,$0
 
 USED_MESSAGE: .db "ANV",$15,"ND"
 FREE_MESSAGE: .db "VALBAR"
-
-
+WIN_MESSAGE: .db "GRATTIS",$21
+RAINBOW: .db $01,$03,$02,$06,$04,$05
 	.dseg 
 USED:
 	.byte		29
@@ -36,6 +36,7 @@ INITIAL_DELAY:
 	rcall	PRINT_LETTER
 
 WARM:
+	rcall	WIN
 	rcall	ROTARY_CHECK
 	rjmp	WARM
 
@@ -101,6 +102,7 @@ USED_CHECK_PRINT_LOOP:
 	ret
 
 PRINT_DISPLAY:
+	push	r16
 	ldi		r19,PINB
 	andi	r19,$F8
 	or		r16,r19
@@ -112,7 +114,7 @@ PRINT_DISPLAY:
 	rcall	SHORT_DELAY
 	sbi		PORTC,7 //ce hög
 	rcall	SHORT_DELAY
-
+	pop		r16
 	ret
 
 LOAD_LETTER:
@@ -269,3 +271,54 @@ CLEAR_LOOP:
 	//aktivera avbrott globalt
 	sei
 	ret
+
+WIN:
+	ldi		ZH,HIGH(WIN_MESSAGE*2)
+	ldi		ZL,LOW(WIN_MESSAGE*2)
+	ldi		r16,$07
+	add		ZL,r16
+	ldi		r18,$08
+WIN_LOOP:
+	lpm		r17,Z
+	rcall	PRINT_DISPLAY
+	dec		ZL
+	dec		r16
+	dec		r18
+	brne	WIN_LOOP
+	ldi		ZH,HIGH(RAINBOW*2)
+	ldi		ZL,LOW(RAINBOW*2)
+	clr		r17
+WIN_STALL:
+	lpm		r16,Z+
+	cpi		r16,$05
+	brne	WIN_COLOUR_CHECK_DONE
+	subi	ZL,$06
+WIN_COLOUR_CHECK_DONE:
+	out		PORTD,r16
+	ldi		r17,$FF
+WIN_DELAY_LOOP:
+	rcall	SHORT_DELAY
+	dec		r17
+	brne	WIN_DELAY_LOOP
+	rjmp	WIN_STALL
+	ret
+
+	/*
+	ldi		ZH,HIGH(USED_MESSAGE*2)
+	ldi		ZL,LOW(USED_MESSAGE*2)
+USED_CHECK_FALSE:
+	ldi		r16,$05
+	add		ZL,r16
+	ldi		r18,$06
+	ldi		r16,$07
+USED_CHECK_PRINT_LOOP:
+	lpm		r17,Z
+	rcall	PRINT_DISPLAY
+	dec		ZL
+	dec		r16
+	dec		r18
+	brne	USED_CHECK_PRINT_LOOP
+	pop		r17
+	pop		r16
+	ret
+	*/
