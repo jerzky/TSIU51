@@ -10,7 +10,11 @@
 	.org		INT1addr
 	rjmp		BUTTON_PRESSED
 
-BOKSTAV: .db "ABCDEFGHIJKLMNOPQRSTUVWXYZ" .db $13,$15,$17,$0
+BOKSTAV: .db "ABCDEFGHIJKLMNOPQRSTUVWXYZ",$13,$15,$17,$0
+
+USED_MESSAGE: .db "ANV",$15,"ND"
+FREE_MESSAGE: .db "VALBAR"
+
 
 	.dseg 
 USED:
@@ -30,13 +34,9 @@ INITIAL_DELAY:
 	rcall	INIT
 	ldi		r18,0
 	rcall	PRINT_LETTER
-	//ldi		r18,3		//TEMP
-
 
 WARM:
 	rcall	ROTARY_CHECK
-	//rcall	PRINT_LETTER
-	
 	rjmp	WARM
 
 
@@ -47,21 +47,67 @@ PRINT_LETTER:
 	push	r18
 	ldi		r16,$00
 	lds		r18,CURRENT_LETTER
+	rcall	LOAD_LETTER								
 	rcall	PRINT_DISPLAY
+	rcall	USED_CHECK
 	pop		r18
 	pop		r17
 	pop		r16
 	ret
 
+USED_CHECK:
+	/*
+	Kolla i tabell över använda
+	om använd gör lampa röd
+	om inte gör grön
+	om använd
+	skriv använd
+	annars skriv valbar
+	*/
+	push	r16
+	push	r17
+	ldi		YH,HIGH(USED)
+	ldi		YL,LOW(USED)
+	add		YL,r18
+	ld		r16,Y
+	cpi		r16,0
+	brne	USED_CHECK_TRUE
+	sbi		PORTD,0
+	cbi		PORTD,1
+	sbi		PORTD,2
+	ldi		ZH,HIGH(FREE_MESSAGE*2)
+	ldi		ZL,LOW(FREE_MESSAGE*2)
+	rjmp	USED_CHECK_FALSE
+USED_CHECK_TRUE:
+	cbi		PORTD,0
+	sbi		PORTD,1
+	sbi		PORTD,2
+	ldi		ZH,HIGH(USED_MESSAGE*2)
+	ldi		ZL,LOW(USED_MESSAGE*2)
+USED_CHECK_FALSE:
+	ldi		r16,$05
+	add		ZL,r16
+	ldi		r18,$06
+	ldi		r16,$07
+USED_CHECK_PRINT_LOOP:
+	lpm		r17,Z
+	rcall	PRINT_DISPLAY
+	dec		ZL
+	dec		r16
+	dec		r18
+	brne	USED_CHECK_PRINT_LOOP
+	pop		r17
+	pop		r16
+	ret
+
 PRINT_DISPLAY:
-	ldi		r17,PINB
-	andi	r17,$F8
-	or		r16,r17
+	ldi		r19,PINB
+	andi	r19,$F8
+	or		r16,r19
 	out		PORTB,r16	//a0-a2 - 0 (Längst till vänster)		
 	rcall	SHORT_DELAY
 	cbi		PORTC,7 //ce låg
 	rcall	SHORT_DELAY
-	rcall	LOAD_LETTER								
 	out		PORTA,r17
 	rcall	SHORT_DELAY
 	sbi		PORTC,7 //ce hög
@@ -69,6 +115,16 @@ PRINT_DISPLAY:
 
 	ret
 
+LOAD_LETTER:
+	push	ZH
+	push	ZL
+	ldi		ZH,HIGH(BOKSTAV*2)
+	ldi		ZL,LOW(BOKSTAV*2)
+	add		ZL,r18
+	lpm		r17,Z
+	pop		ZL
+	pop		ZH
+	ret
 
 
 ROTARY_CHECK:
@@ -129,7 +185,6 @@ RIGHT_LOOP:
 	cpi		r18,$FF
 	brne	RIGHT_CHECK_1
 	ldi		r18,$1C
-		//andi	r18,$07  Nej!
 RIGHT_CHECK_1:
 	sbic	PIND,7
 	rjmp	RIGHT_CHECK_1
@@ -141,7 +196,6 @@ RIGHT_CHECK_2:
 	sts		CURRENT_LETTER,r18
 	rcall	PRINT_LETTER
 RIGHT_DONE:
-
 	ret	
 
 
@@ -149,22 +203,19 @@ RIGHT_DONE:
 
 BUTTON_PRESSED:
 	push	r16
-	push	r17
-	cbi		PORTD,0
-	cbi		PORTD,1
-	cbi		PORTD,2
-	ldi		r16,$FF
-OUTER:
-	ldi		r17,$FF
-INNER:
-	dec		r17
-	brne	INNER
-	dec		r16
-	brne	OUTER
-	sbi		PORTD,0
-	cbi		PORTD,1
-	sbi		PORTD,2
-	pop		r17
+	push	r18
+	push	YH
+	push	YL
+	lds		r18,CURRENT_LETTER
+	ldi		YH,HIGH(USED)
+	ldi		YL,LOW(USED)
+	add		YL,r18
+	ldi		r16,$01
+	st		Y,r16
+	rcall	PRINT_LETTER
+	pop		YL
+	pop		YH
+	pop		r18
 	pop		r16
 	reti
 
@@ -178,12 +229,7 @@ SHORT_DELAY_LOOP:
 	pop		r16
 	ret	
 
-LOAD_LETTER:
-	ldi		ZH,HIGH(BOKSTAV*2)
-	ldi		ZL,LOW(BOKSTAV*2)
-	add		ZL,r18
-	lpm		r17,Z
-	ret
+
 
 
 	INIT:
