@@ -12,9 +12,11 @@
 
 BOKSTAV: .db "ABCDEFGHIJKLMNOPQRSTUVWXYZ",$13,$15,$17,$0
 
-USED_MESSAGE: .db "ANV",$15,"ND"
-FREE_MESSAGE: .db "VALBAR"
+USED_MESSAGE: .db " ANV",$15,"ND " // lägga till space först
+FREE_MESSAGE: .db " VALBAR " //läga till space först
 WIN_MESSAGE: .db "GRATTIS",$21
+LOSE_MESSAGE: .db "DU SUGER"//"F",$17,"RLORAT" //space $20
+DRAW_MESSAGE:	.db " RITAR",$21,$20
 RAINBOW: .db $01,$03,$02,$06,$04,$05
 	.dseg 
 USED:
@@ -36,11 +38,10 @@ INITIAL_DELAY:
 	rcall	PRINT_LETTER
 
 WARM:
-	rcall	WIN
+	//rcall	LOSE
+	//rcall	WIN
 	rcall	ROTARY_CHECK
 	rjmp	WARM
-
-
 
 PRINT_LETTER:
 	push	r16
@@ -86,9 +87,10 @@ USED_CHECK_TRUE:
 	ldi		ZH,HIGH(USED_MESSAGE*2)
 	ldi		ZL,LOW(USED_MESSAGE*2)
 USED_CHECK_FALSE:
-	ldi		r16,$05
+	//ldi		r16,$05
+	ldi		r16,$06 //Fixat så att vi clearar tomma rutan till vänster om meddelandet
 	add		ZL,r16
-	ldi		r18,$06
+	ldi		r18,$07 //samma här
 	ldi		r16,$07
 USED_CHECK_PRINT_LOOP:
 	lpm		r17,Z
@@ -206,8 +208,63 @@ RIGHT_DONE:
 BUTTON_PRESSED:
 	push	r16
 	push	r18
+	push	r17
+	push	r24
+	push	r25
 	push	YH
 	push	YL
+	push	ZH
+	push	ZL
+
+DRAW:
+	cli
+	ldi		ZH,HIGH(DRAW_MESSAGE*2)
+	ldi		ZL,LOW(DRAW_MESSAGE*2)
+	ldi		r16,$07 //sista platsen i tabellen
+	add		ZL,r16
+	ldi		r18,$08
+DRAW_LOOP:
+	lpm		r17,Z
+	rcall	PRINT_DISPLAY
+	dec		ZL
+	dec		r16
+	dec		r18
+	brne	DRAW_LOOP
+	in		r17,PIND  //sparar D
+	andi	r17,$F8
+	ori		r17,$04  //Ändrar färgen till gul
+	push	r17  //lägger PORTD på stacken
+	ldi		r16,$04 //Gul
+	ldi		r18,$03 //För XOR
+
+DRAW_STALL:
+WAIT:
+	out		PORTD,r16
+	eor		r16,r18
+	ldi		r24,$FF
+	ldi		r25,$0A
+	rjmp	WAIT
+
+LOSE_STALL:
+	//swap	r16 // swappa mellan röd och vit färg
+	out		PORTD,r16
+	eor		r16,r18		//XOR r16, med ett. Ändrar från röd färg till ingen färg
+	ldi		r24,$FF
+	ldi		r25,$0A
+LOSE_DELAY_LOOP:
+	rcall	SHORT_DELAY
+	sbiw	r25:r24,1
+	brne	LOSE_DELAY_LOOP
+	rjmp	LOSE_STALL
+	ret
+
+	//val för fortsätt
+	// val och rcall WIN
+	//val och rcall LOSE
+	
+NEXT_LETTER:
+	pop		r17 //Hämtar portD från stacken
+	out		PORTD,r17 // tillbaka på r17
 	lds		r18,CURRENT_LETTER
 	ldi		YH,HIGH(USED)
 	ldi		YL,LOW(USED)
@@ -215,8 +272,15 @@ BUTTON_PRESSED:
 	ldi		r16,$01
 	st		Y,r16
 	rcall	PRINT_LETTER
+	sei
+
+	pop		ZL
+	pop		ZH
 	pop		YL
 	pop		YH
+	pop		r25
+	pop		r24
+	pop		r17
 	pop		r18
 	pop		r16
 	reti
@@ -273,9 +337,10 @@ CLEAR_LOOP:
 	ret
 
 WIN:
+	cli
 	ldi		ZH,HIGH(WIN_MESSAGE*2)
 	ldi		ZL,LOW(WIN_MESSAGE*2)
-	ldi		r16,$07
+	ldi		r16,$07 //sista platsen i tabellen
 	add		ZL,r16
 	ldi		r18,$08
 WIN_LOOP:
@@ -295,13 +360,63 @@ WIN_STALL:
 	subi	ZL,$06
 WIN_COLOUR_CHECK_DONE:
 	out		PORTD,r16
-	ldi		r17,$FF
+	ldi		r24,$FF
+	ldi		r25,$04
 WIN_DELAY_LOOP:
 	rcall	SHORT_DELAY
-	dec		r17
+	sbiw	r24:r25,1
 	brne	WIN_DELAY_LOOP
 	rjmp	WIN_STALL
 	ret
+
+LOSE:
+	cli
+	ldi		ZH,HIGH(LOSE_MESSAGE*2)
+	ldi		ZL,LOW(LOSE_MESSAGE*2)
+	ldi		r16,$07  //ladda platsen för sista bokstaven i tabellen. 
+	add		ZL,r16  //hämta den platsen i tabellen 'T'
+	ldi		r18,$08 //antalet loops
+LOSE_LOOP:
+	lpm		r17,Z
+	rcall	PRINT_DISPLAY
+	dec		ZL
+	dec		r16
+	dec		r18
+	brne	LOSE_LOOP
+	clr		r17
+	ldi		r16,$06 // ladda röd färg
+	ldi		r18,$1 //behövs för XOR, vi vill ändra på bit 0
+LOSE_STALL:
+	//swap	r16 // swappa mellan röd och vit färg
+	eor		r16,r18		//XOR r16, med ett. Ändrar från röd färg till ingen färg
+	out		PORTD,r16
+	ldi		r24,$FF
+	ldi		r25,$0A
+LOSE_DELAY_LOOP:
+	rcall	SHORT_DELAY
+	sbiw	r25:r24,1
+	brne	LOSE_DELAY_LOOP
+	rjmp	LOSE_STALL
+	ret
+
+/*LUCK:
+	cli
+	ldi		ZH,HIGH(LUCK_MESSAGE*2)
+	ldi		ZL,LOW(LUCK_MESSAGE*2)
+	ldi		r16,$07  //ladda platsen för sista bokstaven i tabellen. 
+	add		ZL,r16  //hämta den platsen i tabellen 'L'
+	ldi		r18,$08 //antalet loops
+LUCK_LOOP:
+	lpm		r17,Z
+	rcall	PRINT_DISPLAY
+	dec		ZL
+	dec		r16
+	dec		r18
+	brne	LUCK_LOOP
+	clr		r17
+	*/
+
+
 
 	/*
 	ldi		ZH,HIGH(USED_MESSAGE*2)
