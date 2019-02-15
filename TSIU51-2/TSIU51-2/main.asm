@@ -10,7 +10,7 @@
 	jmp INIT
 	.include "tables.inc"
 
-	.equ	 ADDR = ALPHA_Y*2
+	.equ	 ADDR = GRAPHIC_PLAT*2
 INIT:
 		
 			ldi		r16, HIGH(RAMEND)
@@ -47,11 +47,14 @@ NO_CARRY:
 			mov		ZL, r16
 			rcall	DRAW_FUNC
 			pop		ZH
-			pop		ZL			
+			pop		ZL
+			/*			
 			ldi		r16, $02
 			ldi		r25, $00
 			ldi		r24, $0A
+			
 			rcall	MOVE_FUNC
+			*/
 			rjmp	TEST_ALL_LOOP
 TEST_ALL_DONE:
 			ret
