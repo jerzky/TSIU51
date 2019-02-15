@@ -238,25 +238,15 @@ DRAW_LOOP:
 	ldi		r18,$03 //För XOR
 
 DRAW_STALL:
-WAIT:
 	out		PORTD,r16
 	eor		r16,r18
 	ldi		r24,$FF
 	ldi		r25,$0A
-	rjmp	WAIT
-
-LOSE_STALL:
-	//swap	r16 // swappa mellan röd och vit färg
-	out		PORTD,r16
-	eor		r16,r18		//XOR r16, med ett. Ändrar från röd färg till ingen färg
-	ldi		r24,$FF
-	ldi		r25,$0A
-LOSE_DELAY_LOOP:
+DRAW_DELAY_LOOP:
 	rcall	SHORT_DELAY
 	sbiw	r25:r24,1
-	brne	LOSE_DELAY_LOOP
-	rjmp	LOSE_STALL
-	ret
+	brne	DRAW_DELAY_LOOP
+	rjmp	DRAW_STALL
 
 	//val för fortsätt
 	// val och rcall WIN
