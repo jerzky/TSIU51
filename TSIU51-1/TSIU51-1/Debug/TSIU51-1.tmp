@@ -22,45 +22,56 @@
   <FILE>TSIU51-1.lss</FILE>
  </OUTPUT_FILES>
  <LABELS>
-  <COLD><FILE>C:\Users\Fredrik\Documents\Atmel Studio\7.0\TSIU51\TSIU51-1\TSIU51-1\main.asm</FILE><LINE>25</LINE></COLD>
-  <BUTTON_PRESSED><FILE>C:\Users\Fredrik\Documents\Atmel Studio\7.0\TSIU51\TSIU51-1\TSIU51-1\main.asm</FILE><LINE>206</LINE></BUTTON_PRESSED>
+  <COLD><FILE>C:\Users\Fredrik\Documents\Atmel Studio\7.0\TSIU51\TSIU51-1\TSIU51-1\main.asm</FILE><LINE>29</LINE></COLD>
+  <BUTTON_PRESSED><FILE>C:\Users\Fredrik\Documents\Atmel Studio\7.0\TSIU51\TSIU51-1\TSIU51-1\main.asm</FILE><LINE>208</LINE></BUTTON_PRESSED>
   <BOKSTAV><FILE>C:\Users\Fredrik\Documents\Atmel Studio\7.0\TSIU51\TSIU51-1\TSIU51-1\main.asm</FILE><LINE>13</LINE></BOKSTAV>
   <USED_MESSAGE><FILE>C:\Users\Fredrik\Documents\Atmel Studio\7.0\TSIU51\TSIU51-1\TSIU51-1\main.asm</FILE><LINE>15</LINE></USED_MESSAGE>
   <FREE_MESSAGE><FILE>C:\Users\Fredrik\Documents\Atmel Studio\7.0\TSIU51\TSIU51-1\TSIU51-1\main.asm</FILE><LINE>16</LINE></FREE_MESSAGE>
   <WIN_MESSAGE><FILE>C:\Users\Fredrik\Documents\Atmel Studio\7.0\TSIU51\TSIU51-1\TSIU51-1\main.asm</FILE><LINE>17</LINE></WIN_MESSAGE>
-  <RAINBOW><FILE>C:\Users\Fredrik\Documents\Atmel Studio\7.0\TSIU51\TSIU51-1\TSIU51-1\main.asm</FILE><LINE>18</LINE></RAINBOW>
-  <USED><FILE>C:\Users\Fredrik\Documents\Atmel Studio\7.0\TSIU51\TSIU51-1\TSIU51-1\main.asm</FILE><LINE>20</LINE></USED>
-  <CURRENT_LETTER><FILE>C:\Users\Fredrik\Documents\Atmel Studio\7.0\TSIU51\TSIU51-1\TSIU51-1\main.asm</FILE><LINE>22</LINE></CURRENT_LETTER>
-  <INITIAL_DELAY><FILE>C:\Users\Fredrik\Documents\Atmel Studio\7.0\TSIU51\TSIU51-1\TSIU51-1\main.asm</FILE><LINE>27</LINE></INITIAL_DELAY>
-  <INIT><FILE>C:\Users\Fredrik\Documents\Atmel Studio\7.0\TSIU51\TSIU51-1\TSIU51-1\main.asm</FILE><LINE>237</LINE></INIT>
-  <PRINT_LETTER><FILE>C:\Users\Fredrik\Documents\Atmel Studio\7.0\TSIU51\TSIU51-1\TSIU51-1\main.asm</FILE><LINE>45</LINE></PRINT_LETTER>
-  <WARM><FILE>C:\Users\Fredrik\Documents\Atmel Studio\7.0\TSIU51\TSIU51-1\TSIU51-1\main.asm</FILE><LINE>38</LINE></WARM>
-  <WIN><FILE>C:\Users\Fredrik\Documents\Atmel Studio\7.0\TSIU51\TSIU51-1\TSIU51-1\main.asm</FILE><LINE>275</LINE></WIN>
-  <ROTARY_CHECK><FILE>C:\Users\Fredrik\Documents\Atmel Studio\7.0\TSIU51\TSIU51-1\TSIU51-1\main.asm</FILE><LINE>132</LINE></ROTARY_CHECK>
-  <LOAD_LETTER><FILE>C:\Users\Fredrik\Documents\Atmel Studio\7.0\TSIU51\TSIU51-1\TSIU51-1\main.asm</FILE><LINE>120</LINE></LOAD_LETTER>
-  <PRINT_DISPLAY><FILE>C:\Users\Fredrik\Documents\Atmel Studio\7.0\TSIU51\TSIU51-1\TSIU51-1\main.asm</FILE><LINE>104</LINE></PRINT_DISPLAY>
-  <USED_CHECK><FILE>C:\Users\Fredrik\Documents\Atmel Studio\7.0\TSIU51\TSIU51-1\TSIU51-1\main.asm</FILE><LINE>59</LINE></USED_CHECK>
-  <USED_CHECK_TRUE><FILE>C:\Users\Fredrik\Documents\Atmel Studio\7.0\TSIU51\TSIU51-1\TSIU51-1\main.asm</FILE><LINE>82</LINE></USED_CHECK_TRUE>
-  <USED_CHECK_FALSE><FILE>C:\Users\Fredrik\Documents\Atmel Studio\7.0\TSIU51\TSIU51-1\TSIU51-1\main.asm</FILE><LINE>88</LINE></USED_CHECK_FALSE>
-  <USED_CHECK_PRINT_LOOP><FILE>C:\Users\Fredrik\Documents\Atmel Studio\7.0\TSIU51\TSIU51-1\TSIU51-1\main.asm</FILE><LINE>93</LINE></USED_CHECK_PRINT_LOOP>
-  <SHORT_DELAY><FILE>C:\Users\Fredrik\Documents\Atmel Studio\7.0\TSIU51\TSIU51-1\TSIU51-1\main.asm</FILE><LINE>225</LINE></SHORT_DELAY>
-  <LEFT_CHECK_DONE><FILE>C:\Users\Fredrik\Documents\Atmel Studio\7.0\TSIU51\TSIU51-1\TSIU51-1\main.asm</FILE><LINE>139</LINE></LEFT_CHECK_DONE>
-  <LEFT><FILE>C:\Users\Fredrik\Documents\Atmel Studio\7.0\TSIU51\TSIU51-1\TSIU51-1\main.asm</FILE><LINE>149</LINE></LEFT>
-  <RIGHT_CHECK_DONE><FILE>C:\Users\Fredrik\Documents\Atmel Studio\7.0\TSIU51\TSIU51-1\TSIU51-1\main.asm</FILE><LINE>145</LINE></RIGHT_CHECK_DONE>
-  <RIGHT><FILE>C:\Users\Fredrik\Documents\Atmel Studio\7.0\TSIU51\TSIU51-1\TSIU51-1\main.asm</FILE><LINE>178</LINE></RIGHT>
-  <LEFT_LOOP><FILE>C:\Users\Fredrik\Documents\Atmel Studio\7.0\TSIU51\TSIU51-1\TSIU51-1\main.asm</FILE><LINE>152</LINE></LEFT_LOOP>
-  <LEFT_DONE><FILE>C:\Users\Fredrik\Documents\Atmel Studio\7.0\TSIU51\TSIU51-1\TSIU51-1\main.asm</FILE><LINE>175</LINE></LEFT_DONE>
-  <LEFT_CHECK_1><FILE>C:\Users\Fredrik\Documents\Atmel Studio\7.0\TSIU51\TSIU51-1\TSIU51-1\main.asm</FILE><LINE>164</LINE></LEFT_CHECK_1>
-  <LEFT_CHECK_2><FILE>C:\Users\Fredrik\Documents\Atmel Studio\7.0\TSIU51\TSIU51-1\TSIU51-1\main.asm</FILE><LINE>167</LINE></LEFT_CHECK_2>
-  <RIGHT_LOOP><FILE>C:\Users\Fredrik\Documents\Atmel Studio\7.0\TSIU51\TSIU51-1\TSIU51-1\main.asm</FILE><LINE>181</LINE></RIGHT_LOOP>
-  <RIGHT_DONE><FILE>C:\Users\Fredrik\Documents\Atmel Studio\7.0\TSIU51\TSIU51-1\TSIU51-1\main.asm</FILE><LINE>200</LINE></RIGHT_DONE>
-  <RIGHT_CHECK_1><FILE>C:\Users\Fredrik\Documents\Atmel Studio\7.0\TSIU51\TSIU51-1\TSIU51-1\main.asm</FILE><LINE>190</LINE></RIGHT_CHECK_1>
-  <RIGHT_CHECK_2><FILE>C:\Users\Fredrik\Documents\Atmel Studio\7.0\TSIU51\TSIU51-1\TSIU51-1\main.asm</FILE><LINE>193</LINE></RIGHT_CHECK_2>
-  <SHORT_DELAY_LOOP><FILE>C:\Users\Fredrik\Documents\Atmel Studio\7.0\TSIU51\TSIU51-1\TSIU51-1\main.asm</FILE><LINE>228</LINE></SHORT_DELAY_LOOP>
-  <CLEAR_LOOP><FILE>C:\Users\Fredrik\Documents\Atmel Studio\7.0\TSIU51\TSIU51-1\TSIU51-1\main.asm</FILE><LINE>258</LINE></CLEAR_LOOP>
-  <WIN_LOOP><FILE>C:\Users\Fredrik\Documents\Atmel Studio\7.0\TSIU51\TSIU51-1\TSIU51-1\main.asm</FILE><LINE>281</LINE></WIN_LOOP>
-  <WIN_STALL><FILE>C:\Users\Fredrik\Documents\Atmel Studio\7.0\TSIU51\TSIU51-1\TSIU51-1\main.asm</FILE><LINE>291</LINE></WIN_STALL>
-  <WIN_COLOUR_CHECK_DONE><FILE>C:\Users\Fredrik\Documents\Atmel Studio\7.0\TSIU51\TSIU51-1\TSIU51-1\main.asm</FILE><LINE>296</LINE></WIN_COLOUR_CHECK_DONE>
-  <WIN_DELAY_LOOP><FILE>C:\Users\Fredrik\Documents\Atmel Studio\7.0\TSIU51\TSIU51-1\TSIU51-1\main.asm</FILE><LINE>299</LINE></WIN_DELAY_LOOP>
+  <LOSE_MESSAGE><FILE>C:\Users\Fredrik\Documents\Atmel Studio\7.0\TSIU51\TSIU51-1\TSIU51-1\main.asm</FILE><LINE>18</LINE></LOSE_MESSAGE>
+  <DRAW_MESSAGE><FILE>C:\Users\Fredrik\Documents\Atmel Studio\7.0\TSIU51\TSIU51-1\TSIU51-1\main.asm</FILE><LINE>19</LINE></DRAW_MESSAGE>
+  <RAINBOW><FILE>C:\Users\Fredrik\Documents\Atmel Studio\7.0\TSIU51\TSIU51-1\TSIU51-1\main.asm</FILE><LINE>20</LINE></RAINBOW>
+  <USED><FILE>C:\Users\Fredrik\Documents\Atmel Studio\7.0\TSIU51\TSIU51-1\TSIU51-1\main.asm</FILE><LINE>23</LINE></USED>
+  <CURRENT_LETTER><FILE>C:\Users\Fredrik\Documents\Atmel Studio\7.0\TSIU51\TSIU51-1\TSIU51-1\main.asm</FILE><LINE>25</LINE></CURRENT_LETTER>
+  <INITIAL_DELAY><FILE>C:\Users\Fredrik\Documents\Atmel Studio\7.0\TSIU51\TSIU51-1\TSIU51-1\main.asm</FILE><LINE>31</LINE></INITIAL_DELAY>
+  <INIT><FILE>C:\Users\Fredrik\Documents\Atmel Studio\7.0\TSIU51\TSIU51-1\TSIU51-1\main.asm</FILE><LINE>288</LINE></INIT>
+  <PRINT_LETTER><FILE>C:\Users\Fredrik\Documents\Atmel Studio\7.0\TSIU51\TSIU51-1\TSIU51-1\main.asm</FILE><LINE>94</LINE></PRINT_LETTER>
+  <WARM><FILE>C:\Users\Fredrik\Documents\Atmel Studio\7.0\TSIU51\TSIU51-1\TSIU51-1\main.asm</FILE><LINE>42</LINE></WARM>
+  <ROTARY_CHECK><FILE>C:\Users\Fredrik\Documents\Atmel Studio\7.0\TSIU51\TSIU51-1\TSIU51-1\main.asm</FILE><LINE>136</LINE></ROTARY_CHECK>
+  <USED_CHECK><FILE>C:\Users\Fredrik\Documents\Atmel Studio\7.0\TSIU51\TSIU51-1\TSIU51-1\main.asm</FILE><LINE>47</LINE></USED_CHECK>
+  <USED_CHECK_TRUE><FILE>C:\Users\Fredrik\Documents\Atmel Studio\7.0\TSIU51\TSIU51-1\TSIU51-1\main.asm</FILE><LINE>70</LINE></USED_CHECK_TRUE>
+  <USED_CHECK_FALSE><FILE>C:\Users\Fredrik\Documents\Atmel Studio\7.0\TSIU51\TSIU51-1\TSIU51-1\main.asm</FILE><LINE>76</LINE></USED_CHECK_FALSE>
+  <USED_CHECK_PRINT_LOOP><FILE>C:\Users\Fredrik\Documents\Atmel Studio\7.0\TSIU51\TSIU51-1\TSIU51-1\main.asm</FILE><LINE>82</LINE></USED_CHECK_PRINT_LOOP>
+  <PRINT_DISPLAY><FILE>C:\Users\Fredrik\Documents\Atmel Studio\7.0\TSIU51\TSIU51-1\TSIU51-1\main.asm</FILE><LINE>108</LINE></PRINT_DISPLAY>
+  <LOAD_LETTER><FILE>C:\Users\Fredrik\Documents\Atmel Studio\7.0\TSIU51\TSIU51-1\TSIU51-1\main.asm</FILE><LINE>124</LINE></LOAD_LETTER>
+  <SHORT_DELAY><FILE>C:\Users\Fredrik\Documents\Atmel Studio\7.0\TSIU51\TSIU51-1\TSIU51-1\main.asm</FILE><LINE>276</LINE></SHORT_DELAY>
+  <LEFT_CHECK_DONE><FILE>C:\Users\Fredrik\Documents\Atmel Studio\7.0\TSIU51\TSIU51-1\TSIU51-1\main.asm</FILE><LINE>143</LINE></LEFT_CHECK_DONE>
+  <LEFT><FILE>C:\Users\Fredrik\Documents\Atmel Studio\7.0\TSIU51\TSIU51-1\TSIU51-1\main.asm</FILE><LINE>153</LINE></LEFT>
+  <RIGHT_CHECK_DONE><FILE>C:\Users\Fredrik\Documents\Atmel Studio\7.0\TSIU51\TSIU51-1\TSIU51-1\main.asm</FILE><LINE>149</LINE></RIGHT_CHECK_DONE>
+  <RIGHT><FILE>C:\Users\Fredrik\Documents\Atmel Studio\7.0\TSIU51\TSIU51-1\TSIU51-1\main.asm</FILE><LINE>180</LINE></RIGHT>
+  <LEFT_LOOP><FILE>C:\Users\Fredrik\Documents\Atmel Studio\7.0\TSIU51\TSIU51-1\TSIU51-1\main.asm</FILE><LINE>156</LINE></LEFT_LOOP>
+  <LEFT_DONE><FILE>C:\Users\Fredrik\Documents\Atmel Studio\7.0\TSIU51\TSIU51-1\TSIU51-1\main.asm</FILE><LINE>177</LINE></LEFT_DONE>
+  <LEFT_CHECK_1><FILE>C:\Users\Fredrik\Documents\Atmel Studio\7.0\TSIU51\TSIU51-1\TSIU51-1\main.asm</FILE><LINE>167</LINE></LEFT_CHECK_1>
+  <LEFT_CHECK_2><FILE>C:\Users\Fredrik\Documents\Atmel Studio\7.0\TSIU51\TSIU51-1\TSIU51-1\main.asm</FILE><LINE>170</LINE></LEFT_CHECK_2>
+  <RIGHT_LOOP><FILE>C:\Users\Fredrik\Documents\Atmel Studio\7.0\TSIU51\TSIU51-1\TSIU51-1\main.asm</FILE><LINE>183</LINE></RIGHT_LOOP>
+  <RIGHT_DONE><FILE>C:\Users\Fredrik\Documents\Atmel Studio\7.0\TSIU51\TSIU51-1\TSIU51-1\main.asm</FILE><LINE>202</LINE></RIGHT_DONE>
+  <RIGHT_CHECK_1><FILE>C:\Users\Fredrik\Documents\Atmel Studio\7.0\TSIU51\TSIU51-1\TSIU51-1\main.asm</FILE><LINE>192</LINE></RIGHT_CHECK_1>
+  <RIGHT_CHECK_2><FILE>C:\Users\Fredrik\Documents\Atmel Studio\7.0\TSIU51\TSIU51-1\TSIU51-1\main.asm</FILE><LINE>195</LINE></RIGHT_CHECK_2>
+  <LOSE><FILE>C:\Users\Fredrik\Documents\Atmel Studio\7.0\TSIU51\TSIU51-1\TSIU51-1\main.asm</FILE><LINE>365</LINE></LOSE>
+  <DRAW><FILE>C:\Users\Fredrik\Documents\Atmel Studio\7.0\TSIU51\TSIU51-1\TSIU51-1\main.asm</FILE><LINE>219</LINE></DRAW>
+  <DRAW_LOOP><FILE>C:\Users\Fredrik\Documents\Atmel Studio\7.0\TSIU51\TSIU51-1\TSIU51-1\main.asm</FILE><LINE>226</LINE></DRAW_LOOP>
+  <DRAW_STALL><FILE>C:\Users\Fredrik\Documents\Atmel Studio\7.0\TSIU51\TSIU51-1\TSIU51-1\main.asm</FILE><LINE>239</LINE></DRAW_STALL>
+  <LONG_DELAY><FILE>C:\Users\Fredrik\Documents\Atmel Studio\7.0\TSIU51\TSIU51-1\TSIU51-1\main.asm</FILE><LINE>381</LINE></LONG_DELAY>
+  <NEXT_LETTER><FILE>C:\Users\Fredrik\Documents\Atmel Studio\7.0\TSIU51\TSIU51-1\TSIU51-1\main.asm</FILE><LINE>252</LINE></NEXT_LETTER>
+  <SHORT_DELAY_LOOP><FILE>C:\Users\Fredrik\Documents\Atmel Studio\7.0\TSIU51\TSIU51-1\TSIU51-1\main.asm</FILE><LINE>279</LINE></SHORT_DELAY_LOOP>
+  <CLEAR_LOOP><FILE>C:\Users\Fredrik\Documents\Atmel Studio\7.0\TSIU51\TSIU51-1\TSIU51-1\main.asm</FILE><LINE>309</LINE></CLEAR_LOOP>
+  <WIN><FILE>C:\Users\Fredrik\Documents\Atmel Studio\7.0\TSIU51\TSIU51-1\TSIU51-1\main.asm</FILE><LINE>326</LINE></WIN>
+  <PRINT_ENTIRE_DISPLAY><FILE>C:\Users\Fredrik\Documents\Atmel Studio\7.0\TSIU51\TSIU51-1\TSIU51-1\main.asm</FILE><LINE>350</LINE></PRINT_ENTIRE_DISPLAY>
+  <WIN_STALL><FILE>C:\Users\Fredrik\Documents\Atmel Studio\7.0\TSIU51\TSIU51-1\TSIU51-1\main.asm</FILE><LINE>334</LINE></WIN_STALL>
+  <WIN_COLOUR_CHECK_DONE><FILE>C:\Users\Fredrik\Documents\Atmel Studio\7.0\TSIU51\TSIU51-1\TSIU51-1\main.asm</FILE><LINE>339</LINE></WIN_COLOUR_CHECK_DONE>
+  <WIN_DELAY_LOOP><FILE>C:\Users\Fredrik\Documents\Atmel Studio\7.0\TSIU51\TSIU51-1\TSIU51-1\main.asm</FILE><LINE>343</LINE></WIN_DELAY_LOOP>
+  <PRINT_ENTIRE_DISPLAY_LOOP><FILE>C:\Users\Fredrik\Documents\Atmel Studio\7.0\TSIU51\TSIU51-1\TSIU51-1\main.asm</FILE><LINE>356</LINE></PRINT_ENTIRE_DISPLAY_LOOP>
+  <LOSE_STALL><FILE>C:\Users\Fredrik\Documents\Atmel Studio\7.0\TSIU51\TSIU51-1\TSIU51-1\main.asm</FILE><LINE>373</LINE></LOSE_STALL>
+  <LONG_DELAY_LOOP><FILE>C:\Users\Fredrik\Documents\Atmel Studio\7.0\TSIU51\TSIU51-1\TSIU51-1\main.asm</FILE><LINE>386</LINE></LONG_DELAY_LOOP>
  </LABELS>
 </ASSEMBLER_INFO>

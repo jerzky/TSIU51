@@ -1,5 +1,5 @@
 
-AVRASM ver. 2.2.7  C:\Users\Fredrik\Documents\Atmel Studio\7.0\TSIU51\TSIU51-1\TSIU51-1\main.asm Thu Feb 14 11:37:00 2019
+AVRASM ver. 2.2.7  C:\Users\Fredrik\Documents\Atmel Studio\7.0\TSIU51\TSIU51-1\TSIU51-1\main.asm Mon Feb 18 08:50:12 2019
 
 [builtin](2): Including file 'C:/Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.2.209\avrasm\inc\m16adef.inc'
 [builtin](2): Including file 'C:/Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.2.209\avrasm\inc\m16adef.inc'
@@ -877,9 +877,9 @@ AVRASM ver. 2.2.7  C:\Users\Fredrik\Documents\Atmel Studio\7.0\TSIU51\TSIU51-1\T
                                  ;
                                  
                                  	.org		0
-000000 c020                      	rjmp		COLD
+000000 c02a                      	rjmp		COLD
                                  	.org		INT1addr
-000004 c0a2                      	rjmp		BUTTON_PRESSED
+000004 c0aa                      	rjmp		BUTTON_PRESSED
                                  
 000005 4241
 000006 4443
@@ -897,58 +897,54 @@ AVRASM ver. 2.2.7  C:\Users\Fredrik\Documents\Atmel Studio\7.0\TSIU51\TSIU51-1\T
 000012 1513
 000013 0017                      BOKSTAV: .db "ABCDEFGHIJKLMNOPQRSTUVWXYZ",$13,$15,$17,$0
                                  
-000014 4e41
-000015 1556
-000016 444e                      USED_MESSAGE: .db "ANV",$15,"ND"
-000017 4156
-000018 424c
-000019 5241                      FREE_MESSAGE: .db "VALBAR"
-00001a 5247
-00001b 5441
-00001c 4954
-00001d 2153                      WIN_MESSAGE: .db "GRATTIS",$21
-00001e 0301
-00001f 0602
-000020 0504                      RAINBOW: .db $01,$03,$02,$06,$04,$05
+000014 4120
+000015 564e
+000016 4e15
+000017 2044                      USED_MESSAGE: .db " ANV",$15,"ND " // lägga till space först
+000018 5620
+000019 4c41
+00001a 4142
+00001b 2052                      FREE_MESSAGE: .db " VALBAR " //läga till space först
+00001c 5247
+00001d 5441
+00001e 4954
+00001f 2153                      WIN_MESSAGE: .db "GRATTIS",$21
+000020 5544
+000021 5320
+000022 4755
+000023 5245                      LOSE_MESSAGE: .db "DU SUGER"//"F",$17,"RLORAT" //space $20
+000024 5220
+000025 5449
+000026 5241
+000027 2021                      DRAW_MESSAGE:	.db " RITAR",$21,$20
+000028 0301
+000029 0602
+00002a 0504                      RAINBOW: .db $01,$03,$02,$06,$04,$05
+                                 
                                  	.dseg 
                                  USED:
 000060                           	.byte		29
                                  CURRENT_LETTER:
 00007d                           	.byte		1
                                  	.cseg
+                                 
                                  COLD:
-000021 ef0f                      	ldi		r16,$FF
+00002b ef0f                      	ldi		r16,$FF
                                  INITIAL_DELAY:	
-000022 950a                      	dec		r16
-000023 f7f1                      	brne	INITIAL_DELAY
-000024 e004                      	ldi		r16,HIGH(RAMEND)
-000025 bf0e                      	out		SPH,r16
-000026 e50f                      	ldi		r16,LOW(RAMEND)
-000027 bf0d                      	out		SPL,r16
-000028 d095                      	rcall	INIT
-000029 e020                      	ldi		r18,0
-00002a d003                      	rcall	PRINT_LETTER
+00002c 950a                      	dec		r16
+00002d f7f1                      	brne	INITIAL_DELAY
+00002e e004                      	ldi		r16,HIGH(RAMEND)
+00002f bf0e                      	out		SPH,r16
+000030 e50f                      	ldi		r16,LOW(RAMEND)
+000031 bf0d                      	out		SPL,r16
+000032 d0b6                      	rcall	INIT
+                                 	//ldi		r18,0
+000033 d022                      	rcall	PRINT_LETTER
                                  
                                  WARM:
-00002b d0af                      	rcall	WIN
-00002c d045                      	rcall	ROTARY_CHECK
-00002d cffd                      	rjmp	WARM
+000034 d045                      	rcall	ROTARY_CHECK
+000035 cffe                      	rjmp	WARM
                                  
-                                 
-                                 
-                                 PRINT_LETTER:
-00002e 930f                      	push	r16
-00002f 931f                      	push	r17
-000030 932f                      	push	r18
-000031 e000                      	ldi		r16,$00
-000032 9120 007d                 	lds		r18,CURRENT_LETTER
-000034 d034                      	rcall	LOAD_LETTER								
-000035 d025                      	rcall	PRINT_DISPLAY
-000036 d004                      	rcall	USED_CHECK
-000037 912f                      	pop		r18
-000038 911f                      	pop		r17
-000039 910f                      	pop		r16
-00003a 9508                      	ret
                                  
                                  USED_CHECK:
                                  	/*
@@ -959,262 +955,360 @@ AVRASM ver. 2.2.7  C:\Users\Fredrik\Documents\Atmel Studio\7.0\TSIU51\TSIU51-1\T
                                  	skriv använd
                                  	annars skriv valbar
                                  	*/
-00003b 930f                      	push	r16
-00003c 931f                      	push	r17
-00003d e0d0                      	ldi		YH,HIGH(USED)
-00003e e6c0                      	ldi		YL,LOW(USED)
-00003f 0fc2                      	add		YL,r18
-000040 8108                      	ld		r16,Y
-000041 3000                      	cpi		r16,0
-000042 f431                      	brne	USED_CHECK_TRUE
-000043 9a90                      	sbi		PORTD,0
-000044 9891                      	cbi		PORTD,1
-000045 9a92                      	sbi		PORTD,2
-000046 e0f0                      	ldi		ZH,HIGH(FREE_MESSAGE*2)
-000047 e2ee                      	ldi		ZL,LOW(FREE_MESSAGE*2)
-000048 c005                      	rjmp	USED_CHECK_FALSE
+000036 930f                      	push	r16
+000037 931f                      	push	r17
+000038 e0d0                      	ldi		YH,HIGH(USED)
+000039 e6c0                      	ldi		YL,LOW(USED)
+00003a 0fc2                      	add		YL,r18
+00003b 8108                      	ld		r16,Y
+00003c 3000                      	cpi		r16,0
+00003d f431                      	brne	USED_CHECK_TRUE
+00003e 9a90                      	sbi		PORTD,0
+00003f 9891                      	cbi		PORTD,1
+000040 9a92                      	sbi		PORTD,2
+000041 e0f0                      	ldi		ZH,HIGH(FREE_MESSAGE*2)
+000042 e3e0                      	ldi		ZL,LOW(FREE_MESSAGE*2)
+000043 c005                      	rjmp	USED_CHECK_FALSE
                                  USED_CHECK_TRUE:
-000049 9890                      	cbi		PORTD,0
-00004a 9a91                      	sbi		PORTD,1
-00004b 9a92                      	sbi		PORTD,2
-00004c e0f0                      	ldi		ZH,HIGH(USED_MESSAGE*2)
-00004d e2e8                      	ldi		ZL,LOW(USED_MESSAGE*2)
+000044 9890                      	cbi		PORTD,0
+000045 9a91                      	sbi		PORTD,1
+000046 9a92                      	sbi		PORTD,2
+000047 e0f0                      	ldi		ZH,HIGH(USED_MESSAGE*2)
+000048 e2e8                      	ldi		ZL,LOW(USED_MESSAGE*2)
                                  USED_CHECK_FALSE:
-00004e e005                      	ldi		r16,$05
-00004f 0fe0                      	add		ZL,r16
-000050 e026                      	ldi		r18,$06
-000051 e007                      	ldi		r16,$07
+                                 	//ldi		r16,$05
+000049 e006                      	ldi		r16,$06 //Fixat så att vi clearar tomma rutan till vänster om meddelandet
+00004a 0fe0                      	add		ZL,r16
+00004b e027                      	ldi		r18,$07 //samma här
+00004c e007                      	ldi		r16,$07
                                  USED_CHECK_PRINT_LOOP:
-000052 9114                      	lpm		r17,Z
-000053 d007                      	rcall	PRINT_DISPLAY
-000054 95ea                      	dec		ZL
-000055 950a                      	dec		r16
-000056 952a                      	dec		r18
-000057 f7d1                      	brne	USED_CHECK_PRINT_LOOP
-000058 911f                      	pop		r17
-000059 910f                      	pop		r16
-00005a 9508                      	ret
+00004d 9114                      	lpm		r17,Z
+00004e d014                      	rcall	PRINT_DISPLAY
+00004f 95ea                      	dec		ZL
+000050 950a                      	dec		r16
+000051 952a                      	dec		r18
+000052 f7d1                      	brne	USED_CHECK_PRINT_LOOP
+000053 911f                      	pop		r17
+000054 910f                      	pop		r16
+000055 9508                      	ret
+                                 
+                                 	
+                                 PRINT_LETTER:
+000056 930f                      	push	r16
+000057 931f                      	push	r17
+000058 932f                      	push	r18
+000059 e000                      	ldi		r16,$00
+00005a 9120 007d                 	lds		r18,CURRENT_LETTER
+00005c d014                      	rcall	LOAD_LETTER								
+00005d d005                      	rcall	PRINT_DISPLAY
+00005e dfd7                      	rcall	USED_CHECK
+00005f 912f                      	pop		r18
+000060 911f                      	pop		r17
+000061 910f                      	pop		r16
+000062 9508                      	ret
                                  
                                  PRINT_DISPLAY:
-00005b 930f                      	push	r16
-00005c e136                      	ldi		r19,PINB
-00005d 7f38                      	andi	r19,$F8
-00005e 2b03                      	or		r16,r19
-00005f bb08                      	out		PORTB,r16	//a0-a2 - 0 (Längst till vänster)		
-000060 d057                      	rcall	SHORT_DELAY
-000061 98af                      	cbi		PORTC,7 //ce låg
-000062 d055                      	rcall	SHORT_DELAY
-000063 bb1b                      	out		PORTA,r17
-000064 d053                      	rcall	SHORT_DELAY
-000065 9aaf                      	sbi		PORTC,7 //ce hög
-000066 d051                      	rcall	SHORT_DELAY
-000067 910f                      	pop		r16
-000068 9508                      	ret
+000063 930f                      	push	r16
+000064 e136                      	ldi		r19,PINB
+000065 7f38                      	andi	r19,$F8
+000066 2b03                      	or		r16,r19
+000067 bb08                      	out		PORTB,r16	//a0-a2 - 0 (Längst till vänster)		
+000068 d07a                      	rcall	SHORT_DELAY
+000069 98af                      	cbi		PORTC,7 //ce låg
+00006a d078                      	rcall	SHORT_DELAY
+00006b bb1b                      	out		PORTA,r17
+00006c d076                      	rcall	SHORT_DELAY
+00006d 9aaf                      	sbi		PORTC,7 //ce hög
+00006e d074                      	rcall	SHORT_DELAY
+00006f 910f                      	pop		r16
+000070 9508                      	ret
                                  
                                  LOAD_LETTER:
-000069 93ff                      	push	ZH
-00006a 93ef                      	push	ZL
-00006b e0f0                      	ldi		ZH,HIGH(BOKSTAV*2)
-00006c e0ea                      	ldi		ZL,LOW(BOKSTAV*2)
-00006d 0fe2                      	add		ZL,r18
-00006e 9114                      	lpm		r17,Z
-00006f 91ef                      	pop		ZL
-000070 91ff                      	pop		ZH
-000071 9508                      	ret
+000071 93ff                      	push	ZH
+000072 93ef                      	push	ZL
+000073 e0f0                      	ldi		ZH,HIGH(BOKSTAV*2)
+000074 e0ea                      	ldi		ZL,LOW(BOKSTAV*2)
+000075 0fe2                      	add		ZL,r18
+000076 9114                      	lpm		r17,Z
+000077 91ef                      	pop		ZL
+000078 91ff                      	pop		ZH
+000079 9508                      	ret
                                  
                                  
                                  ROTARY_CHECK:
                                  			//D6, D7 är knappen
-000072 9b87                      	sbis	PIND,7
-000073 c003                      	rjmp	LEFT_CHECK_DONE
-000074 9986                      	sbic	PIND,6
-000075 c001                      	rjmp	LEFT_CHECK_DONE
-000076 d006                      	rcall	LEFT
+00007a 9b87                      	sbis	PIND,7
+00007b c003                      	rjmp	LEFT_CHECK_DONE
+00007c 9986                      	sbic	PIND,6
+00007d c001                      	rjmp	LEFT_CHECK_DONE
+00007e d006                      	rcall	LEFT
                                  LEFT_CHECK_DONE:
-000077 9b86                      	sbis	PIND,6
-000078 c003                      	rjmp	RIGHT_CHECK_DONE
-000079 9987                      	sbic	PIND,7
-00007a c001                      	rjmp	RIGHT_CHECK_DONE
-00007b d016                      	rcall	RIGHT
+00007f 9b86                      	sbis	PIND,6
+000080 c003                      	rjmp	RIGHT_CHECK_DONE
+000081 9987                      	sbic	PIND,7
+000082 c001                      	rjmp	RIGHT_CHECK_DONE
+000083 d016                      	rcall	RIGHT
                                  RIGHT_CHECK_DONE:
-00007c 9508                      	ret
+000084 9508                      	ret
                                  
                                  
                                  LEFT:
-00007d 9120 007d                 	lds		r18,CURRENT_LETTER
-00007f ef0f                      	ldi		r16,$FF
+000085 9120 007d                 	lds		r18,CURRENT_LETTER
+000087 ef0f                      	ldi		r16,$FF
                                  LEFT_LOOP:
-000080 950a                      	dec		r16
-000081 f7f1                      	brne	LEFT_LOOP
-000082 9987                      	sbic	PIND,7
-000083 c00d                      	rjmp	LEFT_DONE
+000088 950a                      	dec		r16
+000089 f7f1                      	brne	LEFT_LOOP
+00008a 9987                      	sbic	PIND,7
+00008b c00d                      	rjmp	LEFT_DONE
                                  
-000084 9523                      	inc		r18
-000085 312d                      	cpi		r18,$1D
-000086 f409                      	brne	LEFT_CHECK_1
-000087 e020                      	ldi		r18,$00
+00008c 9523                      	inc		r18
+00008d 312d                      	cpi		r18,$1D
+00008e f409                      	brne	LEFT_CHECK_1
+00008f e020                      	ldi		r18,$00
                                  	
-                                 
                                  LEFT_CHECK_1:
-000088 9986                      	sbic	PIND,6
-000089 cffe                      	rjmp	LEFT_CHECK_1
+000090 9986                      	sbic	PIND,6
+000091 cffe                      	rjmp	LEFT_CHECK_1
                                  LEFT_CHECK_2:
-                                 	
-00008a 9b87                      	sbis	PIND,7
-00008b cffe                      	rjmp	LEFT_CHECK_2
-00008c 9b86                      	sbis	PIND,6
-00008d cffc                      	rjmp	LEFT_CHECK_2
-00008e 9320 007d                 	sts		CURRENT_LETTER,r18
-000090 df9d                      	rcall	PRINT_LETTER
+000092 9b87                      	sbis	PIND,7
+000093 cffe                      	rjmp	LEFT_CHECK_2
+000094 9b86                      	sbis	PIND,6
+000095 cffc                      	rjmp	LEFT_CHECK_2
+000096 9320 007d                 	sts		CURRENT_LETTER,r18
+000098 dfbd                      	rcall	PRINT_LETTER
                                  LEFT_DONE:
-000091 9508                      	ret	
+000099 9508                      	ret	
                                  
                                  RIGHT:
-000092 9120 007d                 	lds		r18,CURRENT_LETTER
-000094 ef0f                      	ldi		r16,$FF
+00009a 9120 007d                 	lds		r18,CURRENT_LETTER
+00009c ef0f                      	ldi		r16,$FF
                                  RIGHT_LOOP:
-000095 950a                      	dec		r16
-000096 f7f1                      	brne	RIGHT_LOOP
-000097 9986                      	sbic	PIND,6
-000098 c00d                      	rjmp	RIGHT_DONE
-000099 952a                      	dec		r18
-00009a 3f2f                      	cpi		r18,$FF
-00009b f409                      	brne	RIGHT_CHECK_1
-00009c e12c                      	ldi		r18,$1C
+00009d 950a                      	dec		r16
+00009e f7f1                      	brne	RIGHT_LOOP
+00009f 9986                      	sbic	PIND,6
+0000a0 c00d                      	rjmp	RIGHT_DONE
+0000a1 952a                      	dec		r18
+0000a2 3f2f                      	cpi		r18,$FF
+0000a3 f409                      	brne	RIGHT_CHECK_1
+0000a4 e12c                      	ldi		r18,$1C
                                  RIGHT_CHECK_1:
-00009d 9987                      	sbic	PIND,7
-00009e cffe                      	rjmp	RIGHT_CHECK_1
+0000a5 9987                      	sbic	PIND,7
+0000a6 cffe                      	rjmp	RIGHT_CHECK_1
                                  RIGHT_CHECK_2:
-00009f 9b86                      	sbis	PIND,6
-0000a0 cffe                      	rjmp	RIGHT_CHECK_2
-0000a1 9b87                      	sbis	PIND,7
-0000a2 cffc                      	rjmp	RIGHT_CHECK_2
-0000a3 9320 007d                 	sts		CURRENT_LETTER,r18
-0000a5 df88                      	rcall	PRINT_LETTER
+0000a7 9b86                      	sbis	PIND,6
+0000a8 cffe                      	rjmp	RIGHT_CHECK_2
+0000a9 9b87                      	sbis	PIND,7
+0000aa cffc                      	rjmp	RIGHT_CHECK_2
+0000ab 9320 007d                 	sts		CURRENT_LETTER,r18
+0000ad dfa8                      	rcall	PRINT_LETTER
                                  RIGHT_DONE:
-0000a6 9508                      	ret	
+0000ae 9508                      	ret	
                                  
                                  
                                  
                                  
                                  BUTTON_PRESSED:
-0000a7 930f                      	push	r16
-0000a8 932f                      	push	r18
-0000a9 93df                      	push	YH
-0000aa 93cf                      	push	YL
-0000ab 9120 007d                 	lds		r18,CURRENT_LETTER
-0000ad e0d0                      	ldi		YH,HIGH(USED)
-0000ae e6c0                      	ldi		YL,LOW(USED)
-0000af 0fc2                      	add		YL,r18
-0000b0 e001                      	ldi		r16,$01
-0000b1 8308                      	st		Y,r16
-0000b2 df7b                      	rcall	PRINT_LETTER
-0000b3 91cf                      	pop		YL
-0000b4 91df                      	pop		YH
-0000b5 912f                      	pop		r18
-0000b6 910f                      	pop		r16
-0000b7 9518                      	reti
+0000af 930f                      	push	r16
+0000b0 931f                      	push	r17
+0000b1 932f                      	push	r18
+0000b2 938f                      	push	r24
+0000b3 939f                      	push	r25
+0000b4 93df                      	push	YH
+0000b5 93cf                      	push	YL
+0000b6 93ff                      	push	ZH
+0000b7 93ef                      	push	ZL
+0000b8 d06a                      	rcall	LOSE
+                                 DRAW:
+0000b9 94f8                      	cli
+0000ba e0f0                      	ldi		ZH,HIGH(DRAW_MESSAGE*2)
+0000bb e4e8                      	ldi		ZL,LOW(DRAW_MESSAGE*2)
+0000bc e007                      	ldi		r16,$07 //sista platsen i tabellen
+0000bd 0fe0                      	add		ZL,r16
+0000be e028                      	ldi		r18,$08
+                                 DRAW_LOOP:
+0000bf 9114                      	lpm		r17,Z
+0000c0 dfa2                      	rcall	PRINT_DISPLAY
+0000c1 95ea                      	dec		ZL
+0000c2 950a                      	dec		r16
+0000c3 952a                      	dec		r18
+0000c4 f7d1                      	brne	DRAW_LOOP
+0000c5 b310                      	in		r17,PIND  //sparar D
+0000c6 7f18                      	andi	r17,$F8
+0000c7 6014                      	ori		r17,$04  //Ändrar färgen till gul
+0000c8 931f                      	push	r17  //lägger PORTD på stacken
+0000c9 e704                      	ldi		r16,$74 //Gul
+                                 
+                                 DRAW_STALL:
+0000ca 9502                      	swap	r16
+0000cb bb02                      	out		PORTD,r16
+0000cc d061                      	rcall	LONG_DELAY
+                                 
+                                 	//Här måste vi vänta på svar från plottern
+                                 
+0000cd cffc                      	rjmp	DRAW_STALL
+                                 
+                                 	//val för fortsätt
+                                 	// val och rcall WIN
+                                 	//val och rcall LOSE
+                                 	
+                                 NEXT_LETTER:
+0000ce 911f                      	pop		r17 //Hämtar portD från stacken
+0000cf bb12                      	out		PORTD,r17 // tillbaka på r17
+0000d0 9120 007d                 	lds		r18,CURRENT_LETTER
+0000d2 e0d0                      	ldi		YH,HIGH(USED)
+0000d3 e6c0                      	ldi		YL,LOW(USED)
+0000d4 0fc2                      	add		YL,r18
+0000d5 e001                      	ldi		r16,$01
+0000d6 8308                      	st		Y,r16
+0000d7 df7e                      	rcall	PRINT_LETTER
+0000d8 9478                      	sei
+                                 
+0000d9 91ef                      	pop		ZL
+0000da 91ff                      	pop		ZH
+0000db 91cf                      	pop		YL
+0000dc 91df                      	pop		YH
+0000dd 919f                      	pop		r25
+0000de 918f                      	pop		r24
+0000df 911f                      	pop		r17
+0000e0 912f                      	pop		r18
+0000e1 910f                      	pop		r16
+0000e2 9518                      	reti
                                  
                                  
                                  SHORT_DELAY:
-0000b8 930f                      	push	r16
-0000b9 ef0f                      	ldi		r16,$FF
+0000e3 930f                      	push	r16
+0000e4 ef0f                      	ldi		r16,$FF
                                  SHORT_DELAY_LOOP:
-0000ba 950a                      	dec		r16
-0000bb f7f1                      	brne	SHORT_DELAY_LOOP
-0000bc 910f                      	pop		r16
-0000bd 9508                      	ret	
+0000e5 950a                      	dec		r16
+0000e6 f7f1                      	brne	SHORT_DELAY_LOOP
+0000e7 910f                      	pop		r16
+0000e8 9508                      	ret	
                                  
                                  
                                  
                                  
                                  	INIT:
-0000be e025                      	ldi		r18,$05 //temp satt dioden till grön
-0000bf bb22                      	out		PORTD,r18// same same
-0000c0 9aa8                      	sbi		PORTC,0		//a3-1
-0000c1 9aa9                      	sbi		PORTC,1		//a4-1
-0000c2 dff5                      	rcall	SHORT_DELAY
-0000c3 ef0f                      	ldi		r16,$FF
-0000c4 bb0a                      	out		DDRA,r16
-0000c5 eb07                      	ldi		r16,$B7
-0000c6 bb07                      	out		DDRB,r16
-0000c7 e803                      	ldi		r16,$83
-0000c8 bb04                      	out		DDRC,r16
-0000c9 e307                      	ldi		r16,$37
-0000ca bb01                      	out		DDRD,r16
-0000cb 9aaf                      	sbi		PORTC,7		//Sätt ce hög för skärmen
-0000cc 9a95                      	sbi		PORTD,5		//Flash hög
+0000e9 e025                      	ldi		r18,$05 //temp satt dioden till grön
+0000ea bb22                      	out		PORTD,r18// same same
+0000eb 9aa8                      	sbi		PORTC,0		//a3-1
+0000ec 9aa9                      	sbi		PORTC,1		//a4-1
+0000ed dff5                      	rcall	SHORT_DELAY
+0000ee ef0f                      	ldi		r16,$FF
+0000ef bb0a                      	out		DDRA,r16
+0000f0 eb07                      	ldi		r16,$B7
+0000f1 bb07                      	out		DDRB,r16
+0000f2 e803                      	ldi		r16,$83
+0000f3 bb04                      	out		DDRC,r16
+0000f4 e307                      	ldi		r16,$37
+0000f5 bb01                      	out		DDRD,r16
+0000f6 9aaf                      	sbi		PORTC,7		//Sätt ce hög för skärmen
+0000f7 9a95                      	sbi		PORTD,5		//Flash hög
                                  			//Sätt alla minnesbitar för använda bokstäver till noll
-0000cd e000                      	ldi		r16,$0
-0000ce e0d0                      	ldi		YH,HIGH(USED)
-0000cf e6c0                      	ldi		YL,LOW(USED)
-0000d0 e010                      	ldi		r17,$0
+0000f8 e000                      	ldi		r16,$0
+0000f9 e0d0                      	ldi		YH,HIGH(USED)
+0000fa e6c0                      	ldi		YL,LOW(USED)
+0000fb e010                      	ldi		r17,$0
                                  CLEAR_LOOP:
-0000d1 9309                      	st		Y+,r16
-0000d2 9513                      	inc		r17
-0000d3 311e                      	cpi		r17,$1E
-0000d4 f7e1                      	brne	CLEAR_LOOP
+0000fc 9309                      	st		Y+,r16
+0000fd 9513                      	inc		r17
+0000fe 311e                      	cpi		r17,$1E
+0000ff f7e1                      	brne	CLEAR_LOOP
                                  
                                  
                                  	//konfigurera avbrott
-0000d5 e808                      	ldi		r16,(1<<ISC11)|(0<<ISC10)|(1<<INT1)
-0000d6 bf05                      	out		MCUCR,r16
+000100 e808                      	ldi		r16,(1<<ISC11)|(0<<ISC10)|(1<<INT1)
+000101 bf05                      	out		MCUCR,r16
                                  	//aktivera avbrott
-0000d7 e800                      	ldi		r16,(1<<INT1)
-0000d8 bf0b                      	out		GICR,r16
+000102 e800                      	ldi		r16,(1<<INT1)
+000103 bf0b                      	out		GICR,r16
                                  	//aktivera avbrott globalt
-0000d9 9478                      	sei
-0000da 9508                      	ret
+000104 9478                      	sei
+000105 9508                      	ret
                                  
                                  WIN:
-0000db e0f0                      	ldi		ZH,HIGH(WIN_MESSAGE*2)
-0000dc e3e4                      	ldi		ZL,LOW(WIN_MESSAGE*2)
-0000dd e007                      	ldi		r16,$07
-0000de 0fe0                      	add		ZL,r16
-0000df e028                      	ldi		r18,$08
-                                 WIN_LOOP:
-0000e0 9114                      	lpm		r17,Z
-0000e1 df79                      	rcall	PRINT_DISPLAY
-0000e2 95ea                      	dec		ZL
-0000e3 950a                      	dec		r16
-0000e4 952a                      	dec		r18
-0000e5 f7d1                      	brne	WIN_LOOP
-0000e6 e0f0                      	ldi		ZH,HIGH(RAINBOW*2)
-0000e7 e3ec                      	ldi		ZL,LOW(RAINBOW*2)
-0000e8 2711                      	clr		r17
+000106 94f8                      	cli
+000107 e0f0                      	ldi		ZH,HIGH(WIN_MESSAGE*2)
+000108 e3e8                      	ldi		ZL,LOW(WIN_MESSAGE*2)
+000109 d00f                      	rcall	PRINT_ENTIRE_DISPLAY
+00010a e0f0                      	ldi		ZH,HIGH(RAINBOW*2)
+00010b e5e0                      	ldi		ZL,LOW(RAINBOW*2)
+00010c 2711                      	clr		r17
                                  WIN_STALL:
-0000e9 9105                      	lpm		r16,Z+
-0000ea 3005                      	cpi		r16,$05
-0000eb f409                      	brne	WIN_COLOUR_CHECK_DONE
-0000ec 50e6                      	subi	ZL,$06
+00010d 9105                      	lpm		r16,Z+
+00010e 3005                      	cpi		r16,$05
+00010f f409                      	brne	WIN_COLOUR_CHECK_DONE
+000110 50e6                      	subi	ZL,$06
                                  WIN_COLOUR_CHECK_DONE:
-0000ed bb02                      	out		PORTD,r16
-0000ee ef1f                      	ldi		r17,$FF
+000111 bb02                      	out		PORTD,r16
+000112 ef8f                      	ldi		r24,$FF
+000113 e094                      	ldi		r25,$04
                                  WIN_DELAY_LOOP:
-0000ef dfc8                      	rcall	SHORT_DELAY
-0000f0 951a                      	dec		r17
-0000f1 f7e9                      	brne	WIN_DELAY_LOOP
-0000f2 cff6                      	rjmp	WIN_STALL
-0000f3 9508                      	ret
+000114 dfce                      	rcall	SHORT_DELAY
+000115 9701                      	sbiw	r24:r25,1
+000116 f7e9                      	brne	WIN_DELAY_LOOP
+000117 cff5                      	rjmp	WIN_STALL
+000118 9508                      	ret
                                  
-                                 	/*
-                                 	ldi		ZH,HIGH(USED_MESSAGE*2)
-                                 	ldi		ZL,LOW(USED_MESSAGE*2)
-                                 USED_CHECK_FALSE:
-                                 	ldi		r16,$05
-                                 	add		ZL,r16
-                                 	ldi		r18,$06
-                                 	ldi		r16,$07
-                                 USED_CHECK_PRINT_LOOP:
+                                 PRINT_ENTIRE_DISPLAY:
+                                 		//Skriver hela displayen
+                                 		//Kräver att rätt tabell är laddad i z-register först. Tabellen måste vara 8 tecken lång.
+000119 e007                      	ldi		r16,$07  //ladda platsen för sista bokstaven i tabellen. 
+00011a 0fe0                      	add		ZL,r16  //hämta den platsen i tabellen 'T'
+00011b e028                      	ldi		r18,$08 //antalet loops
+                                 PRINT_ENTIRE_DISPLAY_LOOP:
+00011c 9114                      	lpm		r17,Z
+00011d df45                      	rcall	PRINT_DISPLAY
+00011e 95ea                      	dec		ZL
+00011f 950a                      	dec		r16
+000120 952a                      	dec		r18
+000121 f7d1                      	brne	PRINT_ENTIRE_DISPLAY_LOOP
+000122 9508                      	ret
+                                 
+                                 LOSE:
+000123 94f8                      	cli
+000124 e0f0                      	ldi		ZH,HIGH(LOSE_MESSAGE*2)
+000125 e4e0                      	ldi		ZL,LOW(LOSE_MESSAGE*2)
+000126 dff2                      	rcall	PRINT_ENTIRE_DISPLAY
+000127 2711                      	clr		r17
+000128 e706                      	ldi		r16,$76 // ladda röd färg
+                                 	//ldi		r18,$1 //behövs för XOR, vi vill ändra på bit 0
+                                 LOSE_STALL:
+                                 	//eor		r16,r18		//XOR r16, med ett. Ändrar från röd färg till ingen färg
+000129 9502                      	swap	r16
+00012a bb02                      	out		PORTD,r16
+00012b d002                      	rcall	LONG_DELAY
+00012c cffc                      	rjmp	LOSE_STALL
+00012d 9508                      	ret
+                                 
+                                 LONG_DELAY:
+00012e 938f                      	push	r24
+00012f 939f                      	push	r25
+000130 ef8f                      	ldi		r24,$FF
+000131 e09a                      	ldi		r25,$0A
+                                 LONG_DELAY_LOOP:
+000132 dfb0                      	rcall	SHORT_DELAY
+000133 9701                      	sbiw	r25:r24,1
+000134 f7e9                      	brne	LONG_DELAY_LOOP
+000135 919f                      	pop		r25
+000136 918f                      	pop		r24
+000137 9508                      	ret
+                                 
+                                 /*LUCK:
+                                 	cli
+                                 	ldi		ZH,HIGH(LUCK_MESSAGE*2)
+                                 	ldi		ZL,LOW(LUCK_MESSAGE*2)
+                                 	ldi		r16,$07  //ladda platsen för sista bokstaven i tabellen. 
+                                 	add		ZL,r16  //hämta den platsen i tabellen 'L'
+                                 	ldi		r18,$08 //antalet loops
+                                 LUCK_LOOP:
                                  	lpm		r17,Z
                                  	rcall	PRINT_DISPLAY
                                  	dec		ZL
                                  	dec		r16
                                  	dec		r18
-                                 	brne	USED_CHECK_PRINT_LOOP
-                                 	pop		r17
-                                 	pop		r16
-                                 	ret
+                                 	brne	LUCK_LOOP
+                                 	clr		r17
+                                 	*/
 
 
 RESOURCE USE INFORMATION
@@ -1232,39 +1326,39 @@ counted separately from r26..r31 here.
 .dseg memory usage only counts static data declared with .byte
 
 "ATmega16A" register use summary:
-x  :   0 y  :   3 z  :   4 r0 :   0 r1 :   0 r2 :   0 r3 :   0 r4 :   0 
+x  :   0 y  :   3 z  :   5 r0 :   0 r1 :   0 r2 :   0 r3 :   0 r4 :   0 
 r5 :   0 r6 :   0 r7 :   0 r8 :   0 r9 :   0 r10:   0 r11:   0 r12:   0 
-r13:   0 r14:   0 r15:   0 r16:  53 r17:  14 r18:  26 r19:   3 r20:   0 
-r21:   0 r22:   0 r23:   0 r24:   0 r25:   0 r26:   0 r27:   0 r28:   7 
-r29:   5 r30:  13 r31:   7 
-Registers used: 10 out of 35 (28.6%)
+r13:   0 r14:   0 r15:   0 r16:  62 r17:  22 r18:  27 r19:   3 r20:   0 
+r21:   0 r22:   0 r23:   0 r24:   8 r25:   8 r26:   0 r27:   0 r28:   7 
+r29:   5 r30:  19 r31:  11 
+Registers used: 12 out of 35 (34.3%)
 
 "ATmega16A" instruction use summary:
-.lds  :   0 .sts  :   0 adc   :   0 add   :   5 adiw  :   0 and   :   0 
-andi  :   1 asr   :   0 bclr  :   0 bld   :   0 brbc  :   0 brbs  :   0 
+.lds  :   0 .sts  :   0 adc   :   0 add   :   6 adiw  :   0 and   :   0 
+andi  :   2 asr   :   0 bclr  :   0 bld   :   0 brbc  :   0 brbs  :   0 
 brcc  :   0 brcs  :   0 break :   0 breq  :   0 brge  :   0 brhc  :   0 
 brhs  :   0 brid  :   0 brie  :   0 brlo  :   0 brlt  :   0 brmi  :   0 
-brne  :  12 brpl  :   0 brsh  :   0 brtc  :   0 brts  :   0 brvc  :   0 
+brne  :  14 brpl  :   0 brsh  :   0 brtc  :   0 brts  :   0 brvc  :   0 
 brvs  :   0 bset  :   0 bst   :   0 call  :   0 cbi   :   3 cbr   :   0 
-clc   :   0 clh   :   0 cli   :   0 cln   :   0 clr   :   1 cls   :   0 
+clc   :   0 clh   :   0 cli   :   3 cln   :   0 clr   :   2 cls   :   0 
 clt   :   0 clv   :   0 clz   :   0 com   :   0 cp    :   0 cpc   :   0 
-cpi   :   5 cpse  :   0 dec   :  12 eor   :   0 fmul  :   0 fmuls :   0 
-fmulsu:   0 icall :   0 ijmp  :   0 in    :   0 inc   :   2 jmp   :   0 
-ld    :   1 ldd   :   0 ldi   :  43 lds   :   4 lpm   :   7 lsl   :   0 
+cpi   :   5 cpse  :   0 dec   :  14 eor   :   0 fmul  :   0 fmuls :   0 
+fmulsu:   0 icall :   0 ijmp  :   0 in    :   1 inc   :   2 jmp   :   0 
+ld    :   1 ldd   :   0 ldi   :  53 lds   :   4 lpm   :   9 lsl   :   0 
 lsr   :   0 mov   :   0 movw  :   0 mul   :   0 muls  :   0 mulsu :   0 
-neg   :   0 nop   :   0 or    :   1 ori   :   0 out   :  12 pop   :  13 
-push  :  13 rcall :  20 ret   :  10 reti  :   1 rjmp  :  17 rol   :   0 
+neg   :   0 nop   :   0 or    :   1 ori   :   1 out   :  15 pop   :  21 
+push  :  21 rcall :  26 ret   :  13 reti  :   1 rjmp  :  19 rol   :   0 
 ror   :   0 sbc   :   0 sbci  :   0 sbi   :   9 sbic  :   6 sbis  :   6 
-sbiw  :   0 sbr   :   0 sbrc  :   0 sbrs  :   0 sec   :   0 seh   :   0 
-sei   :   1 sen   :   0 ser   :   0 ses   :   0 set   :   0 sev   :   0 
+sbiw  :   2 sbr   :   0 sbrc  :   0 sbrs  :   0 sec   :   0 seh   :   0 
+sei   :   2 sen   :   0 ser   :   0 ses   :   0 set   :   0 sev   :   0 
 sez   :   0 sleep :   0 spm   :   0 st    :   2 std   :   0 sts   :   2 
-sub   :   0 subi  :   1 swap  :   0 tst   :   0 wdr   :   0 
-Instructions used: 27 out of 113 (23.9%)
+sub   :   0 subi  :   1 swap  :   2 tst   :   0 wdr   :   0 
+Instructions used: 32 out of 113 (28.3%)
 
 "ATmega16A" memory use summary [bytes]:
 Segment   Begin    End      Code   Data   Used    Size   Use%
 ---------------------------------------------------------------
-[.cseg] 0x000000 0x0001e8    426     56    482   16384   2.9%
+[.cseg] 0x000000 0x000270    542     76    618   16384   3.8%
 [.dseg] 0x000060 0x00007e      0     30     30    1024   2.9%
 [.eseg] 0x000000 0x000000      0      0      0     512   0.0%
 

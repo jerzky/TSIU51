@@ -18,12 +18,14 @@ WIN_MESSAGE: .db "GRATTIS",$21
 LOSE_MESSAGE: .db "DU SUGER"//"F",$17,"RLORAT" //space $20
 DRAW_MESSAGE:	.db " RITAR",$21,$20
 RAINBOW: .db $01,$03,$02,$06,$04,$05
+
 	.dseg 
 USED:
 	.byte		29
 CURRENT_LETTER:
 	.byte		1
 	.cseg
+
 COLD:
 	ldi		r16,$FF
 INITIAL_DELAY:	
@@ -34,28 +36,13 @@ INITIAL_DELAY:
 	ldi		r16,LOW(RAMEND)
 	out		SPL,r16
 	rcall	INIT
-	ldi		r18,0
+	//ldi		r18,0
 	rcall	PRINT_LETTER
 
 WARM:
-	//rcall	LOSE
-	//rcall	WIN
 	rcall	ROTARY_CHECK
 	rjmp	WARM
 
-PRINT_LETTER:
-	push	r16
-	push	r17
-	push	r18
-	ldi		r16,$00
-	lds		r18,CURRENT_LETTER
-	rcall	LOAD_LETTER								
-	rcall	PRINT_DISPLAY
-	rcall	USED_CHECK
-	pop		r18
-	pop		r17
-	pop		r16
-	ret
 
 USED_CHECK:
 	/*
@@ -99,6 +86,21 @@ USED_CHECK_PRINT_LOOP:
 	dec		r16
 	dec		r18
 	brne	USED_CHECK_PRINT_LOOP
+	pop		r17
+	pop		r16
+	ret
+
+	
+PRINT_LETTER:
+	push	r16
+	push	r17
+	push	r18
+	ldi		r16,$00
+	lds		r18,CURRENT_LETTER
+	rcall	LOAD_LETTER								
+	rcall	PRINT_DISPLAY
+	rcall	USED_CHECK
+	pop		r18
 	pop		r17
 	pop		r16
 	ret
@@ -162,12 +164,10 @@ LEFT_LOOP:
 	brne	LEFT_CHECK_1
 	ldi		r18,$00
 	
-
 LEFT_CHECK_1:
 	sbic	PIND,6
 	rjmp	LEFT_CHECK_1
 LEFT_CHECK_2:
-	
 	sbis	PIND,7
 	rjmp	LEFT_CHECK_2
 	sbis	PIND,6
@@ -207,17 +207,26 @@ RIGHT_DONE:
 
 BUTTON_PRESSED:
 	push	r16
-	push	r18
 	push	r17
+	push	r18
 	push	r24
 	push	r25
 	push	YH
 	push	YL
 	push	ZH
 	push	ZL
+	cli
+
+	ld		r16,CURRENT_LETTER
+	ldi		YH,HIGH(USED)
+	ldi		YL,LOW(USED)
+	add		YL,r16
+	ld		r16,Y
+	cpi		r16,$00
+	brne	BUTTON_PRESSED_END
+
 
 DRAW:
-	cli
 	ldi		ZH,HIGH(DRAW_MESSAGE*2)
 	ldi		ZL,LOW(DRAW_MESSAGE*2)
 	ldi		r16,$07 //sista platsen i tabellen
@@ -234,18 +243,15 @@ DRAW_LOOP:
 	andi	r17,$F8
 	ori		r17,$04  //Ändrar färgen till gul
 	push	r17  //lägger PORTD på stacken
-	ldi		r16,$04 //Gul
-	ldi		r18,$03 //För XOR
+	ldi		r16,$74 //Gul
 
 DRAW_STALL:
+	swap	r16
 	out		PORTD,r16
-	eor		r16,r18
-	ldi		r24,$FF
-	ldi		r25,$0A
-DRAW_DELAY_LOOP:
-	rcall	SHORT_DELAY
-	sbiw	r25:r24,1
-	brne	DRAW_DELAY_LOOP
+	rcall	LONG_DELAY
+
+	//Här måste vi vänta på svar från plottern
+
 	rjmp	DRAW_STALL
 
 	//val för fortsätt
@@ -262,8 +268,11 @@ NEXT_LETTER:
 	ldi		r16,$01
 	st		Y,r16
 	rcall	PRINT_LETTER
-	sei
 
+
+
+BUTTON_PRESSED_END:
+	sei
 	pop		ZL
 	pop		ZH
 	pop		YL
@@ -330,16 +339,7 @@ WIN:
 	cli
 	ldi		ZH,HIGH(WIN_MESSAGE*2)
 	ldi		ZL,LOW(WIN_MESSAGE*2)
-	ldi		r16,$07 //sista platsen i tabellen
-	add		ZL,r16
-	ldi		r18,$08
-WIN_LOOP:
-	lpm		r17,Z
-	rcall	PRINT_DISPLAY
-	dec		ZL
-	dec		r16
-	dec		r18
-	brne	WIN_LOOP
+	rcall	PRINT_ENTIRE_DISPLAY
 	ldi		ZH,HIGH(RAINBOW*2)
 	ldi		ZL,LOW(RAINBOW*2)
 	clr		r17
@@ -359,34 +359,48 @@ WIN_DELAY_LOOP:
 	rjmp	WIN_STALL
 	ret
 
-LOSE:
-	cli
-	ldi		ZH,HIGH(LOSE_MESSAGE*2)
-	ldi		ZL,LOW(LOSE_MESSAGE*2)
+PRINT_ENTIRE_DISPLAY:
+		//Skriver hela displayen
+		//Kräver att rätt tabell är laddad i z-register först. Tabellen måste vara 8 tecken lång.
 	ldi		r16,$07  //ladda platsen för sista bokstaven i tabellen. 
 	add		ZL,r16  //hämta den platsen i tabellen 'T'
 	ldi		r18,$08 //antalet loops
-LOSE_LOOP:
+PRINT_ENTIRE_DISPLAY_LOOP:
 	lpm		r17,Z
 	rcall	PRINT_DISPLAY
 	dec		ZL
 	dec		r16
 	dec		r18
-	brne	LOSE_LOOP
+	brne	PRINT_ENTIRE_DISPLAY_LOOP
+	ret
+
+LOSE:
+	cli
+	ldi		ZH,HIGH(LOSE_MESSAGE*2)
+	ldi		ZL,LOW(LOSE_MESSAGE*2)
+	rcall	PRINT_ENTIRE_DISPLAY
 	clr		r17
-	ldi		r16,$06 // ladda röd färg
-	ldi		r18,$1 //behövs för XOR, vi vill ändra på bit 0
+	ldi		r16,$76 // ladda röd färg
+	//ldi		r18,$1 //behövs för XOR, vi vill ändra på bit 0
 LOSE_STALL:
-	//swap	r16 // swappa mellan röd och vit färg
-	eor		r16,r18		//XOR r16, med ett. Ändrar från röd färg till ingen färg
+	//eor		r16,r18		//XOR r16, med ett. Ändrar från röd färg till ingen färg
+	swap	r16
 	out		PORTD,r16
+	rcall	LONG_DELAY
+	rjmp	LOSE_STALL
+	ret
+
+LONG_DELAY:
+	push	r24
+	push	r25
 	ldi		r24,$FF
 	ldi		r25,$0A
-LOSE_DELAY_LOOP:
+LONG_DELAY_LOOP:
 	rcall	SHORT_DELAY
 	sbiw	r25:r24,1
-	brne	LOSE_DELAY_LOOP
-	rjmp	LOSE_STALL
+	brne	LONG_DELAY_LOOP
+	pop		r25
+	pop		r24
 	ret
 
 /*LUCK:
@@ -404,26 +418,4 @@ LUCK_LOOP:
 	dec		r18
 	brne	LUCK_LOOP
 	clr		r17
-	*/
-
-
-
-	/*
-	ldi		ZH,HIGH(USED_MESSAGE*2)
-	ldi		ZL,LOW(USED_MESSAGE*2)
-USED_CHECK_FALSE:
-	ldi		r16,$05
-	add		ZL,r16
-	ldi		r18,$06
-	ldi		r16,$07
-USED_CHECK_PRINT_LOOP:
-	lpm		r17,Z
-	rcall	PRINT_DISPLAY
-	dec		ZL
-	dec		r16
-	dec		r18
-	brne	USED_CHECK_PRINT_LOOP
-	pop		r17
-	pop		r16
-	ret
 	*/
