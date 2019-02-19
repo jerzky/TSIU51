@@ -71,8 +71,7 @@ ALPHA_EH:.db    $80, $00, $0E, $84, $00, $02, $82, $00, $01, $05, $00, $02, $03,
 ALPHA_OE:.db    $00, $00, $02, $80, $00, $0C, $84, $00, $02, $82, $00, $01, $05, $00, $02, $03, $00, $01, $82, $00, $02, $80, $00, $02, $83, $00, $02, $81, $00, $02, $02, $00, $06, $82, $00, $02, $80, $00, $02, $83, $00, $02, $81, $00, $02, $03, $00, $03, $01, $00, $02, $82, $00, $03, $86, $00, $02, $81, $00, $0C, $87, $00, $02, $83, $00, $04, $85, $00, $02, $06, $00, $02, $02, $00, $06, $01, $00, $01, $FF
 
 
-ALPHA_ALL: .dw  GRAPHIC_PLAT, GRAPHIC_PILLAR_1, GRAPHIC_PILLAR_2, GRAPHIC_PILLAR_3, GRAPHIC_PILLAR_4, GRAPHIC_HEAD, $FF
-//ALPHA_ALL: .dw  ALPHA_A, ALPHA_B, ALPHA_C, ALPHA_D, ALPHA_E, ALPHA_F, ALPHA_G, ALPHA_H, ALPHA_I, ALPHA_J, ALPHA_K, ALPHA_L, ALPHA_M, ALPHA_N, ALPHA_O, ALPHA_P, ALPHA_Q, ALPHA_R, ALPHA_S, ALPHA_T, ALPHA_U, ALPHA_V, ALPHA_X, ALPHA_Y, ALPHA_Z, ALPHA_OH, ALPHA_EH, ALPHA_OE, $FF
+ALPHA_ALL: .dw  ALPHA_A, ALPHA_B, ALPHA_C, ALPHA_D, ALPHA_E, ALPHA_F, ALPHA_G, ALPHA_H, ALPHA_I, ALPHA_J, ALPHA_K, ALPHA_L, ALPHA_M, ALPHA_N, ALPHA_O, ALPHA_P, ALPHA_Q, ALPHA_R, ALPHA_S, ALPHA_T, ALPHA_U, ALPHA_V, ALPHA_X, ALPHA_Y, ALPHA_Z, ALPHA_OH, ALPHA_EH, ALPHA_OE, $FF
 
 
 
@@ -86,5 +85,38 @@ GRAPHIC_PILLAR_3: .db  $02, $00, $2E, $00, $00, $2C, $00, $00, $2A, $84, $00, $0
 
 GRAPHIC_PILLAR_4: .db  $02, $00, $2E, $00, $00, $2C, $00, $00, $34, $02, $00, $24, $81, $00, $0A, $03, $00, $24, $01, $00, $56, $03, $00, $2E, $FF
 
-GRAPHIC_HEAD: .db $02, $00, $2E, $00, $00, $2C, $00, $00, $34, $02, $00, $24, $01, $00, $0A, $82, $00, $02, $81, $00, $01, $82, $00, $01, $81, $00, $01, $82, $00, $01, $81, $00, $04, $83, $00, $01, $81, $00, $01, $83, $00, $01, $81, $00, $01, $83, $00, $04, $80, $00, $01, $83, $00, $01, $80, $00, $01, $83, $00, $01, $80, $00, $04, $80, $00, $01, $83, $00, $01, $80, $00, $01, $83, $00, $01, $80, $00, $01, $82, $00, $02, $03, $00, $24, $01, $00, $60, $03, $00, $2E, $FF
-//EJ KOMPLETT
+GRAPHIC_HEAD: .db $02, $00, $2E, $00, $00, $2C, $00, $00, $34, $02, $00, $24, $01, $00, $0A, $82, $00, $02, $81, $00, $01, $82, $00, $01, $81, $00, $01, $82, $00, $01, $81, $00, $04, $83, $00, $01, $81, $00, $01, $83, $00, $01, $81, $00, $01, $83, $00, $04, $80, $00, $01, $83, $00, $01, $80, $00, $01, $83, $00, $01, $80, $00, $03, $80, $00, $01, $82, $00, $01, $80, $00, $01, $82, $00, $01, $80, $00, $01, $82, $00, $02, $03, $00, $24, $01, $00, $56, $03, $00, $2E, $FF
+
+GRAPHIC_BODY: .db $02, $00, $2E, $00, $00, $60, $02, $00, $24, $01, $00, $12, $81, $00, $10, $01, $00, $3E, $03, $00, $52, $FF
+
+GRAPHIC_LEFT_LEG: .db $02, $00, $52, $00, $00, $3E, $87, $00, $08, $01, $00, $36, $03, $00, $4A, $FF
+
+GRAPHIC_RIGHT_LEG: .db $02, $00, $52, $00, $00, $3E, $86, $00, $08, $01, $00, $36, $03, $00, $5A, $FF
+
+GRAPHIC_LEFT_ARM: .db $02, $00, $52, $00, $00, $48, $85, $00, $08, $01, $00, $50, $03, $00, $4A, $FF
+
+GRAPHIC_RIGHT_ARM: .db $02, $00, $52, $00, $00, $48, $84, $00, $08, $01, $00, $50, $03, $00, $5A, $FF
+
+GRAPHICS_ALL: .dw  GRAPHIC_PLAT, GRAPHIC_PILLAR_1, GRAPHIC_PILLAR_2, GRAPHIC_PILLAR_3, GRAPHIC_PILLAR_4, GRAPHIC_HEAD, GRAPHIC_BODY, GRAPHIC_LEFT_LEG, GRAPHIC_RIGHT_LEG , GRAPHIC_LEFT_ARM, GRAPHIC_RIGHT_ARM, $FF
+
+LETTERS_SETUP_START_POS: .db	$02, $00, $B4, $00, $00, $3C, $FF
+
+LETTERS_SETUP_BACK_HOME: .db	$03, $00, $B4, $01, $00, $3C, $FF
+
+LETTER_SUB: .db $82, $00, $0A, $02, $00, $06, $FF
+
+LETTER_SUB_BACK: .db $03, $00, $10, $FF
+
+
+
+
+LETTERS_START_POS: .db	$02, $00, $B5, $00, $00, $3E, $FF
+
+LETTERS_BACK_HOME: .db	$03, $00, $B6, $01, $00, $3F, $FF
+
+
+LETTERS_MOVE_RIGHT:	.db $02, $00, $10, $FF	
+
+LETTERS_MOVE_RIGHT_LITTLE:	.db $02, $00, $08, $FF	
+
+LETTERS_MOVE_LEFT:	.db $03, $00, $10, $FF	
