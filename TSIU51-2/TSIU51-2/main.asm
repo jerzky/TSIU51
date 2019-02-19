@@ -10,7 +10,13 @@
 	jmp INIT
 	.include "tables.inc"
 
-	CURRENT_WORD: .db $13, $00, $01, $0B, $04, $FF
+	.dseg
+	WRONG_GUESS_FLAG: .byte	1
+	WRONG_GUESS_INDEX: .byte 1
+	CURRENT_LETTER_INDEX: .byte 1
+	.cseg
+
+	CURRENT_WORD: .db $13, $13, $00, $01, $0B, $04, $FF
 
 INIT:
 		
@@ -22,36 +28,118 @@ INIT:
 			out		DDRA, r16
 			ldi		r16, $80
 			out		DDRC, r16
+
+			ldi		r16, $00
+			sts		WRONG_GUESS_INDEX, r16
+			sts		CURRENT_LETTER_INDEX, r16
 						
 
 START:		
-			rcall	SETUP_GAME
+			call	SETUP_GAME
 			
-			ldi		r17, $0B
+			ldi		r17, $0B //L
 			rcall	GUESS_LETTER
 
-			ldi		r17, 1
+			ldi		r17, 1 //B
 			rcall	GUESS_LETTER
 			
-			ldi		r17, $14
+			ldi		r17, $14 //U
+			rcall	GUESS_LETTER
+			
+			ldi		r17, $15 //V
+			rcall	GUESS_LETTER
+			
+			ldi		r17, $04 //E
 			rcall	GUESS_LETTER
 
-			ldi		r17, $04
+			ldi		r17, $13//T
 			rcall	GUESS_LETTER
 
-			ldi		r17, $13
+			ldi		r17, 0 //A
 			rcall	GUESS_LETTER
-
-			ldi		r17, 0
-			rcall	GUESS_LETTER
-
+			
 
 END:
 			jmp	end
 
 
 
+WRONG_GUESS:
 
+
+			push	ZH
+			push	ZL
+			push	r16
+			push	r17
+			ldi		ZH, HIGH(GRAPHICS_ALL*2)
+			ldi		ZL, LOW(GRAPHICS_ALL*2)
+			lds		r16, WRONG_GUESS_INDEX
+	
+
+			lsl		r16	
+			add		ZL, r16
+			brcc	PC+2
+			subi	ZH, -1
+			lpm		r16, Z+
+			lpm		r17, Z
+
+			lsl		r17
+			lsl		r16
+			brcc	PC+2
+			subi	r17, -1		
+			mov		ZH, r17
+			mov		ZL, r16
+			rcall	DRAW_FUNC
+			pop		r17
+			pop		r16
+			pop		ZL
+			pop		ZH
+WRONG_GUESS_EXIT:
+			
+			
+			ret
+
+
+WRITE_WRONG_LETTER:
+			push	ZH
+			push	ZL
+			ldi		ZH, HIGH(WRONG_LETTERS_START_POS*2)
+			ldi		ZL, LOW(WRONG_LETTERS_START_POS*2)
+			rcall	DRAW_FUNC
+			lds		r16, WRONG_GUESS_INDEX
+			ldi		ZH, HIGH(LETTERS_MOVE_RIGHT*2)
+			ldi		ZL, LOW(LETTERS_MOVE_RIGHT*2)
+			push	r16
+WRITE_WRONG_LETTER_LOOP:
+			cpi		r16, $00
+			breq	WRITE_WRONG_LETTER_LOOP_EXIT		
+			rcall	DRAW_FUNC
+			dec		r16
+			rjmp	WRITE_WRONG_LETTER_LOOP
+WRITE_WRONG_LETTER_LOOP_EXIT:
+			pop		r16
+
+			lds		r16, WRONG_GUESS_INDEX
+			inc		r16
+			sts		WRONG_GUESS_INDEX, r16
+
+			lds		r16, CURRENT_LETTER_INDEX
+			rcall	DRAW_LETTER
+
+			lds		r16, WRONG_GUESS_INDEX
+			ldi		ZH, HIGH(LETTER_SUB_BACK*2)
+			ldi		ZL, LOW(LETTER_SUB_BACK*2)
+WRITE_WRONG_LETTER_BACK_LOOP:
+			rcall	DRAW_FUNC		
+			dec		r16
+			brne	WRITE_WRONG_LETTER_BACK_LOOP
+
+			ldi		ZH, HIGH(WRONG_LETTERS_BACK_HOME*2)
+			ldi		ZL, LOW(WRONG_LETTERS_BACK_HOME*2)
+			rcall	DRAW_FUNC
+			pop		ZL
+			pop		ZH
+			ret
 
 
 SETUP_GAME:
@@ -101,6 +189,8 @@ SETUP_BACK_DONE:
 //R17 is what letter to guess
 //r18 is 0 if no letter matched
 GUESS_LETTER:
+			sts		CURRENT_LETTER_INDEX, r17
+			clr		r18
 			push	ZH
 			push	ZL
 			ldi		ZH, HIGH(LETTERS_START_POS*2)
@@ -149,6 +239,11 @@ GUESS_LETTER_GO_BACK_DONE:
 			rcall	DRAW_FUNC
 			pop		ZL
 			pop		ZH
+			cpi		r18, $FF
+			breq	GUESS_EXIT
+			rcall	WRONG_GUESS
+			rcall	WRITE_WRONG_LETTER
+GUESS_EXIT:
 			ret
 
 
@@ -215,6 +310,7 @@ DRAW_LETTER:
 DRAW_FUNC:	
 			push	ZH	
 			push	ZL
+			push	r16
 DRAW_FUNC_LOOP:
 			lpm		r16, Z+
 			cpi		r16, $FF
@@ -230,6 +326,7 @@ DRAW_FUNC_LOOP:
 			rjmp	DRAW_FUNC_LOOP					
 DRAW_FUNC_DONE:
 			rcall	RAISE_PEN
+			pop		r16
 			pop		ZL
 			pop		ZH
 			ret	
@@ -285,33 +382,27 @@ RAISE_PEN_EXIT:
 
 
 PEN_DELAY:
-		push	r16
-		push	r17
-		ldi		r17, $FF
-PEN_DELAY_OUTER:
-		ldi		r16, $FF
-PEN_DELAY_INNER:
-		dec		r16
-		brne	PEN_DELAY_INNER
-		dec		r17
-		brne	PEN_DELAY_OUTER
-		pop		r17
-		pop		r16
+		push	r24
+		push	r25
+		ldi		r25, $FF
+		ldi		r24, $FF
+PEN_DELAY_LOOP:
+		sbiw	r25:r24, 1
+		brne	PEN_DELAY_LOOP
+		pop		r25
+		pop		r24
 		ret
 
 PULSE_DELAY:
-		push	r16
-		push	r17
-		ldi		r17, $10
-PULSE_DELAY_OUTER:
-		ldi		r16, $FF
-PULSE_DELAY_INNER:
-		dec		r16
-		brne	PULSE_DELAY_INNER
-		dec		r17
-		brne	PULSE_DELAY_OUTER
-		pop		r17
-		pop		r16
+		push	r24
+		push	r25
+		ldi		r25, $0A
+		ldi		r24, $00
+PULSE_DELAY_LOOP:
+		sbiw	r25:r24, 1
+		brne	PULSE_DELAY_LOOP
+		pop		r25
+		pop		r24
 		ret
 
 
