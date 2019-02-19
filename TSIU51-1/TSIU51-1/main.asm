@@ -54,17 +54,20 @@ START_FUNCTION:
 	ldi		ZH,HIGH(START_MESSAGE*2)
 	ldi		ZL,LOW(START_MESSAGE*2)
 	rcall	PRINT_ENTIRE_DISPLAY
-	cbi		PORTD,0
-	sbi		PORTD,1
-	cbi		PORTD,2
+	in		r16,PIND
+	push	r16
+	ldi		r16,$57
 
 START_STALL:
 	rcall	LONG_DELAY
-	clr		r17
+	swap	r16
+	out		PORTD,r16
 	lds		r17,START_STATUS
 	cpi		r17,$00
 	breq	START_STALL
 START_DONE:
+	pop		r16
+	out		PORTD,r16
 	ret
 
 USED_CHECK:
@@ -243,7 +246,6 @@ RIGHT_DONE:
 
 
 BUTTON_PRESSED:
-	cli
 	push	r16
 	push	r17
 	push	r18
@@ -253,13 +255,15 @@ BUTTON_PRESSED:
 	push	YL
 	push	ZH
 	push	ZL
-
+	in		r16,SREG
+	push	r16
 	
 	lds		r16,START_STATUS
 	cpi		r16,$00
 	brne	GAME_IN_PROGRESS
 	inc		r16
 	sts		START_STATUS,r16
+	rcall	SHORT_DELAY
 				//HÄR ÄR KOD SOM INITIERAR PLOTTER (Får den att rita spaces o.s.v.)
 	rjmp	BUTTON_PRESSED_END
 
@@ -317,7 +321,22 @@ NEXT_LETTER:
 	rcall	PRINT_LETTER
 
 BUTTON_PRESSED_END:
-	
+	sbic	PORTD,3
+	rjmp	BUTTON_PRESSED_END
+	ldi		r16,$20
+BUTTON_PRESSED_END_LOOP:
+	rcall	SHORT_DELAY
+	dec		r16
+	brne	BUTTON_PRESSED_END_LOOP
+	in		r16,GIFR
+	andi	r16,$80
+	cpi		r16,$80
+	brne	GIFR_NOT_SET
+	ldi		r16,(1<<INTF1)
+	out		GIFR,r16
+GIFR_NOT_SET:
+	pop		r16
+	out		SREG,r16
 	pop		ZL
 	pop		ZH
 	pop		YL
@@ -327,7 +346,6 @@ BUTTON_PRESSED_END:
 	pop		r18
 	pop		r17
 	pop		r16
-	sei
 	reti
 
 
@@ -354,7 +372,7 @@ LONG_DELAY:
 	push	r24
 	push	r25
 	ldi		r24,$FF
-	ldi		r25,$0A
+	ldi		r25,$0E
 LONG_DELAY_LOOP:
 	rcall	SHORT_DELAY
 	sbiw	r25:r24,1
