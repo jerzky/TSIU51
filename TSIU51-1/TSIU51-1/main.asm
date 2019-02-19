@@ -17,12 +17,15 @@ FREE_MESSAGE: .db " VALBAR " //läga till space först
 WIN_MESSAGE: .db "GRATTIS",$21
 LOSE_MESSAGE: .db "DU SUGER"//"F",$17,"RLORAT" //space $20
 DRAW_MESSAGE:	.db " RITAR",$21,$20
+START_MESSAGE: .db " START",$21,$20
 RAINBOW: .db $01,$03,$02,$06,$04,$05
 
 	.dseg 
 USED:
 	.byte		29
 CURRENT_LETTER:
+	.byte		1
+START_STATUS:
 	.byte		1
 	.cseg
 
@@ -36,13 +39,36 @@ INITIAL_DELAY:
 	ldi		r16,LOW(RAMEND)
 	out		SPL,r16
 	rcall	INIT
-	//ldi		r18,0
-	rcall	PRINT_LETTER
+
 
 WARM:
-	rcall	ROTARY_CHECK
-	rjmp	WARM
+	rcall	START_FUNCTION
+	rcall	PRINT_LETTER
 
+MAIN_LOOP:
+	rcall	ROTARY_CHECK
+	rjmp	MAIN_LOOP
+
+
+START_FUNCTION:
+	ldi		ZH,HIGH(START_MESSAGE*2)
+	ldi		ZL,LOW(START_MESSAGE*2)
+	rcall	PRINT_ENTIRE_DISPLAY
+	in		r16,PIND
+	push	r16
+	ldi		r16,$57
+
+START_STALL:
+	rcall	LONG_DELAY
+	swap	r16
+	out		PORTD,r16
+	lds		r17,START_STATUS
+	cpi		r17,$00
+	breq	START_STALL
+START_DONE:
+	pop		r16
+	out		PORTD,r16
+	ret
 
 USED_CHECK:
 	/*
@@ -74,7 +100,6 @@ USED_CHECK_TRUE:
 	ldi		ZH,HIGH(USED_MESSAGE*2)
 	ldi		ZL,LOW(USED_MESSAGE*2)
 USED_CHECK_FALSE:
-	//ldi		r16,$05
 	ldi		r16,$06 //Fixat så att vi clearar tomma rutan till vänster om meddelandet
 	add		ZL,r16
 	ldi		r18,$07 //samma här
@@ -106,19 +131,34 @@ PRINT_LETTER:
 	ret
 
 PRINT_DISPLAY:
-	push	r16
+	push	r19
 	ldi		r19,PINB
 	andi	r19,$F8
 	or		r16,r19
 	out		PORTB,r16	//a0-a2 - 0 (Längst till vänster)		
 	rcall	SHORT_DELAY
-	cbi		PORTC,7 //ce låg
-	rcall	SHORT_DELAY
 	out		PORTA,r17
+	rcall	SHORT_DELAY
+	cbi		PORTC,7 //ce låg
 	rcall	SHORT_DELAY
 	sbi		PORTC,7 //ce hög
 	rcall	SHORT_DELAY
-	pop		r16
+	pop		r19
+	ret
+
+	PRINT_ENTIRE_DISPLAY:
+		//Skriver hela displayen
+		//Kräver att rätt tabell är laddad i z-register först. Tabellen måste vara 8 tecken lång.
+	ldi		r16,$07  //ladda platsen för sista bokstaven i tabellen. 
+	add		ZL,r16  //hämta den platsen i tabellen 'T'
+	ldi		r18,$08 //antalet loops
+PRINT_ENTIRE_DISPLAY_LOOP:
+	lpm		r17,Z
+	rcall	PRINT_DISPLAY
+	dec		ZL
+	dec		r16
+	dec		r18
+	brne	PRINT_ENTIRE_DISPLAY_LOOP
 	ret
 
 LOAD_LETTER:
@@ -215,16 +255,27 @@ BUTTON_PRESSED:
 	push	YL
 	push	ZH
 	push	ZL
-	cli
+	in		r16,SREG
+	push	r16
+	
+	lds		r16,START_STATUS
+	cpi		r16,$00
+	brne	GAME_IN_PROGRESS
+	inc		r16
+	sts		START_STATUS,r16
+	rcall	SHORT_DELAY
+				//HÄR ÄR KOD SOM INITIERAR PLOTTER (Får den att rita spaces o.s.v.)
+	rjmp	BUTTON_PRESSED_END
 
-	ld		r16,CURRENT_LETTER
+GAME_IN_PROGRESS:
+	//Kontrollerar om nuvarande bokstav är använd och hoppar i så fall till slut av funktionen
+	lds		r16,CURRENT_LETTER
 	ldi		YH,HIGH(USED)
 	ldi		YL,LOW(USED)
 	add		YL,r16
 	ld		r16,Y
 	cpi		r16,$00
 	brne	BUTTON_PRESSED_END
-
 
 DRAW:
 	ldi		ZH,HIGH(DRAW_MESSAGE*2)
@@ -243,7 +294,7 @@ DRAW_LOOP:
 	andi	r17,$F8
 	ori		r17,$04  //Ändrar färgen till gul
 	push	r17  //lägger PORTD på stacken
-	ldi		r16,$74 //Gul
+	ldi		r16,$47 //Gul
 
 DRAW_STALL:
 	swap	r16
@@ -252,10 +303,10 @@ DRAW_STALL:
 
 	//Här måste vi vänta på svar från plottern
 
-	rjmp	DRAW_STALL
+	//rjmp	DRAW_STALL
 
 	//val för fortsätt
-	// val och rcall WIN
+	//val och rcall WIN
 	//val och rcall LOSE
 	
 NEXT_LETTER:
@@ -269,21 +320,44 @@ NEXT_LETTER:
 	st		Y,r16
 	rcall	PRINT_LETTER
 
-
-
 BUTTON_PRESSED_END:
-	sei
+	sbic	PORTD,3
+	rjmp	BUTTON_PRESSED_END
+	ldi		r16,$20
+BUTTON_PRESSED_END_LOOP:
+	rcall	SHORT_DELAY
+	dec		r16
+	brne	BUTTON_PRESSED_END_LOOP
+	in		r16,GIFR
+	andi	r16,$80
+	cpi		r16,$80
+	brne	GIFR_NOT_SET
+	ldi		r16,(1<<INTF1)
+	out		GIFR,r16
+GIFR_NOT_SET:
+	pop		r16
+	out		SREG,r16
 	pop		ZL
 	pop		ZH
 	pop		YL
 	pop		YH
 	pop		r25
 	pop		r24
-	pop		r17
 	pop		r18
+	pop		r17
 	pop		r16
 	reti
 
+
+INITIATE_SPI_TRANSFER:
+		//Förutsätter rätt data i r16
+	cbi		PORTB,4			//Slave select låg
+	out		SPDR,r16
+SPI_WAIT:
+	sbis	SPSR,SPIF
+	rjmp	SPI_WAIT
+	sbi		PORTB,4			//Slave select hög
+	ret
 
 SHORT_DELAY:
 	push	r16
@@ -294,46 +368,21 @@ SHORT_DELAY_LOOP:
 	pop		r16
 	ret	
 
-
-
-
-	INIT:
-	ldi		r18,$05 //temp satt dioden till grön
-	out		PORTD,r18// same same
-	sbi		PORTC,0		//a3-1
-	sbi		PORTC,1		//a4-1
+LONG_DELAY:
+	push	r24
+	push	r25
+	ldi		r24,$FF
+	ldi		r25,$0E
+LONG_DELAY_LOOP:
 	rcall	SHORT_DELAY
-	ldi		r16,$FF
-	out		DDRA,r16
-	ldi		r16,$B7
-	out		DDRB,r16
-	ldi		r16,$83
-	out		DDRC,r16
-	ldi		r16,$37
-	out		DDRD,r16
-	sbi		PORTC,7		//Sätt ce hög för skärmen
-	sbi		PORTD,5		//Flash hög
-			//Sätt alla minnesbitar för använda bokstäver till noll
-	ldi		r16,$0
-	ldi		YH,HIGH(USED)
-	ldi		YL,LOW(USED)
-	ldi		r17,$0
-CLEAR_LOOP:
-	st		Y+,r16
-	inc		r17
-	cpi		r17,$1E
-	brne	CLEAR_LOOP
-
-
-	//konfigurera avbrott
-	ldi		r16,(1<<ISC11)|(0<<ISC10)|(1<<INT1)
-	out		MCUCR,r16
-	//aktivera avbrott
-	ldi		r16,(1<<INT1)
-	out		GICR,r16
-	//aktivera avbrott globalt
-	sei
+	sbiw	r25:r24,1
+	brne	LONG_DELAY_LOOP
+	pop		r25
+	pop		r24
 	ret
+
+
+
 
 WIN:
 	cli
@@ -359,20 +408,7 @@ WIN_DELAY_LOOP:
 	rjmp	WIN_STALL
 	ret
 
-PRINT_ENTIRE_DISPLAY:
-		//Skriver hela displayen
-		//Kräver att rätt tabell är laddad i z-register först. Tabellen måste vara 8 tecken lång.
-	ldi		r16,$07  //ladda platsen för sista bokstaven i tabellen. 
-	add		ZL,r16  //hämta den platsen i tabellen 'T'
-	ldi		r18,$08 //antalet loops
-PRINT_ENTIRE_DISPLAY_LOOP:
-	lpm		r17,Z
-	rcall	PRINT_DISPLAY
-	dec		ZL
-	dec		r16
-	dec		r18
-	brne	PRINT_ENTIRE_DISPLAY_LOOP
-	ret
+
 
 LOSE:
 	cli
@@ -390,18 +426,52 @@ LOSE_STALL:
 	rjmp	LOSE_STALL
 	ret
 
-LONG_DELAY:
-	push	r24
-	push	r25
-	ldi		r24,$FF
-	ldi		r25,$0A
-LONG_DELAY_LOOP:
+
+	
+	INIT:
+	ldi		r18,$05 //temp satt dioden till grön
+	out		PORTD,r18// same same
+	sbi		PORTC,0		//a3-1
+	sbi		PORTC,1		//a4-1
+	sbi		PORTC,7		//Sätt ce hög för skärmen
+	sbi		PORTD,5		//Flash hög
 	rcall	SHORT_DELAY
-	sbiw	r25:r24,1
-	brne	LONG_DELAY_LOOP
-	pop		r25
-	pop		r24
+	ldi		r16,$FF
+	out		DDRA,r16
+	ldi		r16,$B7
+	out		DDRB,r16
+	ldi		r16,$83
+	out		DDRC,r16
+	ldi		r16,$37
+	out		DDRD,r16
+
+			//Sätt alla minnesbitar för använda bokstäver till noll
+	ldi		r16,$0
+	ldi		YH,HIGH(USED)
+	ldi		YL,LOW(USED)
+	ldi		r17,$0
+CLEAR_LOOP:
+	st		Y+,r16
+	inc		r17
+	cpi		r17,$1F
+	brne	CLEAR_LOOP
+
+	//konfigurera SPI
+	ldi		r16,(1<<SPE)|(1<<MSTR)|(1<<SPR0)
+	out		SPCR,r16
+
+
+	//konfigurera avbrott
+	ldi		r16,(1<<ISC11)|(0<<ISC10)|(1<<INT1)
+	out		MCUCR,r16
+	//aktivera avbrott
+	ldi		r16,(1<<INT1)
+	out		GICR,r16
+	//aktivera avbrott globalt
+	sei
 	ret
+
+
 
 /*LUCK:
 	cli
