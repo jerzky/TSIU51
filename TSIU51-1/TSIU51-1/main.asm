@@ -31,6 +31,8 @@ START_STATUS:
 	.byte		1
 BLINK_COLOURS:
 	.byte		1
+BUTTON_STATUS:
+	.byte		1
 	.cseg
 
 //MAIN-----------------------------------------------------------
@@ -47,6 +49,11 @@ WARM:
 
 MAIN_LOOP:
 	rcall	ROTARY_CHECK
+	lds		r16,BUTTON_STATUS
+	cpi		r16,$00
+	breq	MAIN_DONE
+	rcall	LETTER_CHOSEN
+MAIN_DONE:
 	rjmp	MAIN_LOOP
 
 
@@ -59,10 +66,13 @@ START_FUNCTION:
 	sts		BLINK_COLOURS,r16
 START_STALL:
 	rcall	BLINK
-	lds		r17,START_STATUS
+	lds		r17,BUTTON_STATUS
 	cpi		r17,$00
 	breq	START_STALL
 START_DONE:
+	rcall	DRAW
+	rcall	CLEAR_INTERRUPT
+	//HÄR ÄR KOD SOM INITIERAR PLOTTER (Får den att rita spaces o.s.v.)	
 	ret
 
 
@@ -230,29 +240,17 @@ RIGHT_DONE:
 //INTERRUPT FÖR KNAPPTRYCKNING--------------------------------------------
 BUTTON_PRESSED:
 	push	r16
-	push	r17
-	push	r18
-	push	r24
-	push	r25
-	push	YH
-	push	YL
-	push	ZH
-	push	ZL
 	in		r16,SREG
 	push	r16
+	ldi		r16,$01
+	sts		BUTTON_STATUS,r16
+	pop		r16
+	out		SREG,r16
+	pop		r16
+	reti	
 
-	//Kontrollera om spelet är startat eller inte	
-	lds		r16,START_STATUS
-	cpi		r16,$00
-	brne	GAME_IN_PROGRESS
-	inc		r16
-	sts		START_STATUS,r16
-	rcall	DRAW
-				//HÄR ÄR KOD SOM INITIERAR PLOTTER (Får den att rita spaces o.s.v.)
-	rjmp	BUTTON_PRESSED_END
-
-	//Om spelet redan är startat
-GAME_IN_PROGRESS:
+//KONTROLLERAR VALD BOKSTAV OCH SKRIVER UT DEN OM TILLGÄNGLIG--------------------
+LETTER_CHOSEN:
 	//Kontrollerar om nuvarande bokstav är använd och hoppar i så fall till slut av funktionen
 	lds		r16,CURRENT_LETTER
 	ldi		YH,HIGH(USED)
@@ -260,7 +258,7 @@ GAME_IN_PROGRESS:
 	add		YL,r16
 	ld		r16,Y
 	cpi		r16,$00
-	brne	BUTTON_PRESSED_END
+	brne	LETTER_CHOSEN_END
 	rcall	DRAW
 	//val för fortsätt
 	//val och rcall WIN
@@ -274,13 +272,16 @@ SET_LETTER_USED:
 	ldi		r16,$01
 	st		Y,r16
 	rcall	PRINT_LETTER
+LETTER_CHOSEN_END:
+	rcall	CLEAR_INTERRUPT
+	ret
 
-BUTTON_PRESSED_END:
+CLEAR_INTERRUPT:
 	ldi		r16,$20
-BUTTON_PRESSED_END_LOOP:
+CLEAR_INTERRUPT_LOOP:
 	rcall	SHORT_DELAY
 	dec		r16
-	brne	BUTTON_PRESSED_END_LOOP
+	brne	CLEAR_INTERRUPT_LOOP
 	in		r16,GIFR
 	andi	r16,$80
 	cpi		r16,$80
@@ -288,21 +289,11 @@ BUTTON_PRESSED_END_LOOP:
 	ldi		r16,(1<<INTF1)
 	out		GIFR,r16
 GIFR_NOT_SET:
-	pop		r16
-	out		SREG,r16
-	pop		ZL
-	pop		ZH
-	pop		YL
-	pop		YH
-	pop		r25
-	pop		r24
-	pop		r18
-	pop		r17
-	pop		r16
-	reti
+	ldi		r16,$00
+	sts		BUTTON_STATUS,r16
+	ret
 
-
-
+//SKRIVER UT "RITAR" OCH VÄNTAR PÅ SVAR FRÅN PLOTTER-------------------
 DRAW:
 	ldi		ZH,HIGH(DRAW_MESSAGE*2)
 	ldi		ZL,LOW(DRAW_MESSAGE*2)
@@ -327,13 +318,9 @@ DRAW_STALL:
 	ret
 
 
-
-
-
-
 //STARTA SPI-ÖVERFÖRING (Ännu ej testad)------------------------------------
 INITIATE_SPI_TRANSFER:
-		//Förutsätter rätt data i r16
+	//Förutsätter rätt data i r16
 	cbi		PORTB,4			//Slave select låg
 	out		SPDR,r16
 SPI_WAIT:
@@ -451,7 +438,7 @@ INIT:
 CLEAR_LOOP:
 	st		Y+,r16
 	inc		r17
-	cpi		r17,$20
+	cpi		r17,$21
 	brne	CLEAR_LOOP
 
 	//konfigurera SPI
