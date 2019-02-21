@@ -34,26 +34,26 @@ INIT:
 						
 
 START:		
-			//call	SETUP_GAME
+		/*	call	SETUP_GAME
 			
 			ldi		r17, $0B //L
 			rcall	GUESS_LETTER
 
 			ldi		r17, 1 //B
 			rcall	GUESS_LETTER
-			
+			*/
 			ldi		r17, $14 //U
 			rcall	GUESS_LETTER
 			
-			ldi		r17, $15 //V
+			ldi		r17, $10 //V
 			rcall	GUESS_LETTER
 			
 			ldi		r17, $16 //W
 			rcall	GUESS_LETTER
 			
-			ldi		r17, $02 //V
+			ldi		r17, $02 //c
 			rcall	GUESS_LETTER
-
+			
 			ldi		r17, $04 //E
 			rcall	GUESS_LETTER
 
@@ -62,6 +62,7 @@ START:
 
 			ldi		r17, 0 //A
 			rcall	GUESS_LETTER			
+			
 END:
 			jmp	end
 
@@ -191,37 +192,54 @@ WRITE_WRONG_LETTER:
 			ldi		ZH, HIGH(WRONG_LETTERS_START_POS*2)
 			ldi		ZL, LOW(WRONG_LETTERS_START_POS*2)
 			rcall	DRAW_FUNC
+			
 			lds		r16, WRONG_GUESS_INDEX
+			cpi		r16, $00
+			breq	WRITE_WRONG_LETTER_LOOP_EXIT
+
+		//	ldi		ZH, HIGH(LETTERS_MOVE_RIGHT_LITTLE*2)
+		//	ldi		ZL, LOW(LETTERS_MOVE_RIGHT_LITTLE*2)
+		//	rcall	DRAW_FUNC			
+		
 			ldi		ZH, HIGH(LETTERS_MOVE_RIGHT*2)
 			ldi		ZL, LOW(LETTERS_MOVE_RIGHT*2)
 			push	r16
-WRITE_WRONG_LETTER_LOOP:
-			cpi		r16, $00
-			breq	WRITE_WRONG_LETTER_LOOP_EXIT		
+WRITE_WRONG_LETTER_LOOP:		
 			rcall	DRAW_FUNC
 			dec		r16
-			rjmp	WRITE_WRONG_LETTER_LOOP
-WRITE_WRONG_LETTER_LOOP_EXIT:
+			brne	WRITE_WRONG_LETTER_LOOP
 			pop		r16
+WRITE_WRONG_LETTER_LOOP_EXIT:
+
+
+			lds		r16, CURRENT_LETTER_INDEX
+			rcall	DRAW_LETTER
+
+			ldi		ZH, HIGH(WRONG_LETTERS_MOVE_LITTLE_LEFT*2)
+			ldi		ZL, LOW(WRONG_LETTERS_MOVE_LITTLE_LEFT*2)
+			rcall	DRAW_FUNC
+
+			lds		r16, WRONG_GUESS_INDEX
+			ldi		ZH, HIGH(WRONG_LETTERS_MOVE_LEFT*2)
+			ldi		ZL, LOW(WRONG_LETTERS_MOVE_LEFT*2)
+
+
+			cpi		r16, $00
+			breq	WRITE_WRONG_LETTER_BACK_LOOP_EXIT
+WRITE_WRONG_LETTER_BACK_LOOP:
+			rcall	DRAW_FUNC		
+			dec		r16
+			brne	WRITE_WRONG_LETTER_BACK_LOOP
+WRITE_WRONG_LETTER_BACK_LOOP_EXIT:
+
+			ldi		ZH, HIGH(WRONG_LETTERS_BACK_HOME*2)
+			ldi		ZL, LOW(WRONG_LETTERS_BACK_HOME*2)
+			rcall	DRAW_FUNC
 
 			lds		r16, WRONG_GUESS_INDEX
 			inc		r16
 			sts		WRONG_GUESS_INDEX, r16
 
-			lds		r16, CURRENT_LETTER_INDEX
-			rcall	DRAW_LETTER
-
-			lds		r16, WRONG_GUESS_INDEX
-			ldi		ZH, HIGH(LETTER_SUB_BACK*2)
-			ldi		ZL, LOW(LETTER_SUB_BACK*2)
-WRITE_WRONG_LETTER_BACK_LOOP:
-			rcall	DRAW_FUNC		
-			dec		r16
-			brne	WRITE_WRONG_LETTER_BACK_LOOP
-
-			ldi		ZH, HIGH(WRONG_LETTERS_BACK_HOME*2)
-			ldi		ZL, LOW(WRONG_LETTERS_BACK_HOME*2)
-			rcall	DRAW_FUNC
 			pop		ZL
 			pop		ZH
 			ret
