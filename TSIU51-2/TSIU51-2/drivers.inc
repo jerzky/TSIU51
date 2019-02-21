@@ -5,14 +5,14 @@
  *   Author: Jensg
  */ 
 
- //---------------------------------------------
-//Used for jumtables 
-//Starts whereever Z-pointer is
-//EX
-//			ldi		ZH, HIGH(ALPHA_ALL*2)
-//			ldi		ZL, LOW(ALPHA_ALL*2)
-//Parameter r16 decides index
-//------------------------------------------
+;---------------------------------------------
+;Used for jumtables 
+;Starts whereever Z-pointer is
+;EX
+;			ldi		ZH, HIGH(ALPHA_ALL*2)
+;			ldi		ZL, LOW(ALPHA_ALL*2)
+;Parameter r16 decides index
+;------------------------------------------
 JUMP_TABLE:
 			push	r17
 			lsl		r16	
@@ -31,9 +31,9 @@ JUMP_TABLE:
 			pop		r17
 			ret
 
-//---------------------------------------------
-//STARTS DRAWING TO WHEREVER THE Z-POINTER POINTS TO, STOPS ON $FF
-//------------------------------------
+;---------------------------------------------
+;STARTS DRAWING TO WHEREVER THE Z-POINTER POINTS TO, STOPS ON $FF
+;------------------------------------
 DRAW_FUNC:	
 			push	ZH	
 			push	ZL
@@ -47,8 +47,7 @@ DRAW_FUNC_LOOP:
 			sbrs	r16, 7
 			rcall	RAISE_PEN
 			andi	r16, $7F
-			lpm		r25, Z+
-			lpm		r24, Z+
+			lpm		r18, Z+
 			rcall	MOVE_FUNC
 			rjmp	DRAW_FUNC_LOOP					
 DRAW_FUNC_DONE:
@@ -61,12 +60,14 @@ DRAW_FUNC_DONE:
 
 ;------ DRIVER FOR PLOTTER
 ;------ parameter -  r16 direction, use consts NORTH, SOUTH .. etc
-;------ parameter - r24-r25 how far to move (max 65 535)
+;------ parameter - r18 how far to move (max 65 535)
 MOVE_FUNC:
 		push	ZH
 		push	ZL
 		push	r17
+		push	r19
 		mov		r19, r16
+
 MOVE_FUNC_SEQUENCE:
 		mov		r16, r19
 		ldi		r17, 8
@@ -80,8 +81,9 @@ MOVE_FUNC_LOOP:
 		subi	ZL, -8
 		dec		r17
 		brne	MOVE_FUNC_LOOP
-		sbiw	r25:r24,1
+		dec		r18
 		brne	MOVE_FUNC_SEQUENCE
+		pop		r19
 		pop		r17
 		pop		ZL
 		pop		ZH
