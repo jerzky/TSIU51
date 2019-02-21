@@ -33,6 +33,8 @@ BLINK_COLOURS:
 	.byte		1
 BUTTON_STATUS:
 	.byte		1
+ROTARY_STATUS:
+	.byte		1
 	.cseg
 
 //MAIN-----------------------------------------------------------
@@ -49,13 +51,13 @@ WARM:
 
 MAIN_LOOP:
 	rcall	ROTARY_CHECK
+	rcall	LETTER_CHANGE_CHECK
 	lds		r16,BUTTON_STATUS
 	cpi		r16,$00
 	breq	MAIN_DONE
 	rcall	LETTER_CHOSEN
 MAIN_DONE:
 	rjmp	MAIN_LOOP
-
 
 //STARTUP--------------------------------------------------------
 START_FUNCTION:
@@ -74,8 +76,6 @@ START_DONE:
 	rcall	CLEAR_INTERRUPT
 	//HÄR ÄR KOD SOM INITIERAR PLOTTER (Får den att rita spaces o.s.v.)	
 	ret
-
-
 
 //KONTROLL OM ANVÄND BOKSTAV-----------------------------------------------
 USED_CHECK:
@@ -146,6 +146,7 @@ PRINT_DISPLAY:
 	rcall	SHORT_DELAY
 	pop		r19
 	ret
+
 //SKRIV ALLA ÅTTA TECKEN PÅ DISPLAYEN--------------------------------
 PRINT_ENTIRE_DISPLAY:
 		//Kräver att rätt tabell är laddad i z-register först. Tabellen måste vara 8 tecken lång.
@@ -163,7 +164,7 @@ PRINT_ENTIRE_DISPLAY_LOOP:
 
 //LADDA NUVARANDE BOKSTAV FRÅN ALFABETSTABELLEN---------------------------------------------------------------
 LOAD_LETTER:
-		//Kräver att r18 är laddat med CURRENT_LETTER från SRAM
+	//Kräver att r18 är laddat med CURRENT_LETTER från SRAM
 	push	ZH
 	push	ZL
 	ldi		ZH,HIGH(BOKSTAV*2)
@@ -176,7 +177,7 @@ LOAD_LETTER:
 
 //KONTROLLERA OM VIRDNING SKER PÅ REGLAGET--------------------------------------
 ROTARY_CHECK:
-			//D6, D7 är knappen
+	//D6, D7 är knappen
 	sbis	PIND,7
 	rjmp	LEFT_CHECK_DONE
 	sbic	PIND,6
@@ -193,14 +194,9 @@ RIGHT_CHECK_DONE:
 
 //HANTERA VRIDNING VÄNSTER---------------------------------------
 LEFT:
-	lds		r18,CURRENT_LETTER
 	rcall	SHORT_DELAY
 	sbic	PIND,7
 	rjmp	LEFT_DONE
-	inc		r18
-	cpi		r18,$1D
-	brne	LEFT_CHECK_1
-	ldi		r18,$00
 LEFT_CHECK_1:
 	sbic	PIND,6
 	rjmp	LEFT_CHECK_1
@@ -209,21 +205,27 @@ LEFT_CHECK_2:
 	rjmp	LEFT_CHECK_2
 	sbis	PIND,6
 	rjmp	LEFT_CHECK_2
-	sts		CURRENT_LETTER,r18
-	rcall	PRINT_LETTER
+	ldi		r16,$01
+	sts		ROTARY_STATUS,r16
 LEFT_DONE:
 	ret	
 
+//ÖKA ELLER SÄNK NUVARANDE BOKSTAV-------------------------
+LETTER_CHANGE_CHECK:
+	lds		r16,ROTARY_STATUS
+	sbrc	r16,0
+	rcall	INC_LETTER
+	sbrc	r16,1
+	rcall	DEC_LETTER
+	ldi		r16,$00
+	sts		ROTARY_STATUS,r16
+	ret
+
 //HANTERA VRIDNING HÖGER-------------------------------------------
 RIGHT:
-	lds		r18,CURRENT_LETTER
 	rcall	SHORT_DELAY
 	sbic	PIND,6
 	rjmp	RIGHT_DONE
-	dec		r18
-	cpi		r18,$FF
-	brne	RIGHT_CHECK_1
-	ldi		r18,$1C
 RIGHT_CHECK_1:
 	sbic	PIND,7
 	rjmp	RIGHT_CHECK_1
@@ -232,10 +234,34 @@ RIGHT_CHECK_2:
 	rjmp	RIGHT_CHECK_2
 	sbis	PIND,7
 	rjmp	RIGHT_CHECK_2
-	sts		CURRENT_LETTER,r18
-	rcall	PRINT_LETTER
+	ldi		r16,$02
+	sts		ROTARY_STATUS,r16
 RIGHT_DONE:
 	ret	
+
+//MINSKA NUVARANDE BOKSTAV-------------------
+DEC_LETTER:
+	lds		r18,CURRENT_LETTER
+	dec		r18
+	cpi		r18,$FF
+	brne	NOT_MIN
+	ldi		r18,$1C
+NOT_MIN:
+	sts		CURRENT_LETTER,r18
+	rcall	PRINT_LETTER
+	ret
+
+//ÖKA NUVARANDE BOKSTAV----------------
+INC_LETTER:
+	lds		r18,CURRENT_LETTER
+	inc		r18
+	cpi		r18,$1D
+	brne	NOT_MAX
+	ldi		r18,$00
+NOT_MAX:
+	sts		CURRENT_LETTER,r18
+	rcall	PRINT_LETTER
+	ret
 
 //INTERRUPT FÖR KNAPPTRYCKNING--------------------------------------------
 BUTTON_PRESSED:
@@ -438,13 +464,11 @@ INIT:
 CLEAR_LOOP:
 	st		Y+,r16
 	inc		r17
-	cpi		r17,$21
+	cpi		r17,$22
 	brne	CLEAR_LOOP
-
 	//konfigurera SPI
 	ldi		r16,(1<<SPE)|(1<<MSTR)|(1<<SPR0)
 	out		SPCR,r16
-
 	//konfigurera avbrott
 	ldi		r16,(1<<ISC11)|(0<<ISC10)|(1<<INT1)
 	out		MCUCR,r16
