@@ -1,5 +1,5 @@
 
-AVRASM ver. 2.2.7  C:\Users\Fredrik\Documents\Atmel Studio\7.0\TSIU51\TSIU51-1\TSIU51-1\main.asm Thu Feb 21 08:12:27 2019
+AVRASM ver. 2.2.7  C:\Users\Fredrik\Documents\Atmel Studio\7.0\TSIU51\TSIU51-1\TSIU51-1\main.asm Thu Feb 21 09:53:22 2019
 
 [builtin](2): Including file 'C:/Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.2.209\avrasm\inc\m16adef.inc'
 [builtin](2): Including file 'C:/Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.2.209\avrasm\inc\m16adef.inc'
@@ -879,7 +879,7 @@ AVRASM ver. 2.2.7  C:\Users\Fredrik\Documents\Atmel Studio\7.0\TSIU51\TSIU51-1\T
                                  	.org		0
 000000 c02e                      	rjmp		COLD
                                  	.org		INT1addr
-000004 c0c2                      	rjmp		BUTTON_PRESSED
+000004 c0be                      	rjmp		BUTTON_PRESSED
                                  
                                  //TABELLER-------------------------------------------------------
 000005 4241
@@ -944,7 +944,7 @@ AVRASM ver. 2.2.7  C:\Users\Fredrik\Documents\Atmel Studio\7.0\TSIU51\TSIU51-1\T
 000030 bf0e                      	out		SPH,r16
 000031 e50f                      	ldi		r16,LOW(RAMEND)
 000032 bf0d                      	out		SPL,r16
-000033 d124                      	rcall	INIT
+000033 d120                      	rcall	INIT
                                  
                                  WARM:
 000034 d003                      	rcall	START_FUNCTION
@@ -963,7 +963,7 @@ AVRASM ver. 2.2.7  C:\Users\Fredrik\Documents\Atmel Studio\7.0\TSIU51\TSIU51-1\T
 00003b e507                      	ldi		r16,$57
 00003c 9300 007f                 	sts		BLINK_COLOURS,r16
                                  START_STALL:
-00003e d109                      	rcall	BLINK
+00003e d105                      	rcall	BLINK
 00003f 9110 007e                 	lds		r17,START_STATUS
 000041 3010                      	cpi		r17,$00
 000042 f3d9                      	breq	START_STALL
@@ -1032,13 +1032,13 @@ AVRASM ver. 2.2.7  C:\Users\Fredrik\Documents\Atmel Studio\7.0\TSIU51\TSIU51-1\T
 000073 7f38                      	andi	r19,$F8
 000074 2b03                      	or		r16,r19
 000075 bb08                      	out		PORTB,r16	//a0-a2 - 0 (Längst till vänster)		
-000076 d0a3                      	rcall	SHORT_DELAY
+000076 d09f                      	rcall	SHORT_DELAY
 000077 bb1b                      	out		PORTA,r17
-000078 d0a1                      	rcall	SHORT_DELAY
+000078 d09d                      	rcall	SHORT_DELAY
 000079 98af                      	cbi		PORTC,7 //ce låg
-00007a d09f                      	rcall	SHORT_DELAY
+00007a d09b                      	rcall	SHORT_DELAY
 00007b 9aaf                      	sbi		PORTC,7 //ce hög
-00007c d09d                      	rcall	SHORT_DELAY
+00007c d099                      	rcall	SHORT_DELAY
 00007d 913f                      	pop		r19
 00007e 9508                      	ret
                                  //SKRIV ALLA ÅTTA TECKEN PÅ DISPLAYEN--------------------------------
@@ -1082,164 +1082,154 @@ AVRASM ver. 2.2.7  C:\Users\Fredrik\Documents\Atmel Studio\7.0\TSIU51\TSIU51-1\T
 000098 c003                      	rjmp	RIGHT_CHECK_DONE
 000099 9987                      	sbic	PIND,7
 00009a c001                      	rjmp	RIGHT_CHECK_DONE
-00009b d016                      	rcall	RIGHT
+00009b d014                      	rcall	RIGHT
                                  RIGHT_CHECK_DONE:
 00009c 9508                      	ret
                                  
                                  //HANTERA VRIDNING VÄNSTER---------------------------------------
                                  LEFT:
 00009d 9120 007d                 	lds		r18,CURRENT_LETTER
-00009f ef0f                      	ldi		r16,$FF
-                                 LEFT_LOOP:
-0000a0 950a                      	dec		r16
-0000a1 f7f1                      	brne	LEFT_LOOP
-0000a2 9987                      	sbic	PIND,7
-0000a3 c00d                      	rjmp	LEFT_DONE
-0000a4 9523                      	inc		r18
-0000a5 312d                      	cpi		r18,$1D
-0000a6 f409                      	brne	LEFT_CHECK_1
-0000a7 e020                      	ldi		r18,$00
+00009f d076                      	rcall	SHORT_DELAY
+0000a0 9987                      	sbic	PIND,7
+0000a1 c00d                      	rjmp	LEFT_DONE
+0000a2 9523                      	inc		r18
+0000a3 312d                      	cpi		r18,$1D
+0000a4 f409                      	brne	LEFT_CHECK_1
+0000a5 e020                      	ldi		r18,$00
                                  LEFT_CHECK_1:
-0000a8 9986                      	sbic	PIND,6
-0000a9 cffe                      	rjmp	LEFT_CHECK_1
+0000a6 9986                      	sbic	PIND,6
+0000a7 cffe                      	rjmp	LEFT_CHECK_1
                                  LEFT_CHECK_2:
-0000aa 9b87                      	sbis	PIND,7
-0000ab cffe                      	rjmp	LEFT_CHECK_2
-0000ac 9b86                      	sbis	PIND,6
-0000ad cffc                      	rjmp	LEFT_CHECK_2
-0000ae 9320 007d                 	sts		CURRENT_LETTER,r18
-0000b0 dfb3                      	rcall	PRINT_LETTER
+0000a8 9b87                      	sbis	PIND,7
+0000a9 cffe                      	rjmp	LEFT_CHECK_2
+0000aa 9b86                      	sbis	PIND,6
+0000ab cffc                      	rjmp	LEFT_CHECK_2
+0000ac 9320 007d                 	sts		CURRENT_LETTER,r18
+0000ae dfb5                      	rcall	PRINT_LETTER
                                  LEFT_DONE:
-0000b1 9508                      	ret	
+0000af 9508                      	ret	
                                  
                                  //HANTERA VRIDNING HÖGER-------------------------------------------
                                  RIGHT:
-0000b2 9120 007d                 	lds		r18,CURRENT_LETTER
-0000b4 ef0f                      	ldi		r16,$FF
-                                 RIGHT_LOOP:
-0000b5 950a                      	dec		r16
-0000b6 f7f1                      	brne	RIGHT_LOOP
-0000b7 9986                      	sbic	PIND,6
-0000b8 c00d                      	rjmp	RIGHT_DONE
-0000b9 952a                      	dec		r18
-0000ba 3f2f                      	cpi		r18,$FF
-0000bb f409                      	brne	RIGHT_CHECK_1
-0000bc e12c                      	ldi		r18,$1C
+0000b0 9120 007d                 	lds		r18,CURRENT_LETTER
+0000b2 d063                      	rcall	SHORT_DELAY
+0000b3 9986                      	sbic	PIND,6
+0000b4 c00d                      	rjmp	RIGHT_DONE
+0000b5 952a                      	dec		r18
+0000b6 3f2f                      	cpi		r18,$FF
+0000b7 f409                      	brne	RIGHT_CHECK_1
+0000b8 e12c                      	ldi		r18,$1C
                                  RIGHT_CHECK_1:
-0000bd 9987                      	sbic	PIND,7
-0000be cffe                      	rjmp	RIGHT_CHECK_1
+0000b9 9987                      	sbic	PIND,7
+0000ba cffe                      	rjmp	RIGHT_CHECK_1
                                  RIGHT_CHECK_2:
-0000bf 9b86                      	sbis	PIND,6
-0000c0 cffe                      	rjmp	RIGHT_CHECK_2
-0000c1 9b87                      	sbis	PIND,7
-0000c2 cffc                      	rjmp	RIGHT_CHECK_2
-0000c3 9320 007d                 	sts		CURRENT_LETTER,r18
-0000c5 df9e                      	rcall	PRINT_LETTER
+0000bb 9b86                      	sbis	PIND,6
+0000bc cffe                      	rjmp	RIGHT_CHECK_2
+0000bd 9b87                      	sbis	PIND,7
+0000be cffc                      	rjmp	RIGHT_CHECK_2
+0000bf 9320 007d                 	sts		CURRENT_LETTER,r18
+0000c1 dfa2                      	rcall	PRINT_LETTER
                                  RIGHT_DONE:
-0000c6 9508                      	ret	
-                                 
-                                 
+0000c2 9508                      	ret	
                                  
                                  //INTERRUPT FÖR KNAPPTRYCKNING--------------------------------------------
                                  BUTTON_PRESSED:
-0000c7 930f                      	push	r16
-0000c8 931f                      	push	r17
-0000c9 932f                      	push	r18
-0000ca 938f                      	push	r24
-0000cb 939f                      	push	r25
-0000cc 93df                      	push	YH
-0000cd 93cf                      	push	YL
-0000ce 93ff                      	push	ZH
-0000cf 93ef                      	push	ZL
-0000d0 b70f                      	in		r16,SREG
-0000d1 930f                      	push	r16
+0000c3 930f                      	push	r16
+0000c4 931f                      	push	r17
+0000c5 932f                      	push	r18
+0000c6 938f                      	push	r24
+0000c7 939f                      	push	r25
+0000c8 93df                      	push	YH
+0000c9 93cf                      	push	YL
+0000ca 93ff                      	push	ZH
+0000cb 93ef                      	push	ZL
+0000cc b70f                      	in		r16,SREG
+0000cd 930f                      	push	r16
                                  
                                  	//Kontrollera om spelet är startat eller inte	
-0000d2 9100 007e                 	lds		r16,START_STATUS
-0000d4 3000                      	cpi		r16,$00
-0000d5 f429                      	brne	GAME_IN_PROGRESS
-0000d6 9503                      	inc		r16
-0000d7 9300 007e                 	sts		START_STATUS,r16
-0000d9 d028                      	rcall	DRAW
+0000ce 9100 007e                 	lds		r16,START_STATUS
+0000d0 3000                      	cpi		r16,$00
+0000d1 f429                      	brne	GAME_IN_PROGRESS
+0000d2 9503                      	inc		r16
+0000d3 9300 007e                 	sts		START_STATUS,r16
+0000d5 d028                      	rcall	DRAW
                                  				//HÄR ÄR KOD SOM INITIERAR PLOTTER (Får den att rita spaces o.s.v.)
-0000da c011                      	rjmp	BUTTON_PRESSED_END
+0000d6 c011                      	rjmp	BUTTON_PRESSED_END
                                  
                                  	//Om spelet redan är startat
                                  GAME_IN_PROGRESS:
                                  	//Kontrollerar om nuvarande bokstav är använd och hoppar i så fall till slut av funktionen
-0000db 9100 007d                 	lds		r16,CURRENT_LETTER
-0000dd e0d0                      	ldi		YH,HIGH(USED)
-0000de e6c0                      	ldi		YL,LOW(USED)
-0000df 0fc0                      	add		YL,r16
-0000e0 8108                      	ld		r16,Y
-0000e1 3000                      	cpi		r16,$00
-0000e2 f449                      	brne	BUTTON_PRESSED_END
-0000e3 d01e                      	rcall	DRAW
+0000d7 9100 007d                 	lds		r16,CURRENT_LETTER
+0000d9 e0d0                      	ldi		YH,HIGH(USED)
+0000da e6c0                      	ldi		YL,LOW(USED)
+0000db 0fc0                      	add		YL,r16
+0000dc 8108                      	ld		r16,Y
+0000dd 3000                      	cpi		r16,$00
+0000de f449                      	brne	BUTTON_PRESSED_END
+0000df d01e                      	rcall	DRAW
                                  	//val för fortsätt
                                  	//val och rcall WIN
                                  	//val och rcall LOSE
                                  	
-                                 NEXT_LETTER:
-0000e4 9120 007d                 	lds		r18,CURRENT_LETTER
-0000e6 e0d0                      	ldi		YH,HIGH(USED)
-0000e7 e6c0                      	ldi		YL,LOW(USED)
-0000e8 0fc2                      	add		YL,r18
-0000e9 e001                      	ldi		r16,$01
-0000ea 8308                      	st		Y,r16
-0000eb df78                      	rcall	PRINT_LETTER
+                                 SET_LETTER_USED:
+0000e0 9120 007d                 	lds		r18,CURRENT_LETTER
+0000e2 e0d0                      	ldi		YH,HIGH(USED)
+0000e3 e6c0                      	ldi		YL,LOW(USED)
+0000e4 0fc2                      	add		YL,r18
+0000e5 e001                      	ldi		r16,$01
+0000e6 8308                      	st		Y,r16
+0000e7 df7c                      	rcall	PRINT_LETTER
                                  
                                  BUTTON_PRESSED_END:
-                                 	//sbic	PORTD,3
-                                 	//rjmp	BUTTON_PRESSED_END
-0000ec e200                      	ldi		r16,$20
+0000e8 e200                      	ldi		r16,$20
                                  BUTTON_PRESSED_END_LOOP:
-0000ed d02c                      	rcall	SHORT_DELAY
-0000ee 950a                      	dec		r16
-0000ef f7e9                      	brne	BUTTON_PRESSED_END_LOOP
-0000f0 b70a                      	in		r16,GIFR
-0000f1 7800                      	andi	r16,$80
-0000f2 3800                      	cpi		r16,$80
-0000f3 f411                      	brne	GIFR_NOT_SET
-0000f4 e800                      	ldi		r16,(1<<INTF1)
-0000f5 bf0a                      	out		GIFR,r16
+0000e9 d02c                      	rcall	SHORT_DELAY
+0000ea 950a                      	dec		r16
+0000eb f7e9                      	brne	BUTTON_PRESSED_END_LOOP
+0000ec b70a                      	in		r16,GIFR
+0000ed 7800                      	andi	r16,$80
+0000ee 3800                      	cpi		r16,$80
+0000ef f411                      	brne	GIFR_NOT_SET
+0000f0 e800                      	ldi		r16,(1<<INTF1)
+0000f1 bf0a                      	out		GIFR,r16
                                  GIFR_NOT_SET:
-0000f6 910f                      	pop		r16
-0000f7 bf0f                      	out		SREG,r16
-0000f8 91ef                      	pop		ZL
-0000f9 91ff                      	pop		ZH
-0000fa 91cf                      	pop		YL
-0000fb 91df                      	pop		YH
-0000fc 919f                      	pop		r25
-0000fd 918f                      	pop		r24
-0000fe 912f                      	pop		r18
-0000ff 911f                      	pop		r17
-000100 910f                      	pop		r16
-000101 9518                      	reti
+0000f2 910f                      	pop		r16
+0000f3 bf0f                      	out		SREG,r16
+0000f4 91ef                      	pop		ZL
+0000f5 91ff                      	pop		ZH
+0000f6 91cf                      	pop		YL
+0000f7 91df                      	pop		YH
+0000f8 919f                      	pop		r25
+0000f9 918f                      	pop		r24
+0000fa 912f                      	pop		r18
+0000fb 911f                      	pop		r17
+0000fc 910f                      	pop		r16
+0000fd 9518                      	reti
                                  
                                  
                                  
                                  DRAW:
-000102 e0f0                      	ldi		ZH,HIGH(DRAW_MESSAGE*2)
-000103 e4e8                      	ldi		ZL,LOW(DRAW_MESSAGE*2)
-000104 e007                      	ldi		r16,$07 //sista platsen i tabellen
-000105 0fe0                      	add		ZL,r16
-000106 e028                      	ldi		r18,$08
+0000fe e0f0                      	ldi		ZH,HIGH(DRAW_MESSAGE*2)
+0000ff e4e8                      	ldi		ZL,LOW(DRAW_MESSAGE*2)
+000100 e007                      	ldi		r16,$07 //sista platsen i tabellen
+000101 0fe0                      	add		ZL,r16
+000102 e028                      	ldi		r18,$08
                                  DRAW_LOOP:
-000107 9114                      	lpm		r17,Z
-000108 df68                      	rcall	PRINT_DISPLAY
-000109 95ea                      	dec		ZL
-00010a 950a                      	dec		r16
-00010b 952a                      	dec		r18
-00010c f7d1                      	brne	DRAW_LOOP
-00010d 7f18                      	andi	r17,$F8
-00010e 6014                      	ori		r17,$04  //Ändrar färgen till gul
-00010f e407                      	ldi		r16,$47 //Gul
-000110 9300 007f                 	sts		BLINK_COLOURS,r16
+000103 9114                      	lpm		r17,Z
+000104 df6c                      	rcall	PRINT_DISPLAY
+000105 95ea                      	dec		ZL
+000106 950a                      	dec		r16
+000107 952a                      	dec		r18
+000108 f7d1                      	brne	DRAW_LOOP
+000109 7f18                      	andi	r17,$F8
+00010a 6014                      	ori		r17,$04  //Ändrar färgen till gul
+00010b e407                      	ldi		r16,$47 //Gul
+00010c 9300 007f                 	sts		BLINK_COLOURS,r16
                                  DRAW_STALL:
-000112 d035                      	rcall	BLINK
+00010e d035                      	rcall	BLINK
                                  	//Vänta på plotter
                                  	//rjmp	DRAW_STALL			//Kommentera in när vi kan hantera svarsignal från plotter
-000113 9508                      	ret
+00010f 9508                      	ret
                                  
                                  
                                  
@@ -1249,139 +1239,139 @@ AVRASM ver. 2.2.7  C:\Users\Fredrik\Documents\Atmel Studio\7.0\TSIU51\TSIU51-1\T
                                  //STARTA SPI-ÖVERFÖRING (Ännu ej testad)------------------------------------
                                  INITIATE_SPI_TRANSFER:
                                  		//Förutsätter rätt data i r16
-000114 98c4                      	cbi		PORTB,4			//Slave select låg
-000115 b90f                      	out		SPDR,r16
+000110 98c4                      	cbi		PORTB,4			//Slave select låg
+000111 b90f                      	out		SPDR,r16
                                  SPI_WAIT:
-000116 9b77                      	sbis	SPSR,SPIF
-000117 cffe                      	rjmp	SPI_WAIT
-000118 9ac4                      	sbi		PORTB,4			//Slave select hög
-000119 9508                      	ret
+000112 9b77                      	sbis	SPSR,SPIF
+000113 cffe                      	rjmp	SPI_WAIT
+000114 9ac4                      	sbi		PORTB,4			//Slave select hög
+000115 9508                      	ret
                                  
                                  //KORT DELAY, T.EX. VID SKRIVNING TILL DISPLAY---------------------------------------------------------------
                                  SHORT_DELAY:
-00011a 930f                      	push	r16
-00011b ef0f                      	ldi		r16,$FF
+000116 930f                      	push	r16
+000117 ef0f                      	ldi		r16,$FF
                                  SHORT_DELAY_LOOP:
-00011c 950a                      	dec		r16
-00011d f7f1                      	brne	SHORT_DELAY_LOOP
-00011e 910f                      	pop		r16
-00011f 9508                      	ret	
+000118 950a                      	dec		r16
+000119 f7f1                      	brne	SHORT_DELAY_LOOP
+00011a 910f                      	pop		r16
+00011b 9508                      	ret	
                                  
                                  //LÅNG DELAY, T.EX. FÖR KNAPPBLINKNING---------------------------------------------------------------
                                  LONG_DELAY:
-000120 938f                      	push	r24
-000121 939f                      	push	r25
-000122 ef8f                      	ldi		r24,$FF
-000123 e09e                      	ldi		r25,$0E
+00011c 938f                      	push	r24
+00011d 939f                      	push	r25
+00011e ef8f                      	ldi		r24,$FF
+00011f e09e                      	ldi		r25,$0E
                                  LONG_DELAY_LOOP:
-000124 dff5                      	rcall	SHORT_DELAY
-000125 9701                      	sbiw	r25:r24,1
-000126 f7e9                      	brne	LONG_DELAY_LOOP
-000127 919f                      	pop		r25
-000128 918f                      	pop		r24
-000129 9508                      	ret
+000120 dff5                      	rcall	SHORT_DELAY
+000121 9701                      	sbiw	r25:r24,1
+000122 f7e9                      	brne	LONG_DELAY_LOOP
+000123 919f                      	pop		r25
+000124 918f                      	pop		r24
+000125 9508                      	ret
                                  
                                  
                                  
                                  //SEGERMEDDELANDE----------------------------------
                                  WIN:
-00012a 94f8                      	cli
-00012b e0f0                      	ldi		ZH,HIGH(WIN_MESSAGE*2)
-00012c e3e8                      	ldi		ZL,LOW(WIN_MESSAGE*2)
-00012d df51                      	rcall	PRINT_ENTIRE_DISPLAY
-00012e e0f0                      	ldi		ZH,HIGH(RAINBOW*2)
-00012f e5e8                      	ldi		ZL,LOW(RAINBOW*2)
-000130 2711                      	clr		r17
+000126 94f8                      	cli
+000127 e0f0                      	ldi		ZH,HIGH(WIN_MESSAGE*2)
+000128 e3e8                      	ldi		ZL,LOW(WIN_MESSAGE*2)
+000129 df55                      	rcall	PRINT_ENTIRE_DISPLAY
+00012a e0f0                      	ldi		ZH,HIGH(RAINBOW*2)
+00012b e5e8                      	ldi		ZL,LOW(RAINBOW*2)
+00012c 2711                      	clr		r17
                                  WIN_STALL:
-000131 9105                      	lpm		r16,Z+
-000132 3005                      	cpi		r16,$05
-000133 f409                      	brne	WIN_COLOUR_CHECK_DONE
-000134 50e6                      	subi	ZL,$06
+00012d 9105                      	lpm		r16,Z+
+00012e 3005                      	cpi		r16,$05
+00012f f409                      	brne	WIN_COLOUR_CHECK_DONE
+000130 50e6                      	subi	ZL,$06
                                  WIN_COLOUR_CHECK_DONE:
-000135 bb02                      	out		PORTD,r16
-000136 ef8f                      	ldi		r24,$FF
-000137 e094                      	ldi		r25,$04
+000131 bb02                      	out		PORTD,r16
+000132 ef8f                      	ldi		r24,$FF
+000133 e094                      	ldi		r25,$04
                                  WIN_DELAY_LOOP:
-000138 dfe1                      	rcall	SHORT_DELAY
-000139 9701                      	sbiw	r24:r25,1
-00013a f7e9                      	brne	WIN_DELAY_LOOP
-00013b cff5                      	rjmp	WIN_STALL
-00013c 9508                      	ret
+000134 dfe1                      	rcall	SHORT_DELAY
+000135 9701                      	sbiw	r24:r25,1
+000136 f7e9                      	brne	WIN_DELAY_LOOP
+000137 cff5                      	rjmp	WIN_STALL
+000138 9508                      	ret
                                  
                                  
                                  //FÖRLUSTMEDDELANDE--------------------------------------
                                  LOSE:
-00013d 94f8                      	cli
-00013e e0f0                      	ldi		ZH,HIGH(LOSE_MESSAGE*2)
-00013f e4e0                      	ldi		ZL,LOW(LOSE_MESSAGE*2)
-000140 df3e                      	rcall	PRINT_ENTIRE_DISPLAY
-000141 2711                      	clr		r17
-000142 e706                      	ldi		r16,$76 // ladda röd färg
-000143 9300 007f                 	sts		BLINK_COLOURS,r16
+000139 94f8                      	cli
+00013a e0f0                      	ldi		ZH,HIGH(LOSE_MESSAGE*2)
+00013b e4e0                      	ldi		ZL,LOW(LOSE_MESSAGE*2)
+00013c df42                      	rcall	PRINT_ENTIRE_DISPLAY
+00013d 2711                      	clr		r17
+00013e e706                      	ldi		r16,$76 // ladda röd färg
+00013f 9300 007f                 	sts		BLINK_COLOURS,r16
                                  LOSE_STALL:
-000145 d002                      	rcall	BLINK	
-000146 cffe                      	rjmp	LOSE_STALL
-000147 9508                      	ret
+000141 d002                      	rcall	BLINK	
+000142 cffe                      	rjmp	LOSE_STALL
+000143 9508                      	ret
                                  
                                  //BLINKA LAMPAN PÅ VRIDREGLAGET--------------------------------------
                                  BLINK:
                                  	//Kräver att rätt färger är laddade på de fyra högsta respektive lägsta bitarna i BLINK_COLOURS i SRAM
-000148 930f                      	push	r16
-000149 931f                      	push	r17
-00014a b310                      	in		r17,PIND
-00014b 9100 007f                 	lds		r16,BLINK_COLOURS
-00014d 9502                      	swap	r16
-00014e 9300 007f                 	sts		BLINK_COLOURS,r16
-000150 7f18                      	andi	r17,$F8
-000151 7007                      	andi	r16,$07
-000152 2b01                      	or		r16,r17
-000153 bb02                      	out		PORTD,r16
-000154 dfcb                      	rcall	LONG_DELAY
-000155 911f                      	pop		r17
-000156 910f                      	pop		r16
-000157 9508                      	ret
+000144 930f                      	push	r16
+000145 931f                      	push	r17
+000146 b310                      	in		r17,PIND
+000147 9100 007f                 	lds		r16,BLINK_COLOURS
+000149 9502                      	swap	r16
+00014a 9300 007f                 	sts		BLINK_COLOURS,r16
+00014c 7f18                      	andi	r17,$F8
+00014d 7007                      	andi	r16,$07
+00014e 2b01                      	or		r16,r17
+00014f bb02                      	out		PORTD,r16
+000150 dfcb                      	rcall	LONG_DELAY
+000151 911f                      	pop		r17
+000152 910f                      	pop		r16
+000153 9508                      	ret
                                  
                                  //HÅRDVARUINITIERING SAMT CLEAR AV SRAM-------------------------------------------------
-                                 	INIT:
-000158 e025                      	ldi		r18,$05 //temp satt dioden till grön
-000159 bb22                      	out		PORTD,r18// same same
-00015a 9aa8                      	sbi		PORTC,0		//a3-1
-00015b 9aa9                      	sbi		PORTC,1		//a4-1
-00015c 9aaf                      	sbi		PORTC,7		//Sätt ce hög för skärmen
-00015d 9a95                      	sbi		PORTD,5		//Flash hög
-00015e dfbb                      	rcall	SHORT_DELAY
-00015f ef0f                      	ldi		r16,$FF
-000160 bb0a                      	out		DDRA,r16
-000161 eb07                      	ldi		r16,$B7
-000162 bb07                      	out		DDRB,r16
-000163 e803                      	ldi		r16,$83
-000164 bb04                      	out		DDRC,r16
-000165 e307                      	ldi		r16,$37
-000166 bb01                      	out		DDRD,r16
+                                 INIT:
+000154 e025                      	ldi		r18,$05 //temp satt dioden till grön
+000155 bb22                      	out		PORTD,r18// same same
+000156 9aa8                      	sbi		PORTC,0		//a3-1
+000157 9aa9                      	sbi		PORTC,1		//a4-1
+000158 9aaf                      	sbi		PORTC,7		//Sätt ce hög för skärmen
+000159 9a95                      	sbi		PORTD,5		//Flash hög
+00015a dfbb                      	rcall	SHORT_DELAY
+00015b ef0f                      	ldi		r16,$FF
+00015c bb0a                      	out		DDRA,r16
+00015d eb07                      	ldi		r16,$B7
+00015e bb07                      	out		DDRB,r16
+00015f e803                      	ldi		r16,$83
+000160 bb04                      	out		DDRC,r16
+000161 e307                      	ldi		r16,$37
+000162 bb01                      	out		DDRD,r16
                                  			//Sätt alla minnesbitar för använda bokstäver till noll
-000167 e000                      	ldi		r16,$0
-000168 e0d0                      	ldi		YH,HIGH(USED)
-000169 e6c0                      	ldi		YL,LOW(USED)
-00016a e010                      	ldi		r17,$0
+000163 e000                      	ldi		r16,$0
+000164 e0d0                      	ldi		YH,HIGH(USED)
+000165 e6c0                      	ldi		YL,LOW(USED)
+000166 e010                      	ldi		r17,$0
                                  CLEAR_LOOP:
-00016b 9309                      	st		Y+,r16
-00016c 9513                      	inc		r17
-00016d 3210                      	cpi		r17,$20
-00016e f7e1                      	brne	CLEAR_LOOP
+000167 9309                      	st		Y+,r16
+000168 9513                      	inc		r17
+000169 3210                      	cpi		r17,$20
+00016a f7e1                      	brne	CLEAR_LOOP
                                  
                                  	//konfigurera SPI
-00016f e501                      	ldi		r16,(1<<SPE)|(1<<MSTR)|(1<<SPR0)
-000170 b90d                      	out		SPCR,r16
+00016b e501                      	ldi		r16,(1<<SPE)|(1<<MSTR)|(1<<SPR0)
+00016c b90d                      	out		SPCR,r16
                                  
                                  	//konfigurera avbrott
-000171 e808                      	ldi		r16,(1<<ISC11)|(0<<ISC10)|(1<<INT1)
-000172 bf05                      	out		MCUCR,r16
+00016d e808                      	ldi		r16,(1<<ISC11)|(0<<ISC10)|(1<<INT1)
+00016e bf05                      	out		MCUCR,r16
                                  	//aktivera avbrott
-000173 e800                      	ldi		r16,(1<<INT1)
-000174 bf0b                      	out		GICR,r16
+00016f e800                      	ldi		r16,(1<<INT1)
+000170 bf0b                      	out		GICR,r16
                                  	//aktivera avbrott globalt
-000175 9478                      	sei
-000176 9508                      	ret
+000171 9478                      	sei
+000172 9508                      	ret
                                  
 
 
@@ -1402,7 +1392,7 @@ counted separately from r26..r31 here.
 "ATmega16A" register use summary:
 x  :   0 y  :   4 z  :   5 r0 :   0 r1 :   0 r2 :   0 r3 :   0 r4 :   0 
 r5 :   0 r6 :   0 r7 :   0 r8 :   0 r9 :   0 r10:   0 r11:   0 r12:   0 
-r13:   0 r14:   0 r15:   0 r16:  88 r17:  25 r18:  27 r19:   5 r20:   0 
+r13:   0 r14:   0 r15:   0 r16:  84 r17:  25 r18:  27 r19:   5 r20:   0 
 r21:   0 r22:   0 r23:   0 r24:   8 r25:   8 r26:   0 r27:   0 r28:   9 
 r29:   6 r30:  20 r31:  12 
 Registers used: 12 out of 35 (34.3%)
@@ -1412,16 +1402,16 @@ Registers used: 12 out of 35 (34.3%)
 andi  :   5 asr   :   0 bclr  :   0 bld   :   0 brbc  :   0 brbs  :   0 
 brcc  :   0 brcs  :   0 break :   0 breq  :   1 brge  :   0 brhc  :   0 
 brhs  :   0 brid  :   0 brie  :   0 brlo  :   0 brlt  :   0 brmi  :   0 
-brne  :  17 brpl  :   0 brsh  :   0 brtc  :   0 brts  :   0 brvc  :   0 
+brne  :  15 brpl  :   0 brsh  :   0 brtc  :   0 brts  :   0 brvc  :   0 
 brvs  :   0 bset  :   0 bst   :   0 call  :   0 cbi   :   4 cbr   :   0 
 clc   :   0 clh   :   0 cli   :   2 cln   :   0 clr   :   2 cls   :   0 
 clt   :   0 clv   :   0 clz   :   0 com   :   0 cp    :   0 cpc   :   0 
-cpi   :   9 cpse  :   0 dec   :  14 eor   :   0 fmul  :   0 fmuls :   0 
+cpi   :   9 cpse  :   0 dec   :  12 eor   :   0 fmul  :   0 fmuls :   0 
 fmulsu:   0 icall :   0 ijmp  :   0 in    :   3 inc   :   3 jmp   :   0 
-ld    :   2 ldd   :   0 ldi   :  60 lds   :   8 lpm   :   9 lsl   :   0 
+ld    :   2 ldd   :   0 ldi   :  58 lds   :   8 lpm   :   9 lsl   :   0 
 lsr   :   0 mov   :   0 movw  :   0 mul   :   0 muls  :   0 mulsu :   0 
 neg   :   0 nop   :   0 or    :   2 ori   :   1 out   :  17 pop   :  23 
-push  :  23 rcall :  32 ret   :  17 reti  :   1 rjmp  :  20 rol   :   0 
+push  :  23 rcall :  34 ret   :  17 reti  :   1 rjmp  :  20 rol   :   0 
 ror   :   0 sbc   :   0 sbci  :   0 sbi   :  10 sbic  :   6 sbis  :   7 
 sbiw  :   2 sbr   :   0 sbrc  :   0 sbrs  :   0 sec   :   0 seh   :   0 
 sei   :   1 sen   :   0 ser   :   0 ses   :   0 set   :   0 sev   :   0 
@@ -1432,7 +1422,7 @@ Instructions used: 33 out of 113 (29.2%)
 "ATmega16A" memory use summary [bytes]:
 Segment   Begin    End      Code   Data   Used    Size   Use%
 ---------------------------------------------------------------
-[.cseg] 0x000000 0x0002ee    660     84    744   16384   4.5%
+[.cseg] 0x000000 0x0002e6    652     84    736   16384   4.5%
 [.dseg] 0x000060 0x000080      0     32     32    1024   3.1%
 [.eseg] 0x000000 0x000000      0      0      0     512   0.0%
 

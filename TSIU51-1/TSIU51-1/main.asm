@@ -184,10 +184,7 @@ RIGHT_CHECK_DONE:
 //HANTERA VRIDNING VÄNSTER---------------------------------------
 LEFT:
 	lds		r18,CURRENT_LETTER
-	ldi		r16,$FF
-LEFT_LOOP:
-	dec		r16
-	brne	LEFT_LOOP
+	rcall	SHORT_DELAY
 	sbic	PIND,7
 	rjmp	LEFT_DONE
 	inc		r18
@@ -210,10 +207,7 @@ LEFT_DONE:
 //HANTERA VRIDNING HÖGER-------------------------------------------
 RIGHT:
 	lds		r18,CURRENT_LETTER
-	ldi		r16,$FF
-RIGHT_LOOP:
-	dec		r16
-	brne	RIGHT_LOOP
+	rcall	SHORT_DELAY
 	sbic	PIND,6
 	rjmp	RIGHT_DONE
 	dec		r18
@@ -232,8 +226,6 @@ RIGHT_CHECK_2:
 	rcall	PRINT_LETTER
 RIGHT_DONE:
 	ret	
-
-
 
 //INTERRUPT FÖR KNAPPTRYCKNING--------------------------------------------
 BUTTON_PRESSED:
@@ -274,7 +266,7 @@ GAME_IN_PROGRESS:
 	//val och rcall WIN
 	//val och rcall LOSE
 	
-NEXT_LETTER:
+SET_LETTER_USED:
 	lds		r18,CURRENT_LETTER
 	ldi		YH,HIGH(USED)
 	ldi		YL,LOW(USED)
@@ -435,7 +427,7 @@ BLINK:
 	ret
 
 //HÅRDVARUINITIERING SAMT CLEAR AV SRAM-------------------------------------------------
-	INIT:
+INIT:
 	ldi		r18,$05 //temp satt dioden till grön
 	out		PORTD,r18// same same
 	sbi		PORTC,0		//a3-1
