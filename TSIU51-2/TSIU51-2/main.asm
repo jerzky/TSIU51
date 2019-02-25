@@ -13,9 +13,11 @@
 	.dseg
 	WRONG_GUESS_INDEX: .byte 1
 	CURRENT_LETTER_INDEX: .byte 1
+	CURRENT_WORD_LENGTH: .byte 1
+	GO_BACK_PARA: .byte	4
 	.cseg
 
-	CURRENT_WORD: .db $13, $13, $00, $01, $0B, $04, $FF
+	CURRENT_WORD: .db $0D, $00, $13, $08, $0E, $0D, $00, $0B, $04, $0D, $02, $18, $0A, $0E, $0F, $04, $03, $08, $0D,  $FF
 
 INIT:
 		
@@ -34,37 +36,63 @@ INIT:
 						
 
 START:		
-		/*	call	SETUP_GAME
-			
-			ldi		r17, $0B //L
+		
+			call	SETUP_GAME ; SÄTTER WORD LENGTH MED
+
+			ldi		r17, $0F //P
+			rcall	GUESS_LETTER      
+						
+			ldi		r17, $08 //I
 			rcall	GUESS_LETTER
 
-			ldi		r17, 1 //B
+			ldi		r17, $01 //B
 			rcall	GUESS_LETTER
-			*/
+			
 			ldi		r17, $14 //U
 			rcall	GUESS_LETTER
 			
-			ldi		r17, $10 //V
+			ldi		r17, $10 //Q
 			rcall	GUESS_LETTER
 			
 			ldi		r17, $16 //W
 			rcall	GUESS_LETTER
-			
+
+			ldi		r17, $18 //Y
+			rcall	GUESS_LETTER
+
+			ldi		r17, $0B //L
+			rcall	GUESS_LETTER
+
+			ldi		r17, $0A //K
+			rcall	GUESS_LETTER
+
+
 			ldi		r17, $02 //c
 			rcall	GUESS_LETTER
 			
+			ldi		r17, $0D //N
+			rcall	GUESS_LETTER
+
+			ldi		r17, $0E //O
+			rcall	GUESS_LETTER
+
 			ldi		r17, $04 //E
 			rcall	GUESS_LETTER
 
 			ldi		r17, $13//T
 			rcall	GUESS_LETTER
 
-			ldi		r17, 0 //A
+			ldi		r17, $00 //A
 			rcall	GUESS_LETTER			
-			
+		
+
+
 END:
 			jmp	end
+
+
+
+
 
 
 GET_CURRENT_WORD:
@@ -74,12 +102,12 @@ GET_CURRENT_WORD:
 
 
 
-
-
 SETUP_GAME:
 			push	ZH
 			push	ZL
 			push	r16
+			push	r18
+			clr		r18
 			ldi		ZH, HIGH(LETTERS_SETUP_START_POS*2)
 			ldi		ZL, LOW(LETTERS_SETUP_START_POS*2)
 			rcall	DRAW_FUNC
@@ -95,31 +123,24 @@ SETUP_GAME_LOOP:
 			rcall	DRAW_FUNC
 			pop		ZL
 			pop		ZH
+			inc		r18 ; COUNT WORD LENGTH
 			rjmp	SETUP_GAME_LOOP
-SETUP_GAME_LOOP_DONE:		
-			rcall	GET_CURRENT_WORD
-SETUP_BACK_LOOP:
-			lpm		r16, Z+
-			cpi		r16, $FF
-			breq	SETUP_BACK_DONE
-			push	ZH
-			push	ZL
+SETUP_GAME_LOOP_DONE:					
+			rcall	GET_CURRENT_WORD ; SET WORD LENGTH
+			sts		CURRENT_WORD_LENGTH, r18
+			mov		r16, r18
 			ldi		ZH, HIGH(LETTER_SUB_BACK*2)
 			ldi		ZL, LOW(LETTER_SUB_BACK*2)
-			rcall	DRAW_FUNC
-			pop		ZL
-			pop		ZH
-			rjmp	SETUP_BACK_LOOP
-SETUP_BACK_DONE:
-
+			rcall	GO_BACK_FUNCTION		
+			ldi		r16, $01
 			ldi		ZH, HIGH(LETTERS_SETUP_BACK_HOME*2)
 			ldi		ZL, LOW(LETTERS_SETUP_BACK_HOME*2)
-			rcall	DRAW_FUNC
+			rcall	GO_BACK_FUNCTION
+			pop		r18
 			pop		r16
 			pop		ZL
 			pop		ZH
 			ret
-
 
 
 //R17 is what letter to guess
@@ -154,22 +175,14 @@ GUESS_CONTINUE_LOOP:
 			pop		ZL
 			pop		ZH
 			rjmp	GUESS_LETTER_LOOP
-
 GUESS_LETTER_LOOP_DONE:
 			rcall	GET_CURRENT_WORD
-GUESS_LETTER_GO_BACK:			
-			lpm		r16, Z+
-			cpi		r16, $FF
-			breq	GUESS_LETTER_GO_BACK_DONE
-			push	ZH
-			push	ZL
+			
+			lds		r16, CURRENT_WORD_LENGTH
 			ldi		ZH, HIGH(LETTERS_MOVE_LEFT*2)
 			ldi		ZL, LOW(LETTERS_MOVE_LEFT*2)
-			rcall	DRAW_FUNC
-			pop		ZL
-			pop		ZH
-			rjmp	GUESS_LETTER_GO_BACK
-GUESS_LETTER_GO_BACK_DONE:
+			rcall	GO_BACK_FUNCTION			
+			ldi		r16, 1
 			ldi		ZH, HIGH(LETTERS_BACK_HOME*2)
 			ldi		ZL, LOW(LETTERS_BACK_HOME*2)
 			rcall	DRAW_FUNC
@@ -177,11 +190,41 @@ GUESS_LETTER_GO_BACK_DONE:
 			pop		ZH
 			cpi		r18, $FF
 			breq	GUESS_EXIT
-			rcall	DRAW_GRAPHICS
+			ldi		ZH, HIGH(GRAPHICS_ALL*2)
+			ldi		ZL, LOW(GRAPHICS_ALL*2)
+			lds		r16, WRONG_GUESS_INDEX
+			rcall	JUMP_TABLE
+
 			rcall	WRITE_WRONG_LETTER
 GUESS_EXIT:
 			pop		r18
 			ret
+
+
+
+
+
+;r16 för hur många i loopen
+GO_BACK_FUNCTION:
+			cpi		r16, $00
+			breq	GO_BACK_FUNCTION_EXIT
+			push	r17
+			push	r18
+			mov		r17, ZH
+			mov		r18, ZL
+GO_BACK_FUNCTION_LOOP:
+			mov		ZH, r17
+			mov		ZL, r18
+			rcall	DRAW_FUNC
+			dec		r16
+			brne	GO_BACK_FUNCTION_LOOP
+			pop		r18
+			pop		r17
+GO_BACK_FUNCTION_EXIT:
+			ret
+
+
+
 
 
 
@@ -191,41 +234,25 @@ WRITE_WRONG_LETTER:
 			push	ZL
 			ldi		ZH, HIGH(WRONG_LETTERS_START_POS*2)
 			ldi		ZL, LOW(WRONG_LETTERS_START_POS*2)
-			rcall	DRAW_FUNC
-			
-			lds		r16, WRONG_GUESS_INDEX
-			cpi		r16, $00
-			breq	WRITE_WRONG_LETTER_LOOP_EXIT
+			rcall	DRAW_FUNC			
 		
 			ldi		ZH, HIGH(LETTERS_MOVE_RIGHT*2)
 			ldi		ZL, LOW(LETTERS_MOVE_RIGHT*2)
-			push	r16
-WRITE_WRONG_LETTER_LOOP:		
-			rcall	DRAW_FUNC
-			dec		r16
-			brne	WRITE_WRONG_LETTER_LOOP
-			pop		r16
-WRITE_WRONG_LETTER_LOOP_EXIT:
+			lds		r16, WRONG_GUESS_INDEX
+			rcall	GO_BACK_FUNCTION
 
 			lds		r16, CURRENT_LETTER_INDEX
 			rcall	DRAW_LETTER
-
+			
 			ldi		ZH, HIGH(WRONG_LETTERS_MOVE_LITTLE_LEFT*2)
 			ldi		ZL, LOW(WRONG_LETTERS_MOVE_LITTLE_LEFT*2)
 			rcall	DRAW_FUNC
-
+			
 			lds		r16, WRONG_GUESS_INDEX
 			ldi		ZH, HIGH(WRONG_LETTERS_MOVE_LEFT*2)
 			ldi		ZL, LOW(WRONG_LETTERS_MOVE_LEFT*2)
-
-			cpi		r16, $00
-			breq	WRITE_WRONG_LETTER_BACK_LOOP_EXIT
-WRITE_WRONG_LETTER_BACK_LOOP:
-			rcall	DRAW_FUNC		
-			dec		r16
-			brne	WRITE_WRONG_LETTER_BACK_LOOP
-WRITE_WRONG_LETTER_BACK_LOOP_EXIT:
-
+			rcall	GO_BACK_FUNCTION
+			
 			ldi		ZH, HIGH(WRONG_LETTERS_BACK_HOME*2)
 			ldi		ZL, LOW(WRONG_LETTERS_BACK_HOME*2)
 			rcall	DRAW_FUNC
@@ -238,32 +265,6 @@ WRITE_WRONG_LETTER_BACK_LOOP_EXIT:
 			pop		ZH
 			ret
 
-
-
-
-
-
-
-
-
-
-
-
-			
-DRAW_GRAPHICS:
-			push	ZH
-			push	ZL
-			push	r16
-
-			ldi		ZH, HIGH(GRAPHICS_ALL*2)
-			ldi		ZL, LOW(GRAPHICS_ALL*2)
-			lds		r16, WRONG_GUESS_INDEX
-			rcall	JUMP_TABLE
-			
-			pop		r16
-			pop		ZH
-			pop		ZL
-			ret
 
 DRAW_LETTER:
 			push	ZH

@@ -38,6 +38,7 @@ DRAW_FUNC:
 			push	ZH	
 			push	ZL
 			push	r16
+			push	r18
 DRAW_FUNC_LOOP:
 			lpm		r16, Z+
 			cpi		r16, $FF
@@ -52,6 +53,7 @@ DRAW_FUNC_LOOP:
 			rjmp	DRAW_FUNC_LOOP					
 DRAW_FUNC_DONE:
 			rcall	RAISE_PEN
+			pop		r18
 			pop		r16
 			pop		ZL
 			pop		ZH
