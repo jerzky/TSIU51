@@ -11,30 +11,34 @@
 	rjmp		BUTTON_PRESSED
 
 //TABELLER-------------------------------------------------------
-BOKSTAV:		.db "ABCDEFGHIJKLMNOPQRSTUVWXYZ",$13,$15,$17,$0
-USED_MESSAGE:	.db " ANV",$15,"ND " // lägga till space först
-FREE_MESSAGE:	.db " VALBAR " //läga till space först
-WIN_MESSAGE:	.db "GRATTIS",$21
+BOKSTAV:		.db "ABCDEFGHIJKLMNOPQRSTUVWXYZ",$13,$15,$17,$0	//$13 = Å, $15 = Ä, $17 = Ö
+USED_MESSAGE:	.db " ANV",$15,"ND " 
+FREE_MESSAGE:	.db " VALBAR "
+WIN_MESSAGE:	.db "GRATTIS!"
 LOSE_MESSAGE:	.db "DU SUGER"//"F",$17,"RLORAT" //space $20
-DRAW_MESSAGE:	.db " RITAR",$21,$20
-START_MESSAGE:	.db " START",$21,$20
+CORRECT_MESSAGE:.db	"  R",$15,"TT  "
+WRONG_MESSAGE:	.db	"  FEL!  "
+DRAW_MESSAGE:	.db " RITAR! "
+START_MESSAGE:	.db " START! "
 RAINBOW:		.db $01,$03,$02,$06,$04,$05
 
 
 //SRAM-----------------------------------------------------------
 	.dseg 
 USED:
-	.byte		29
-CURRENT_LETTER:
-	.byte		1
-START_STATUS:
-	.byte		1
+	.byte		29		//Lista över använda bokstäver, 0 = inte använd, 1 = använd
+CURRENT_LETTER:		
+	.byte		1		//Nuvarande bokstav att visa på display samt välja
+START_STATUS:		
+	.byte		1		//0 innan start, 1 sedan
 BLINK_COLOURS:
-	.byte		1
+	.byte		1		//Ska laddas med de två blinkande färgerna på låg respektive hög nibble
 BUTTON_STATUS:
-	.byte		1
+	.byte		1		//Sätts till 1 vid knapptryckning, ska sättas till 0 vid hantering.
 ROTARY_STATUS:
-	.byte		1
+	.byte		1		//Sätts till 1 vid vänster, 2 vid höger. Rensa till 0.
+PLOTTER_RESPONSE:
+	.byte		1		//Innehåller responskod från plottern, bit 0 = rätt, bit 1 = fel, bit 2 = vinst, bit 3 = förlust
 	.cseg
 
 //MAIN-----------------------------------------------------------
@@ -46,6 +50,7 @@ COLD:
 	rcall	INIT
 
 WARM:
+	rcall	CLEAR_SRAM
 	rcall	START_FUNCTION
 	rcall	PRINT_LETTER
 
@@ -72,13 +77,14 @@ START_STALL:
 	cpi		r17,$00
 	breq	START_STALL
 START_DONE:
+	ldi		r16,$80
 	rcall	DRAW
 	rcall	CLEAR_INTERRUPT
-	//HÄR ÄR KOD SOM INITIERAR PLOTTER (Får den att rita spaces o.s.v.)	
 	ret
 
 //KONTROLL OM ANVÄND BOKSTAV-----------------------------------------------
 USED_CHECK:
+	//Kräver att CURRENT_LETTER ligger på r18
 	push	r16
 	push	r17
 	ldi		YH,HIGH(USED)
@@ -117,22 +123,22 @@ USED_CHECK_PRINT_LOOP:
 
 //SKRIV NUVARANDE BOKSTAV SAMT ANVÄNDSTATUS--------------------------------
 PRINT_LETTER:
-	push	r16
-	push	r17
-	push	r18
+	//push	r16
+	//push	r17
+	//push	r18
 	ldi		r16,$00
 	lds		r18,CURRENT_LETTER
 	rcall	LOAD_LETTER								
 	rcall	PRINT_DISPLAY
 	rcall	USED_CHECK
-	pop		r18
-	pop		r17
-	pop		r16
+	//pop		r18
+	//pop		r17
+	//pop		r16
 	ret
 
 //SKRIV ETT TECKEN-------------------------------------------------
 PRINT_DISPLAY:
-	push	r19
+	//push	r19
 	ldi		r19,PINB
 	andi	r19,$F8
 	or		r16,r19
@@ -144,12 +150,12 @@ PRINT_DISPLAY:
 	rcall	SHORT_DELAY
 	sbi		PORTC,7 //ce hög
 	rcall	SHORT_DELAY
-	pop		r19
+	//pop		r19
 	ret
 
 //SKRIV ALLA ÅTTA TECKEN PÅ DISPLAYEN--------------------------------
 PRINT_ENTIRE_DISPLAY:
-		//Kräver att rätt tabell är laddad i z-register först. Tabellen måste vara 8 tecken lång.
+	//Kräver att rätt tabell är laddad i z-register först. Tabellen måste vara 8 tecken lång.
 	ldi		r16,$07  //ladda platsen för sista bokstaven i tabellen. 
 	add		ZL,r16  //hämta den platsen i tabellen 'T'
 	ldi		r18,$08 //antalet loops
@@ -210,17 +216,6 @@ LEFT_CHECK_2:
 LEFT_DONE:
 	ret	
 
-//ÖKA ELLER SÄNK NUVARANDE BOKSTAV-------------------------
-LETTER_CHANGE_CHECK:
-	lds		r16,ROTARY_STATUS
-	sbrc	r16,0
-	rcall	INC_LETTER
-	sbrc	r16,1
-	rcall	DEC_LETTER
-	ldi		r16,$00
-	sts		ROTARY_STATUS,r16
-	ret
-
 //HANTERA VRIDNING HÖGER-------------------------------------------
 RIGHT:
 	rcall	SHORT_DELAY
@@ -238,8 +233,19 @@ RIGHT_CHECK_2:
 	sts		ROTARY_STATUS,r16
 RIGHT_DONE:
 	ret	
+		
+	//ÖKA ELLER SÄNK NUVARANDE BOKSTAV-------------------------
+LETTER_CHANGE_CHECK:
+	lds		r16,ROTARY_STATUS
+	sbrc	r16,0
+	rcall	INC_LETTER
+	sbrc	r16,1
+	rcall	DEC_LETTER
+	ldi		r16,$00
+	sts		ROTARY_STATUS,r16
+	ret
 
-//MINSKA NUVARANDE BOKSTAV-------------------
+//MINSKA NUVARANDE BOKSTAV-------------------------------------
 DEC_LETTER:
 	lds		r18,CURRENT_LETTER
 	dec		r18
@@ -251,7 +257,7 @@ NOT_MIN:
 	rcall	PRINT_LETTER
 	ret
 
-//ÖKA NUVARANDE BOKSTAV----------------
+//ÖKA NUVARANDE BOKSTAV-----------------------------------------
 INC_LETTER:
 	lds		r18,CURRENT_LETTER
 	inc		r18
@@ -263,7 +269,9 @@ NOT_MAX:
 	rcall	PRINT_LETTER
 	ret
 
-//INTERRUPT FÖR KNAPPTRYCKNING--------------------------------------------
+
+
+//INTERRUPT FÖR KNAPPTRYCKNING-----------------------------------
 BUTTON_PRESSED:
 	push	r16
 	in		r16,SREG
@@ -275,7 +283,9 @@ BUTTON_PRESSED:
 	pop		r16
 	reti	
 
-//KONTROLLERAR VALD BOKSTAV OCH SKRIVER UT DEN OM TILLGÄNGLIG--------------------
+
+
+//KONTROLLERAR VALD BOKSTAV OCH SKRIVER UT DEN OM TILLGÄNGLIG-----
 LETTER_CHOSEN:
 	//Kontrollerar om nuvarande bokstav är använd och hoppar i så fall till slut av funktionen
 	lds		r16,CURRENT_LETTER
@@ -286,10 +296,7 @@ LETTER_CHOSEN:
 	cpi		r16,$00
 	brne	LETTER_CHOSEN_END
 	rcall	DRAW
-	//val för fortsätt
-	//val och rcall WIN
-	//val och rcall LOSE
-	
+
 SET_LETTER_USED:
 	lds		r18,CURRENT_LETTER
 	ldi		YH,HIGH(USED)
@@ -302,6 +309,7 @@ LETTER_CHOSEN_END:
 	rcall	CLEAR_INTERRUPT
 	ret
 
+//RENSAR INTERRUPTFLAGGAN-----------------------------------
 CLEAR_INTERRUPT:
 	ldi		r16,$20
 CLEAR_INTERRUPT_LOOP:
@@ -310,8 +318,8 @@ CLEAR_INTERRUPT_LOOP:
 	brne	CLEAR_INTERRUPT_LOOP
 	in		r16,GIFR
 	andi	r16,$80
-	cpi		r16,$80
-	brne	GIFR_NOT_SET
+	sbrc	r16,$07
+	rjmp	GIFR_NOT_SET
 	ldi		r16,(1<<INTF1)
 	out		GIFR,r16
 GIFR_NOT_SET:
@@ -321,6 +329,8 @@ GIFR_NOT_SET:
 
 //SKRIVER UT "RITAR" OCH VÄNTAR PÅ SVAR FRÅN PLOTTER-------------------
 DRAW:
+	//Kräver rätt kod till plottern på r16
+	rcall	INITIATE_SPI_TRANSFER
 	ldi		ZH,HIGH(DRAW_MESSAGE*2)
 	ldi		ZL,LOW(DRAW_MESSAGE*2)
 	ldi		r16,$07 //sista platsen i tabellen
@@ -337,10 +347,15 @@ DRAW_LOOP:
 	ori		r17,$04  //Ändrar färgen till gul
 	ldi		r16,$47 //Gul
 	sts		BLINK_COLOURS,r16
+
 DRAW_STALL:
 	rcall	BLINK
-	//Vänta på plotter
-	//rjmp	DRAW_STALL			//Kommentera in när vi kan hantera svarsignal från plotter
+	ldi		r16,$00
+	rcall	INITIATE_SPI_TRANSFER
+	lds		r16,PLOTTER_RESPONSE
+	cpi		r16,$00
+	//breq	DRAW_STALL	//Kommentera in när vi kan hantera svarsignal från plotter	
+	rcall	PLOTTER_RESPONSE_CHECK
 	ret
 
 
@@ -353,9 +368,28 @@ SPI_WAIT:
 	sbis	SPSR,SPIF
 	rjmp	SPI_WAIT
 	sbi		PORTB,4			//Slave select hög
+	in		r16,SPDR
+	sts		PLOTTER_RESPONSE,r16
 	ret
 
-//KORT DELAY, T.EX. VID SKRIVNING TILL DISPLAY---------------------------------------------------------------
+	
+//KONTROLLERAR SVAR FRÅN PLOTTER------------------------
+PLOTTER_RESPONSE_CHECK:
+	lds		r16,PLOTTER_RESPONSE
+	sbrc	r16,0
+	rcall	CORRECT
+	sbrc	r16,1
+	rcall	WRONG
+	sbrc	r16,2
+	rcall	WIN
+	sbrc	r16,3
+	rcall	LOSE
+PLOTTER_RESPONSE_DONE:
+	ldi		r16,$00
+	sts		PLOTTER_RESPONSE,r16
+	ret
+
+//KORT DELAY, T.EX. VID SKRIVNING TILL DISPLAY-----------
 SHORT_DELAY:
 	push	r16
 	ldi		r16,$FF
@@ -365,21 +399,38 @@ SHORT_DELAY_LOOP:
 	pop		r16
 	ret	
 
-//LÅNG DELAY, T.EX. FÖR KNAPPBLINKNING---------------------------------------------------------------
+//LÅNG DELAY, T.EX. FÖR KNAPPBLINKNING--------------
 LONG_DELAY:
-	push	r24
-	push	r25
-	ldi		r24,$FF
-	ldi		r25,$0E
-LONG_DELAY_LOOP:
 	rcall	SHORT_DELAY
 	sbiw	r25:r24,1
-	brne	LONG_DELAY_LOOP
-	pop		r25
-	pop		r24
+	brne	LONG_DELAY
 	ret
 
+//MEDDELANDE VID RÄTT BOKSTAV-----------------------
+CORRECT:
+	sbi		PORTD,0
+	cbi		PORTD,1
+	sbi		PORTD,2
+	ldi		ZH,HIGH(CORRECT_MESSAGE*2)
+	ldi		ZL,LOW(CORRECT_MESSAGE*2)
+	rcall	PRINT_ENTIRE_DISPLAY
+	ldi		r24,$FF
+	ldi		r25,$40
+	rcall	LONG_DELAY
+	ret
 
+//MEDDELANDE VID FEL BOKSTAV-----------------------
+WRONG:
+	cbi		PORTD,0
+	sbi		PORTD,1
+	sbi		PORTD,2
+	ldi		ZH,HIGH(WRONG_MESSAGE*2)
+	ldi		ZL,LOW(WRONG_MESSAGE*2)
+	rcall	PRINT_ENTIRE_DISPLAY
+	ldi		r24,$FF
+	ldi		r25,$40
+	rcall	LONG_DELAY	
+	ret
 
 //SEGERMEDDELANDE----------------------------------
 WIN:
@@ -399,15 +450,12 @@ WIN_COLOUR_CHECK_DONE:
 	out		PORTD,r16
 	ldi		r24,$FF
 	ldi		r25,$04
-WIN_DELAY_LOOP:
-	rcall	SHORT_DELAY
-	sbiw	r24:r25,1
-	brne	WIN_DELAY_LOOP
+	rcall	LONG_DELAY
 	rjmp	WIN_STALL
 	ret
 
 
-//FÖRLUSTMEDDELANDE--------------------------------------
+//FÖRLUSTMEDDELANDE--------------------------------
 LOSE:
 	cli
 	ldi		ZH,HIGH(LOSE_MESSAGE*2)
@@ -421,7 +469,7 @@ LOSE_STALL:
 	rjmp	LOSE_STALL
 	ret
 
-//BLINKA LAMPAN PÅ VRIDREGLAGET--------------------------------------
+//BLINKA LAMPAN PÅ VRIDREGLAGET---------------------
 BLINK:
 	//Kräver att rätt färger är laddade på de fyra högsta respektive lägsta bitarna i BLINK_COLOURS i SRAM
 	push	r16
@@ -434,12 +482,26 @@ BLINK:
 	andi	r16,$07
 	or		r16,r17
 	out		PORTD,r16
+	ldi		r24,$FF
+	ldi		r25,$0E
 	rcall	LONG_DELAY
 	pop		r17
 	pop		r16
 	ret
 
-//HÅRDVARUINITIERING SAMT CLEAR AV SRAM-------------------------------------------------
+//SÄTTER ALLA BITAR I SRAM TILL NOLL-----------------
+CLEAR_SRAM:
+	ldi		r16,$0
+	ldi		YH,HIGH(USED)
+	ldi		YL,LOW(USED)
+	ldi		r17,$23
+CLEAR_LOOP:
+	st		Y+,r16
+	dec		r17
+	brne	CLEAR_LOOP
+	ret
+
+//HÅRDVARUINITIERING---------------------------------
 INIT:
 	ldi		r18,$05 //temp satt dioden till grön
 	out		PORTD,r18// same same
@@ -456,16 +518,7 @@ INIT:
 	out		DDRC,r16
 	ldi		r16,$37
 	out		DDRD,r16
-			//Sätt alla minnesbitar för använda bokstäver till noll
-	ldi		r16,$0
-	ldi		YH,HIGH(USED)
-	ldi		YL,LOW(USED)
-	ldi		r17,$0
-CLEAR_LOOP:
-	st		Y+,r16
-	inc		r17
-	cpi		r17,$22
-	brne	CLEAR_LOOP
+
 	//konfigurera SPI
 	ldi		r16,(1<<SPE)|(1<<MSTR)|(1<<SPR0)
 	out		SPCR,r16
@@ -478,4 +531,3 @@ CLEAR_LOOP:
 	//aktivera avbrott globalt
 	sei
 	ret
-
