@@ -20,6 +20,11 @@ CORRECT_MESSAGE:.db	"  R",$15,"TT  "
 WRONG_MESSAGE:	.db	"  FEL!  "
 DRAW_MESSAGE:	.db " RITAR! "
 START_MESSAGE:	.db " START! "
+EASY_MESSAGE:	.db "  L",$15,"TT  "
+NORMAL_MESSAGE: .db " NORMAL "
+HARD_MESSAGE:	.db "  SV",$13,"R  "
+LEVEL_MESSAGE:	.db	" NIV",$13,"?  "
+
 RAINBOW:		.db $01,$03,$02,$06,$04,$05
 
 
@@ -39,6 +44,8 @@ ROTARY_STATUS:
 	.byte		1		//Sätts till 1 vid vänster, 2 vid höger. Rensa till 0.
 PLOTTER_RESPONSE:
 	.byte		1		//Innehåller responskod från plottern, bit 0 = rätt, bit 1 = fel, bit 2 = vinst, bit 3 = förlust
+DIFFICULTY_CHOICE:
+	.byte		1
 	.cseg
 
 //MAIN-----------------------------------------------------------
@@ -51,7 +58,12 @@ COLD:
 
 WARM:
 	rcall	CLEAR_SRAM
+
+START:
 	rcall	START_FUNCTION
+	rcall	START_MENU
+	//HÄR LADDAR VI R16 MED STATUSKOD FÖR SVÅRIGHETSGRAD
+	rcall	DRAW
 	rcall	PRINT_LETTER
 
 MAIN_LOOP:
@@ -78,8 +90,68 @@ START_STALL:
 	breq	START_STALL
 START_DONE:
 	ldi		r16,$80
-	rcall	DRAW
 	rcall	CLEAR_INTERRUPT
+	ret
+
+//VAL AV SVÅRIGHETSGRAD------------------------------
+START_MENU:
+	sbi		PORTD,0
+	sbi		PORTD,1
+	cbi		PORTD,2
+	ldi		ZH,HIGH(LEVEL_MESSAGE*2)
+	ldi		ZL,LOW(LEVEL_MESSAGE*2)
+	rcall	PRINT_ENTIRE_DISPLAY
+	ldi		r24,$FF
+	ldi		r25,$40
+	rcall	LONG_DELAY
+	ldi		ZH,HIGH(NORMAL_MESSAGE*2)
+	ldi		ZL,LOW(NORMAL_MESSAGE*2)
+	rcall	PRINT_ENTIRE_DISPLAY
+	ldi		r16,$01
+	sts		DIFFICULTY_CHOICE,r16
+
+START_MENU_LOOP:
+	rcall	ROTARY_CHECK
+	lds		r16,ROTARY_STATUS
+	cpi		r16,$00
+	breq	NO_LEVEL_CHANGE
+	rcall	LEVEL_INPUT
+NO_LEVEL_CHANGE:
+	lds		r16,BUTTON_STATUS
+	sbrs	r16,0
+	rjmp	START_MENU_LOOP
+START_MENU_END:
+	rcall	CLEAR_INTERRUPT
+	//SKICKA STATUSKODER TILL PLOTTER (KANSKE)
+	ret
+
+//HANTERA DISPLAYEN OCH SPARAD SVÅRIGHETSGRAD VID NIVÅVAL------------
+LEVEL_INPUT:
+	lds		r17,DIFFICULTY_CHOICE
+	cpi		r16,$01
+	brne	LEVEL_NOT_LEFT
+	sbrs	r17,1
+	inc		r17
+LEVEL_NOT_LEFT:
+	cpi		r16,$02
+	brne	LEVEL_NOT_RIGHT
+	dec		r17
+	sbrc	r17,7
+	ldi		r17,$00
+LEVEL_NOT_RIGHT:
+	sts		DIFFICULTY_CHOICE,r17
+	ldi		ZH,HIGH(EASY_MESSAGE*2)
+	ldi		ZL,LOW(EASY_MESSAGE*2)
+LEVEL_INC_LOOP:
+	cpi		r17,$00
+	breq	LEVEL_INPUT_DONE
+	adiw	Z,$08
+	dec		r17
+	rjmp	LEVEL_INC_LOOP
+LEVEL_INPUT_DONE:
+	rcall	PRINT_ENTIRE_DISPLAY
+	ldi		r16,$00
+	sts		ROTARY_STATUS,r16
 	ret
 
 //KONTROLL OM ANVÄND BOKSTAV-----------------------------------------------
