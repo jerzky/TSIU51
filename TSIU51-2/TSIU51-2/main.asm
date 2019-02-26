@@ -50,7 +50,7 @@ INIT:
 
 START:		
 			cbi		PORTB,3
-			rjmp	END
+			rcall	RANDOM
 			lds		r16,RANDOM_SEED
 			sts		CURRENT_WORD_INDEX,r16
 			call	SETUP_GAME ; SÄTTER WORD LENGTH MED
@@ -62,7 +62,7 @@ GAME_LOOP:
 			rcall	SPI_RECIEVE			
 			rcall	GUESS_LETTER
 			rcall	OUTCOME
-			ldi		r17, $01 //Här skicka outcome value istället
+			lds		r17,OUTCOME_VALUE
 			sbi		PORTB, 3
 			rcall	SPI_RECIEVE
 			rjmp	GAME_LOOP	
@@ -70,7 +70,6 @@ GAME_LOOP:
 
 
 END:
-			rcall	RANDOM
 			jmp	end
 
 
@@ -120,7 +119,8 @@ GET_CURRENT_WORD:
 			push	r16
 			ldi		ZH, HIGH(ALL_WORDS*2)
 			ldi		ZL, LOW(ALL_WORDS*2)
-			lds		r16,WORD_TABLE_INDEX
+			ldi		r16,$00
+			//lds		r16,WORD_TABLE_INDEX
 			rcall	JUMP_TABLE
 			lds		r16, CURRENT_WORD_INDEX
 			rcall	JUMP_TABLE
