@@ -7,14 +7,14 @@
 ; Replace with your application code
 
 	.org 0000
-	jmp INIT
+ 	jmp INIT
 	.include "tables.inc"
 	.include "drivers.inc"
 	.dseg
 	WRONG_GUESS_INDEX: .byte 1
 	CURRENT_LETTER_INDEX: .byte 1
 	CURRENT_WORD_LENGTH: .byte 1
-	GO_BACK_PARA: .byte	4
+	CURRENT_WORD_INDEX: .byte 1
 	.cseg
 
 	CURRENT_WORD: .db $0D, $00, $13, $08, $0E, $0D, $00, $0B, $04, $0D, $02, $18, $0A, $0E, $0F, $04, $03, $08, $0D,  $FF
@@ -29,77 +29,64 @@ INIT:
 			out		DDRA, r16
 			ldi		r16, $80
 			out		DDRC, r16
+			ldi		r16, $44
+			out		DDRB, r16
 
 			ldi		r16, $00
 			sts		WRONG_GUESS_INDEX, r16
 			sts		CURRENT_LETTER_INDEX, r16
+			sts		CURRENT_WORD_INDEX, r16
+
+			//INIT för SPI.
+			; Enable SPI
+			ldi		r16,(1<<SPE)|(0<<MSTR)
+			out		SPCR,r16
 						
 
 START:		
-		
+//			cbi		PORTB,3
+//			ldi		r17,$00
+//			out		SPDR,r17
+//			sbis	SPSR,SPIF
+//			rjmp	START
+//			in		r17,SPDR
+
 			call	SETUP_GAME ; SÄTTER WORD LENGTH MED
 
-			ldi		r17, $0F //P
-			rcall	GUESS_LETTER      
-						
-			ldi		r17, $08 //I
-			rcall	GUESS_LETTER
 
-			ldi		r17, $01 //B
+GAME_LOOP:
+			cbi		PORTB,3
+			ldi		r17,$00
+			rcall	SPI_RECIEVE			
 			rcall	GUESS_LETTER
-			
-			ldi		r17, $14 //U
-			rcall	GUESS_LETTER
-			
-			ldi		r17, $10 //Q
-			rcall	GUESS_LETTER
-			
-			ldi		r17, $16 //W
-			rcall	GUESS_LETTER
-
-			ldi		r17, $18 //Y
-			rcall	GUESS_LETTER
-
-			ldi		r17, $0B //L
-			rcall	GUESS_LETTER
-
-			ldi		r17, $0A //K
-			rcall	GUESS_LETTER
-
-
-			ldi		r17, $02 //c
-			rcall	GUESS_LETTER
-			
-			ldi		r17, $0D //N
-			rcall	GUESS_LETTER
-
-			ldi		r17, $0E //O
-			rcall	GUESS_LETTER
-
-			ldi		r17, $04 //E
-			rcall	GUESS_LETTER
-
-			ldi		r17, $13//T
-			rcall	GUESS_LETTER
-
-			ldi		r17, $00 //A
-			rcall	GUESS_LETTER			
+			ldi		r17, $01
+			sbi		PORTB, 3
+			rcall	SPI_RECIEVE
+			rjmp	GAME_LOOP	
 		
 
 
 END:
 			jmp	end
 
-
-
-
+SPI_RECIEVE:
+			out			SPDR,r17
+			; Wait for reception compete
+			sbis		SPSR,SPIF
+			rjmp		SPI_RECIEVE
+			; Read recieve data and return
+			in			r17,SPDR
+			ret
 
 
 GET_CURRENT_WORD:
-			ldi		ZH,	HIGH(CURRENT_WORD*2)
-			ldi		ZL, LOW(CURRENT_WORD*2)
+			push	r16
+			ldi		ZH, HIGH(WORDS*2)
+			ldi		ZL, LOW(WORDS*2)
+			lds		r16, CURRENT_WORD_INDEX
+			rcall	JUMP_TABLE
+			pop		r16
 			ret
-
 
 
 SETUP_GAME:
@@ -145,7 +132,7 @@ SETUP_GAME_LOOP_DONE:
 
 //R17 is what letter to guess
 GUESS_LETTER:
-			push		r18
+			push	r18
 			sts		CURRENT_LETTER_INDEX, r17
 			clr		r18
 			push	ZH
@@ -186,17 +173,17 @@ GUESS_LETTER_LOOP_DONE:
 			ldi		ZH, HIGH(LETTERS_BACK_HOME*2)
 			ldi		ZL, LOW(LETTERS_BACK_HOME*2)
 			rcall	DRAW_FUNC
-			pop		ZL
-			pop		ZH
 			cpi		r18, $FF
 			breq	GUESS_EXIT
 			ldi		ZH, HIGH(GRAPHICS_ALL*2)
 			ldi		ZL, LOW(GRAPHICS_ALL*2)
 			lds		r16, WRONG_GUESS_INDEX
 			rcall	JUMP_TABLE
-
+			rcall	DRAW_FUNC
 			rcall	WRITE_WRONG_LETTER
 GUESS_EXIT:
+			pop		ZL
+			pop		ZH
 			pop		r18
 			ret
 
@@ -275,7 +262,7 @@ DRAW_LETTER:
 			ldi		ZL, LOW(ALPHA_ALL*2)
 			lds		r16, CURRENT_LETTER_INDEX
 			rcall	JUMP_TABLE
-			
+			rcall	DRAW_FUNC
 			pop		r16
 			pop		ZH
 			pop		ZL	

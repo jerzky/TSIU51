@@ -27,7 +27,6 @@ JUMP_TABLE:
 			subi	r17, -1		
 			mov		ZH, r17
 			mov		ZL, r16
-			rcall	DRAW_FUNC
 			pop		r17
 			ret
 
