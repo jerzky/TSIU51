@@ -63,7 +63,7 @@ START:
 	rcall	START_FUNCTION
 	rcall	START_MENU
 	lds		r16,DIFFICULTY_CHOICE
-	rcall	INITIATE_SPI_TRANSFER
+	ldi		r16,$00
 	rcall	DRAW
 	rcall	PRINT_LETTER
 	rcall	CLEAR_INTERRUPT
@@ -368,6 +368,7 @@ LETTER_CHOSEN:
 	ld		r16,Y
 	cpi		r16,$00
 	brne	LETTER_CHOSEN_END
+	lds		r16,CURRENT_LETTER
 	rcall	DRAW
 
 SET_LETTER_USED:
@@ -423,16 +424,16 @@ DRAW_LOOP:
 
 DRAW_STALL:
 	rcall	BLINK
+	sbis	PINB,3
+	rjmp	DRAW_STALL
 	ldi		r16,$00
 	rcall	INITIATE_SPI_TRANSFER
-	lds		r16,PLOTTER_RESPONSE
-	cpi		r16,$00
-	//breq	DRAW_STALL	//Kommentera in när vi kan hantera svarsignal från plotter	
 	rcall	PLOTTER_RESPONSE_CHECK
 	ret
 
 
-//STARTA SPI-ÖVERFÖRING (Ännu ej testad)------------------------------------
+
+//STARTA SPI-ÖVERFÖRING------------------------------------
 INITIATE_SPI_TRANSFER:
 	//Förutsätter rätt data i r16
 	cbi		PORTB,4			//Slave select låg
@@ -440,12 +441,11 @@ INITIATE_SPI_TRANSFER:
 SPI_WAIT:
 	sbis	SPSR,SPIF
 	rjmp	SPI_WAIT
-	sbi		PORTB,4			//Slave select hög
 	in		r16,SPDR
+	sbi		PORTB,4			//Slave select hög
 	sts		PLOTTER_RESPONSE,r16
 	ret
 
-	
 //KONTROLLERAR SVAR FRÅN PLOTTER------------------------
 PLOTTER_RESPONSE_CHECK:
 	lds		r16,PLOTTER_RESPONSE
@@ -481,6 +481,7 @@ LONG_DELAY:
 
 //MEDDELANDE VID RÄTT BOKSTAV-----------------------
 CORRECT:
+	push	r16
 	sbi		PORTD,0
 	cbi		PORTD,1
 	sbi		PORTD,2
@@ -490,10 +491,12 @@ CORRECT:
 	ldi		r24,$FF
 	ldi		r25,$40
 	rcall	LONG_DELAY
+	pop		r16
 	ret
 
 //MEDDELANDE VID FEL BOKSTAV-----------------------
 WRONG:
+	push	r16
 	cbi		PORTD,0
 	sbi		PORTD,1
 	sbi		PORTD,2
@@ -503,10 +506,12 @@ WRONG:
 	ldi		r24,$FF
 	ldi		r25,$40
 	rcall	LONG_DELAY	
+	pop		r16
 	ret
 
 //SEGERMEDDELANDE----------------------------------
 WIN:
+	push	r16
 	cli
 	ldi		ZH,HIGH(WIN_MESSAGE*2)
 	ldi		ZL,LOW(WIN_MESSAGE*2)
@@ -525,12 +530,13 @@ WIN_COLOUR_CHECK_DONE:
 	ldi		r25,$04
 	rcall	LONG_DELAY
 	rjmp	WIN_STALL
+	pop		r16
 	ret
 
 
 //FÖRLUSTMEDDELANDE--------------------------------
 LOSE:
-	cli
+	push	r16
 	ldi		ZH,HIGH(LOSE_MESSAGE*2)
 	ldi		ZL,LOW(LOSE_MESSAGE*2)
 	rcall	PRINT_ENTIRE_DISPLAY
@@ -540,6 +546,7 @@ LOSE:
 LOSE_STALL:
 	rcall	BLINK	
 	rjmp	LOSE_STALL
+	pop		r16
 	ret
 
 //BLINKA LAMPAN PÅ VRIDREGLAGET---------------------
@@ -591,6 +598,7 @@ INIT:
 	out		DDRC,r16
 	ldi		r16,$37
 	out		DDRD,r16
+	
 
 	//konfigurera SPI
 	ldi		r16,(1<<SPE)|(1<<MSTR)|(1<<SPR0)
