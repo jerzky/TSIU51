@@ -10,14 +10,18 @@
  	jmp INIT
 	.include "tables.inc"
 	.include "drivers.inc"
+	.include "words.inc"
 	.dseg
 	WRONG_GUESS_INDEX: .byte 1
 	CURRENT_LETTER_INDEX: .byte 1
 	CURRENT_WORD_LENGTH: .byte 1
 	CURRENT_WORD_INDEX: .byte 1
+	WORD_TABLE_INDEX: .byte 1
+	RANDOM_SEED: .byte 1
+	RIGHT_GUESS_INDEX: .byte 1
+	OUTCOME_VALUE: .byte 1
 	.cseg
 
-	CURRENT_WORD: .db $0D, $00, $13, $08, $0E, $0D, $00, $0B, $04, $0D, $02, $18, $0A, $0E, $0F, $04, $03, $08, $0D,  $FF
 
 INIT:
 		
@@ -29,13 +33,14 @@ INIT:
 			out		DDRA, r16
 			ldi		r16, $80
 			out		DDRC, r16
-			ldi		r16, $44
+			ldi		r16, $48
 			out		DDRB, r16
 
 			ldi		r16, $00
 			sts		WRONG_GUESS_INDEX, r16
 			sts		CURRENT_LETTER_INDEX, r16
 			sts		CURRENT_WORD_INDEX, r16
+			sts		RIGHT_GUESS_INDEX, r16
 
 			//INIT för SPI.
 			; Enable SPI
@@ -44,13 +49,10 @@ INIT:
 						
 
 START:		
-//			cbi		PORTB,3
-//			ldi		r17,$00
-//			out		SPDR,r17
-//			sbis	SPSR,SPIF
-//			rjmp	START
-//			in		r17,SPDR
-
+			cbi		PORTB,3
+			rjmp	END
+			lds		r16,RANDOM_SEED
+			sts		CURRENT_WORD_INDEX,r16
 			call	SETUP_GAME ; SÄTTER WORD LENGTH MED
 
 
@@ -59,7 +61,8 @@ GAME_LOOP:
 			ldi		r17,$00
 			rcall	SPI_RECIEVE			
 			rcall	GUESS_LETTER
-			ldi		r17, $01
+			rcall	OUTCOME
+			ldi		r17, $01 //Här skicka outcome value istället
 			sbi		PORTB, 3
 			rcall	SPI_RECIEVE
 			rjmp	GAME_LOOP	
@@ -67,22 +70,58 @@ GAME_LOOP:
 
 
 END:
+			rcall	RANDOM
 			jmp	end
 
+
+RANDOM:
+			push	r16
+			lds		r16,RANDOM_SEED
+			inc		r16
+			andi	r16,$3F
+			sts		RANDOM_SEED,r16
+			pop		r16
+			ret
+OUTCOME:
+			push	r16
+			push	r17
+			ldi		r16,$0B
+			lds		r17,WRONG_GUESS_INDEX
+			cp		r16,r17
+			brne	NOT_WRONG
+			ldi		r16,$08
+			sts		OUTCOME_VALUE,r16
+			rjmp	OUTCOME_EXIT
+NOT_WRONG:
+			lds		r16,CURRENT_WORD_LENGTH
+			lds		r17,RIGHT_GUESS_INDEX
+			cp		r16,r17
+			brne	OUTCOME_EXIT
+			ldi		r16,$04
+			sts		OUTCOME_VALUE,r16
+OUTCOME_EXIT:
+			pop		r17
+			pop		r16
+			ret
+			
 SPI_RECIEVE:
+			sbi			PORTB,3
 			out			SPDR,r17
 			; Wait for reception compete
 			sbis		SPSR,SPIF
 			rjmp		SPI_RECIEVE
 			; Read recieve data and return
 			in			r17,SPDR
+			cbi			PORTB,3
 			ret
 
 
 GET_CURRENT_WORD:
 			push	r16
-			ldi		ZH, HIGH(WORDS*2)
-			ldi		ZL, LOW(WORDS*2)
+			ldi		ZH, HIGH(ALL_WORDS*2)
+			ldi		ZL, LOW(ALL_WORDS*2)
+			lds		r16,WORD_TABLE_INDEX
+			rcall	JUMP_TABLE
 			lds		r16, CURRENT_WORD_INDEX
 			rcall	JUMP_TABLE
 			pop		r16
@@ -137,6 +176,8 @@ GUESS_LETTER:
 			clr		r18
 			push	ZH
 			push	ZL
+			ldi		r16,$02
+			sts		OUTCOME_VALUE,r16
 			ldi		ZH, HIGH(LETTERS_START_POS*2)
 			ldi		ZL, LOW(LETTERS_START_POS*2)
 			rcall	DRAW_FUNC
@@ -151,6 +192,11 @@ GUESS_LETTER_LOOP:
 			brne	NO_MATCH
 			rcall	DRAW_LETTER
 			ldi		r18, $FF
+			lds		r16,RIGHT_GUESS_INDEX
+			inc		r16
+			sts		RIGHT_GUESS_INDEX,r16
+			ldi		r16,$01
+			sts		OUTCOME_VALUE,r16
 			ldi		ZH, HIGH(LETTERS_MOVE_RIGHT_LITTLE*2)
 			ldi		ZL, LOW(LETTERS_MOVE_RIGHT_LITTLE*2)
 			rjmp	GUESS_CONTINUE_LOOP
