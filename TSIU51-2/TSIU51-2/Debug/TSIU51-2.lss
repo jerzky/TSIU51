@@ -1,8 +1,14 @@
 
-AVRASM ver. 2.2.7  C:\Users\Fredrik\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\main.asm Wed Feb 06 13:55:44 2019
+AVRASM ver. 2.2.7  C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\main.asm Fri Mar 01 11:03:24 2019
 
 [builtin](2): Including file 'C:/Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.2.209\avrasm\inc\m16adef.inc'
+C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\main.asm(11): Including file 'C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\tables.inc'
+C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\main.asm(12): Including file 'C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\drivers.inc'
+C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\main.asm(13): Including file 'C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\words.inc'
 [builtin](2): Including file 'C:/Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.2.209\avrasm\inc\m16adef.inc'
+C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\main.asm(11): Including file 'C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\tables.inc'
+C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\main.asm(12): Including file 'C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\drivers.inc'
+C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\main.asm(13): Including file 'C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\words.inc'
                                  
                                  ;
                                  
@@ -875,27 +881,1910 @@ AVRASM ver. 2.2.7  C:\Users\Fredrik\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\T
                                  ; Created: 2019-01-29 10:36:44
                                  ; Author : Fredrik
                                  ;
-                                 
-                                 
                                  ; Replace with your application code
                                  
-                                 COLD:
-000000 e004                      	ldi	 r16,HIGH(RAMEND)
-000001 bf0e                      	out		SPH,r16
-000002 e50f                      	ldi		r16,LOW(RAMEND)
-000003 bf0d                      	out		SPL,r16
-000004 d000                      	rcall	INIT
+                                 	.org 0000
+000000 940c 0516                  	jmp INIT
+                                 	.include "tables.inc"
+                                 
+                                  * tables.inc
+                                  *
+                                  *  Created: 2019-02-14 18:49:32
+                                  *   Author: Jensg
+                                  */ 
+                                 
+000002 5010
+000003 0501
+000004 1511
+000005 5551                      FIRST_PULSE:	.db $10, $50, $01, $05, $11, $15, $51, $55
+000006 4090
+000007 0409
+000008 9499
+000009 4449                      SECOND_PULSE:	.db $90, $40, $09, $04, $99, $94, $49, $44    
+00000a 6080
+00000b 0608
+00000c 8688
+00000d 6668                      THIRD_PULSE:	.db $80, $60, $08, $06, $88, $86, $68, $66
+00000e 20a0
+00000f 020a
+000010 a2aa
+000011 222a                      FOURTH_PULSE:	.db $A0, $20, $0A, $02, $AA, $A2, $2A, $22
+000012 a020
+000013 0a02
+000014 2a22
+000015 aaa2                      FIFTH_PULSE:	.db $20, $A0, $02, $0A, $22, $2A, $A2, $AA
+000016 8060
+000017 0806
+000018 6866
+000019 8886                      SIXTH_PULSE:	.db $60, $80, $06, $08, $66, $68, $86, $88
+00001a 9040
+00001b 0904
+00001c 4944
+00001d 9994                      SEVENTH_PULSE:	.db $40, $90, $04, $09, $44, $49, $94, $99
+00001e 1050
+00001f 0105
+000020 5155
+000021 1115                      EIGHT_PULSE:	.db $50, $10, $05, $01, $55, $51, $15, $11
+                                 
+000022 0e80
+000023 0284
+000024 0482
+000025 0286
+000026 0681
+000027 0883
+000028 0802
+000029 0881
+C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\tables.inc(17): warning: .cseg .db misalignment - padding zero byte
+C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\main.asm(11): 'C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\tables.inc' included form here
+00002a 00ff                      ALPHA_A: .db $80, $0E, $84, $02, $82, $04, $86, $02, $81, $06, $83, $08, $02, $08, $81, $08, $FF
+00002b 1080
+00002c 0682
+00002d 0286
+00002e 0481
+00002f 0287
+000030 0683
+000031 0602
+000032 0286
+000033 0481
+000034 0287
+000035 0683
+000036 0802
+C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\tables.inc(18): warning: .cseg .db misalignment - padding zero byte
+C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\main.asm(11): 'C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\tables.inc' included form here
+000037 00ff                      ALPHA_B: .db $80, $10, $82, $06, $86, $02, $81, $04, $87, $02, $83, $06, $02, $06, $86, $02, $81, $04, $87, $02, $83, $06, $02, $08, $FF
+000038 0400
+000039 0880
+00003a 0484
+00003b 0482
+00003c 1001
+00003d 0483
+00003e 0485
+00003f 0802
+000040 0401
+C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\tables.inc(19): warning: .cseg .db misalignment - padding zero byte
+C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\main.asm(11): 'C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\tables.inc' included form here
+000041 00ff                      ALPHA_C: .db $00, $04, $80, $08, $84, $04, $82, $04, $01, $10, $83, $04, $85, $04, $02, $08, $01, $04, $FF
+000042 1080
+000043 0682
+000044 0286
+000045 0c81
+000046 0287
+000047 0683
+000048 0802
+C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\tables.inc(20): warning: .cseg .db misalignment - padding zero byte
+C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\main.asm(11): 'C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\tables.inc' included form here
+000049 00ff                      ALPHA_D: .db $80, $10, $82, $06, $86, $02, $81, $0C, $87, $02, $83, $06, $02, $08, $FF
+00004a 1080
+00004b 0882
+00004c 0601
+00004d 0883
+00004e 0a01
+00004f 0882
+C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\tables.inc(21): warning: .cseg .db misalignment - padding zero byte
+C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\main.asm(11): 'C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\tables.inc' included form here
+000050 00ff                      ALPHA_E: .db $80, $10, $82, $08, $01, $06, $83, $08, $01, $0A, $82, $08, $FF
+000051 1080
+000052 0882
+000053 0601
+000054 0883
+000055 0a01
+000056 0802
+C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\tables.inc(22): warning: .cseg .db misalignment - padding zero byte
+C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\main.asm(11): 'C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\tables.inc' included form here
+000057 00ff                      ALPHA_F: .db $80, $10, $82, $08, $01, $06, $83, $08, $01, $0A, $02, $08, $FF
+000058 0400
+000059 0880
+00005a 0484
+00005b 0482
+00005c 1001
+00005d 0483
+00005e 0485
+00005f 0802
+000060 0401
+000061 0880
+000062 0483
+000063 0402
+000064 0801
+C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\tables.inc(23): warning: .cseg .db misalignment - padding zero byte
+C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\main.asm(11): 'C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\tables.inc' included form here
+000065 00ff                      ALPHA_G: .db $00, $04, $80, $08, $84, $04, $82, $04, $01, $10, $83, $04, $85, $04, $02, $08, $01, $04, $80, $08, $83, $04, $02, $04, $01, $08, $FF
+000066 1080
+000067 0801
+000068 0882
+000069 0880
+00006a 0801
+00006b 0881
+C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\tables.inc(24): warning: .cseg .db misalignment - padding zero byte
+C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\main.asm(11): 'C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\tables.inc' included form here
+00006c 00ff                      ALPHA_H: .db $80, $10, $01, $08, $82, $08, $80, $08, $01, $08, $81, $08, $FF
+00006d 0302
+00006e 0182
+00006f 1080
+000070 0183
+000071 0102
+000072 0182
+000073 1001
+000074 0183
+000075 0402
+C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\tables.inc(25): warning: .cseg .db misalignment - padding zero byte
+C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\main.asm(11): 'C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\tables.inc' included form here
+000076 00ff                      ALPHA_I: .db $02, $03, $82, $01, $80, $10, $83, $01, $02, $01, $82, $01, $01, $10, $83, $01, $02, $04, $FF
+                                 
+                                 
+000077 1000
+000078 0882
+000079 0e81
+00007a 0287
+00007b 0483
+00007c 0285
+00007d 0802
+00007e 0201
+C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\tables.inc(28): warning: .cseg .db misalignment - padding zero byte
+C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\main.asm(11): 'C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\tables.inc' included form here
+00007f 00ff                      ALPHA_J: .db $00, $10, $82, $08, $81, $0E, $87, $02, $83, $04, $85, $02, $02, $08, $01, $02, $FF
+000080 1080
+000081 0702
+000082 0887
+000083 0886
+C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\tables.inc(29): warning: .cseg .db misalignment - padding zero byte
+C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\main.asm(11): 'C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\tables.inc' included form here
+000084 00ff                      ALPHA_K: .db $80, $10, $02, $07, $87, $08, $86, $08, $FF
+000085 1000
+000086 1081
+000087 0882
+C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\tables.inc(30): warning: .cseg .db misalignment - padding zero byte
+C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\main.asm(11): 'C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\tables.inc' included form here
+000088 00ff                      ALPHA_L: .db $00, $10, $81, $10, $82, $08, $FF
+000089 1080
+00008a 0182
+00008b 0281
+00008c 0182
+00008d 0281
+00008e 0182
+00008f 0281
+000090 0182
+000091 0281
+000092 0280
+000093 0182
+000094 0280
+000095 0182
+000096 0280
+000097 0182
+000098 0280
+000099 0182
+00009a 1081
+C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\tables.inc(31): warning: .cseg .db misalignment - padding zero byte
+C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\main.asm(11): 'C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\tables.inc' included form here
+00009b 00ff                      ALPHA_M: .db $80, $10, $82, $01, $81, $02, $82, $01, $81, $02, $82, $01, $81, $02, $82, $01, $81, $02, $80, $02, $82, $01, $80, $02, $82, $01, $80, $02, $82, $01, $80, $02, $82, $01, $81, $10, $FF
+00009c 1080
+00009d 0182
+00009e 0281
+00009f 0182
+0000a0 0281
+0000a1 0182
+0000a2 0281
+0000a3 0182
+0000a4 0281
+0000a5 0182
+0000a6 0281
+0000a7 0182
+0000a8 0281
+0000a9 0182
+0000aa 0281
+0000ab 0182
+0000ac 0281
+0000ad 1080
+0000ae 1001
+C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\tables.inc(32): warning: .cseg .db misalignment - padding zero byte
+C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\main.asm(11): 'C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\tables.inc' included form here
+0000af 00ff                      ALPHA_N: .db $80, $10, $82, $01, $81, $02, $82, $01, $81, $02, $82, $01, $81, $02, $82, $01, $81, $02, $82, $01, $81, $02, $82, $01, $81, $02, $82, $01, $81, $02, $82, $01, $81, $02, $80, $10, $01, $10, $FF
+0000b0 0200
+0000b1 0c80
+0000b2 0284
+0000b3 0482
+0000b4 0286
+0000b5 0c81
+0000b6 0287
+0000b7 0483
+0000b8 0285
+0000b9 0201
+0000ba 0802
+C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\tables.inc(33): warning: .cseg .db misalignment - padding zero byte
+C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\main.asm(11): 'C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\tables.inc' included form here
+0000bb 00ff                      ALPHA_O: .db $00, $02, $80, $0C, $84, $02, $82, $04, $86, $02, $81, $0C, $87, $02, $83, $04, $85, $02, $01, $02, $02, $08, $FF
+0000bc 1080
+0000bd 0682
+0000be 0286
+0000bf 0481
+0000c0 0287
+0000c1 0683
+0000c2 0802
+0000c3 0801
+C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\tables.inc(34): warning: .cseg .db misalignment - padding zero byte
+C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\main.asm(11): 'C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\tables.inc' included form here
+0000c4 00ff                      ALPHA_P: .db $80, $10, $82, $06, $86, $02, $81, $04, $87, $02, $83, $06, $02, $08, $01, $08, $FF
+0000c5 0200
+0000c6 0c80
+0000c7 0284
+0000c8 0482
+0000c9 0286
+0000ca 0c81
+0000cb 0287
+0000cc 0483
+0000cd 0285
+0000ce 0201
+0000cf 0802
+0000d0 0485
+0000d1 0406
+C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\tables.inc(35): warning: .cseg .db misalignment - padding zero byte
+C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\main.asm(11): 'C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\tables.inc' included form here
+0000d2 00ff                      ALPHA_Q: .db $00, $02, $80, $0C, $84, $02, $82, $04, $86, $02, $81, $0C, $87, $02, $83, $04, $85, $02, $01, $02, $02, $08, $85, $04, $06, $04, $FF
+0000d3 1080
+0000d4 0682
+0000d5 0286
+0000d6 0481
+0000d7 0287
+0000d8 0683
+0000d9 0886
+C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\tables.inc(36): warning: .cseg .db misalignment - padding zero byte
+C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\main.asm(11): 'C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\tables.inc' included form here
+0000da 00ff                      ALPHA_R: .db $80, $10, $82, $06, $86, $02, $81, $04, $87, $02, $83, $06, $86, $08, $FF
+0000db 0300
+0000dc 0386
+0000dd 0282
+0000de 0384
+0000df 0280
+0000e0 0385
+0000e1 0283
+0000e2 0385
+0000e3 0280
+0000e4 0384
+0000e5 0282
+0000e6 0386
+0000e7 0c01
+C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\tables.inc(37): warning: .cseg .db misalignment - padding zero byte
+C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\main.asm(11): 'C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\tables.inc' included form here
+0000e8 00ff                      ALPHA_S: .db $00, $03, $86, $03, $82, $02, $84, $03, $80, $02, $85, $03, $83, $02, $85, $03, $80, $02, $84, $03, $82, $02, $86, $03, $01, $0C, $FF
+0000e9 0402
+0000ea 0f80
+0000eb 0403
+0000ec 0882
+0000ed 0403
+0000ee 0f01
+0000ef 0402
+C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\tables.inc(38): warning: .cseg .db misalignment - padding zero byte
+C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\main.asm(11): 'C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\tables.inc' included form here
+0000f0 00ff                      ALPHA_T: .db $02, $04, $80, $0F, $03, $04, $82, $08, $03, $04, $01, $0F, $02, $04, $FF
+0000f1 1000
+0000f2 0d81
+0000f3 0386
+0000f4 0282
+0000f5 0384
+0000f6 0d80
+0000f7 1001
+C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\tables.inc(39): warning: .cseg .db misalignment - padding zero byte
+C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\main.asm(11): 'C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\tables.inc' included form here
+0000f8 00ff                      ALPHA_U: .db $00, $10, $81, $0D, $86, $03, $82, $02, $84, $03, $80, $0D, $01, $10, $FF
+0000f9 1000
+0000fa 0481
+0000fb 0182
+0000fc 0481
+0000fd 0182
+0000fe 0481
+0000ff 0182
+000100 0481
+000101 0282
+000102 0480
+000103 0182
+000104 0480
+000105 0182
+000106 0480
+000107 0182
+000108 0480
+000109 1001
+C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\tables.inc(40): warning: .cseg .db misalignment - padding zero byte
+C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\main.asm(11): 'C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\tables.inc' included form here
+00010a 00ff                      ALPHA_V: .db $00, $10, $81, $04, $82, $01, $81, $04, $82, $01, $81, $04, $82, $01, $81, $04, $82, $02, $80, $04, $82, $01, $80, $04, $82, $01, $80, $04, $82, $01, $80, $04, $01, $10, $FF
+                                 
+00010b 1000
+00010c 1081
+00010d 0280
+00010e 0182
+00010f 0280
+000110 0182
+000111 0280
+000112 0182
+000113 0280
+000114 0282
+000115 0281
+000116 0182
+000117 0281
+000118 0182
+000119 0281
+00011a 0182
+00011b 0281
+00011c 1000
+00011d 1081
+C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\tables.inc(42): warning: .cseg .db misalignment - padding zero byte
+C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\main.asm(11): 'C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\tables.inc' included form here
+00011e 00ff                      ALPHA_W: .db $00, $10, $81, $10, $80, $02, $82, $01, $80, $02, $82, $01, $80, $02, $82, $01, $80, $02, $82, $02, $81, $02, $82, $01, $81, $02, $82, $01, $81, $02, $82, $01, $81, $02, $00, $10, $81, $10, $FF
+                                 
+00011f 0480
+000120 0884
+000121 0480
+000122 0803
+000123 0481
+000124 0886
+000125 0481
+C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\tables.inc(44): warning: .cseg .db misalignment - padding zero byte
+C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\main.asm(11): 'C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\tables.inc' included form here
+000126 00ff                      ALPHA_X: .db $80, $04, $84, $08, $80, $04, $03, $08, $81, $04, $86, $08, $81, $04, $FF
+000127 0402
+000128 0a80
+000129 0485
+00012a 0280
+00012b 0802
+00012c 0281
+00012d 0487
+00012e 0a01
+00012f 0402
+C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\tables.inc(45): warning: .cseg .db misalignment - padding zero byte
+C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\main.asm(11): 'C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\tables.inc' included form here
+000130 00ff                      ALPHA_Y: .db $02, $04, $80, $0A, $85, $04, $80, $02, $02, $08, $81, $02, $87, $04, $01, $0A, $02, $04, $FF
+000131 0280
+000132 0182
+000133 0280
+000134 0182
+000135 0280
+000136 0182
+000137 0280
+000138 0182
+000139 0280
+00013a 0182
+00013b 0280
+00013c 0182
+00013d 0280
+00013e 0182
+00013f 0280
+000140 0182
+000141 0883
+000142 1001
+000143 0882
+C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\tables.inc(46): warning: .cseg .db misalignment - padding zero byte
+C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\main.asm(11): 'C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\tables.inc' included form here
+000144 00ff                      ALPHA_Z: .db $80, $02, $82, $01, $80, $02, $82, $01, $80, $02, $82, $01, $80, $02, $82, $01, $80, $02, $82, $01, $80, $02, $82, $01, $80, $02, $82, $01, $80, $02, $82, $01, $83, $08, $01, $10, $82, $08, $FF
+000145 0e80
+000146 0284
+000147 0182
+000148 0200
+000149 0482
+00014a 0380
+00014b 0483
+00014c 0381
+00014d 0102
+00014e 0201
+00014f 0382
+000150 0286
+000151 0681
+000152 0803
+000153 0882
+000154 0881
+C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\tables.inc(47): warning: .cseg .db misalignment - padding zero byte
+C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\main.asm(11): 'C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\tables.inc' included form here
+000155 00ff                      ALPHA_OH:.db $80, $0E, $84, $02, $82, $01, $00, $02, $82, $04, $80, $03, $83, $04, $81, $03, $02, $01, $01, $02, $82, $03, $86, $02, $81, $06, $03, $08, $82, $08, $81, $08, $FF
+000156 0e80
+000157 0284
+000158 0182
+000159 0205
+00015a 0103
+00015b 0282
+00015c 0280
+00015d 0283
+00015e 0281
+00015f 0702
+000160 0282
+000161 0280
+000162 0283
+000163 0281
+000164 0403
+000165 0201
+000166 0482
+000167 0286
+000168 0681
+000169 0803
+00016a 0882
+00016b 0881
+C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\tables.inc(48): warning: .cseg .db misalignment - padding zero byte
+C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\main.asm(11): 'C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\tables.inc' included form here
+00016c 00ff                      ALPHA_EH:.db $80, $0E, $84, $02, $82, $01, $05, $02, $03, $01, $82, $02, $80, $02, $83, $02, $81, $02, $02, $07, $82, $02, $80, $02, $83, $02, $81, $02, $03, $04, $01, $02, $82, $04, $86, $02, $81, $06, $03, $08, $82, $08, $81, $08, $FF
+00016d 0200
+00016e 0c80
+00016f 0284
+000170 0182
+000171 0205
+000172 0103
+000173 0282
+000174 0280
+000175 0283
+000176 0281
+000177 0602
+000178 0282
+000179 0280
+00017a 0283
+00017b 0281
+00017c 0303
+00017d 0201
+00017e 0382
+00017f 0286
+000180 0c81
+000181 0287
+000182 0483
+000183 0285
+000184 0206
+000185 0602
+000186 0101
+C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\tables.inc(49): warning: .cseg .db misalignment - padding zero byte
+C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\main.asm(11): 'C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\tables.inc' included form here
+000187 00ff                      ALPHA_OE:.db $00, $02, $80, $0C, $84, $02, $82, $01, $05, $02, $03, $01, $82, $02, $80, $02, $83, $02, $81, $02, $02, $06, $82, $02, $80, $02, $83, $02, $81, $02, $03, $03, $01, $02, $82, $03, $86, $02, $81, $0C, $87, $02, $83, $04, $85, $02, $06, $02, $0                                 2, $06, $01, $01, $FF
+                                 
+000188 0022
+000189 002b
+00018a 0038
+00018b 0042
+00018c 004a
+00018d 0051
+00018e 0058
+00018f 0066
+000190 006d
+000191 0077
+000192 0080
+000193 0085
+000194 0089
+000195 009c
+000196 00b0
+000197 00bc
+000198 00c5
+000199 00d3
+00019a 00db
+00019b 00e9
+00019c 00f1
+00019d 00f9
+00019e 010b
+00019f 011f
+0001a0 0127
+0001a1 0131
+0001a2 0145
+0001a3 0156
+0001a4 016d
+0001a5 00ff                      
+                                 ALPHA_ALL: .dw  ALPHA_A, ALPHA_B, ALPHA_C, ALPHA_D, ALPHA_E, ALPHA_F, ALPHA_G, ALPHA_H, ALPHA_I, ALPHA_J, ALPHA_K, ALPHA_L, ALPHA_M, ALPHA_N, ALPHA_O, ALPHA_P, ALPHA_Q, ALPHA_R, ALPHA_S, ALPHA_T, ALPHA_U, ALPHA_V, ALPHA_W, ALPHA_X, ALPHA_Y, ALPHA_Z, ALPHA                                 _OH, ALPHA_EH, ALPHA_OE, $FF
+                                 
+0001a6 0380
+0001a7 0182
+0001a8 0380
+0001a9 0182
+0001aa 0380
+0001ab 0182
+0001ac 0280
+0001ad 0182
+0001ae 0280
+0001af 0182
+0001b0 0280
+0001b1 0182
+0001b2 0180
+0001b3 0182
+0001b4 0280
+0001b5 0182
+0001b6 0180
+0001b7 0182
+0001b8 0180
+0001b9 0182
+0001ba 0280
+0001bb 0182
+0001bc 0180
+0001bd 0182
+0001be 0180
+0001bf 0182
+0001c0 0180
+0001c1 0182
+0001c2 0180
+0001c3 0182
+0001c4 0180
+0001c5 0182
+0001c6 0180
+0001c7 0182
+0001c8 0180
+0001c9 0182
+0001ca 0180
+0001cb 0182
+0001cc 0180
+0001cd 0182
+0001ce 0180
+0001cf 0182
+0001d0 0180
+0001d1 0182
+0001d2 0180
+0001d3 0282
+0001d4 0180
+0001d5 0182
+0001d6 0180
+0001d7 0282
+0001d8 0180
+0001d9 0182
+0001da 0180
+0001db 0282
+0001dc 0180
+0001dd 0182
+0001de 0180
+0001df 0282
+0001e0 0180
+0001e1 0282
+0001e2 0180
+0001e3 0282
+0001e4 0180
+0001e5 0282
+0001e6 0180
+0001e7 0782
+0001e8 0782
+0001e9 0181
+0001ea 0282
+0001eb 0181
+0001ec 0282
+0001ed 0181
+0001ee 0282
+0001ef 0181
+0001f0 0282
+0001f1 0181
+0001f2 0182
+0001f3 0181
+0001f4 0282
+0001f5 0181
+0001f6 0182
+0001f7 0181
+0001f8 0282
+0001f9 0181
+0001fa 0182
+0001fb 0181
+0001fc 0282
+0001fd 0181
+0001fe 0182
+0001ff 0181
+000200 0182
+000201 0181
+000202 0182
+000203 0181
+000204 0182
+000205 0181
+000206 0182
+000207 0181
+000208 0182
+000209 0181
+00020a 0182
+00020b 0181
+00020c 0182
+00020d 0181
+00020e 0182
+00020f 0181
+000210 0182
+000211 0181
+000212 0182
+000213 0181
+000214 0182
+000215 0281
+000216 0182
+000217 0181
+000218 0182
+000219 0181
+00021a 0182
+00021b 0281
+00021c 0182
+00021d 0181
+00021e 0182
+00021f 0281
+000220 0182
+000221 0281
+000222 0182
+000223 0281
+000224 0182
+000225 0381
+000226 0182
+000227 0381
+000228 0182
+000229 0381
+00022a 5c03
+C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\tables.inc(56): warning: .cseg .db misalignment - padding zero byte
+C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\main.asm(11): 'C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\tables.inc' included form here
+00022b 00ff                      
+00022c 2e02
+00022d 2c00
+00022e 3480
+00022f 6001
+000230 2e03
+C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\tables.inc(57): warning: .cseg .db misalignment - padding zero byte
+C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\main.asm(11): 'C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\tables.inc' included form here
+000231 00ff                      //Tabellen för kullen var ca 400 bytes- är ca 270 nu 
+000232 2e02
+000233 2c00
+000234 3400
+000235 2482
+000236 2403
+000237 6001
+000238 2e03
+C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\tables.inc(58): warning: .cseg .db misalignment - padding zero byte
+C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\main.asm(11): 'C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\tables.inc' included form here
+000239 00ff                      GRAPHIC_PLAT:		.db $80, $03, $82, $01, $80, $03, $82, $01, $80, $03, $82, $01, $80, $02, $82, $01, $80, $02, $82, $01, $80, $02, $82, $01, $80, $01, $82, $01, $80, $02, $82, $01, $80, $01, $82, $01, $80, $01, $82, $01, $80, $02, $82, $01, $80, $01, $82, $00023a 2e02
+00023b 2c00
+00023c 2a00
+00023d 0a84
+00023e 0a07
+00023f 5601
+000240 2e03
+C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\tables.inc(59): warning: .cseg .db misalignment - padding zero byte
+C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\main.asm(11): 'C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\tables.inc' included form here
+000241 00ff                      01, $80, $01, $82, $01, $80, $01, $82, $01, $80, $01, $82, $01, $80, $01, $82, $01, $80, $01, $82, $01, $80, $01, $82, $01, $80, $01, $82, $01, $80, $01, $82, $01, $80, $01, $82, $01, $80, $01, $82, $01, $80, $01, $82, $02, $80, $01, $82, $01, $80, $01, $000242 2e02
+000243 2c00
+000244 3400
+000245 2402
+000246 0a81
+000247 2403
+000248 5601
+000249 2e03
+C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\tables.inc(60): warning: .cseg .db misalignment - padding zero byte
+C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\main.asm(11): 'C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\tables.inc' included form here
+00024a 00ff                      82, $02, $80, $01, $82, $01, $80, $01, $82, $02, $80, $01, $82, $01, $80, $01, $82, $02, $80, $01, $82, $02, $80, $01, $82, $02, $80, $01, $82, $02, $80, $01, $82, $07, $82, $07, $81, $01, $82, $02, $81, $01, $82, $02, $81, $01, $82, $02, $81, $01, $82, $00024b 2e02
+00024c 2c00
+00024d 3400
+00024e 2402
+00024f 0a01
+000250 0282
+000251 0181
+000252 0182
+000253 0181
+000254 0182
+000255 0481
+000256 0183
+000257 0181
+000258 0183
+000259 0181
+00025a 0483
+00025b 0180
+00025c 0183
+00025d 0180
+00025e 0183
+00025f 0380
+000260 0180
+000261 0182
+000262 0180
+000263 0182
+000264 0180
+000265 0282
+000266 2403
+000267 5601
+000268 2e03
+C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\tables.inc(61): warning: .cseg .db misalignment - padding zero byte
+C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\main.asm(11): 'C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\tables.inc' included form here
+000269 00ff                      02, $81, $01, $82, $01, $81, $01, $82, $02, $81, $01, $82, $01, $81, $01, $82, $02, $81, $01, $82, $01, $81, $01, $82, $02, $81, $01, $82, $01, $81, $01, $82, $01, $81, $01, $82, $01, $81, $01, $82, $01, $81, $01, $82, $01, $81, $01, $82, $01, $81, $01, $00026a 2e02
+00026b 6000
+00026c 2402
+00026d 1201
+00026e 1081
+00026f 3e01
+000270 5203
+C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\tables.inc(62): warning: .cseg .db misalignment - padding zero byte
+C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\main.asm(11): 'C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\tables.inc' included form here
+000271 00ff                      82, $01, $81, $01, $82, $01, $81, $01, $82, $01, $81, $01, $82, $01, $81, $01, $82, $01, $81, $01, $82, $01, $81, $02, $82, $01, $81, $01, $82, $01, $81, $01, $82, $01, $81, $02, $82, $01, $81, $01, $82, $01, $81, $02, $82, $01, $81, $02, $82, $01, $81, $000272 5202
+000273 3e00
+000274 0887
+000275 3601
+000276 4a03
+C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\tables.inc(63): warning: .cseg .db misalignment - padding zero byte
+C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\main.asm(11): 'C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\tables.inc' included form here
+000277 00ff                      02, $82, $01, $81, $03, $82, $01, $81, $03, $82, $01, $81, $03, $03, $5C, $FF
+000278 5202
+000279 3e00
+00027a 0886
+00027b 3601
+00027c 5a03
+C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\tables.inc(64): warning: .cseg .db misalignment - padding zero byte
+C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\main.asm(11): 'C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\tables.inc' included form here
+00027d 00ff                      GRAPHIC_PILLAR_1:	.db $02, $2E, $00, $2C, $80, $34, $01, $60, $03, $2E, $FF
+00027e 5202
+00027f 4800
+000280 0885
+000281 5001
+000282 4a03
+C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\tables.inc(65): warning: .cseg .db misalignment - padding zero byte
+C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\main.asm(11): 'C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\tables.inc' included form here
+000283 00ff                      GRAPHIC_PILLAR_2:	.db $02, $2E, $00, $2C, $00, $34, $82, $24, $03, $24, $01, $60, $03, $2E, $FF
+000284 5202
+000285 4800
+000286 0884
+000287 5001
+000288 5a03
+C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\tables.inc(66): warning: .cseg .db misalignment - padding zero byte
+C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\main.asm(11): 'C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\tables.inc' included form here
+000289 00ff                      GRAPHIC_PILLAR_3:	.db $02, $2E, $00, $2C, $00, $2A, $84, $0A, $07, $0A, $01, $56, $03, $2E, $FF
+                                 GRAPHIC_PILLAR_4:	.db $02, $2E, $00, $2C, $00, $34, $02, $24, $81, $0A, $03, $24, $01, $56, $03, $2E, $FF
+00028a 01a6
+00028b 022c
+00028c 0232
+00028d 023a
+00028e 0242
+00028f 024b
+000290 026a
+000291 0272
+000292 0278
+000293 027e
+000294 0284
+000295 00ff                      GRAPHIC_HEAD:		.db $02, $2E, $00, $2C, $00, $34, $02, $24, $01, $0A, $82, $02, $81, $01, $82, $01, $81, $01, $82, $01, $81, $04, $83, $01, $81, $01, $83, $01, $81, $01, $83, $04, $80, $01, $83, $01, $80, $01, $83, $01, $80, $03, $80, $01, $82, $01, $80, $                                 01, $82, $01, $80, $01, $82, $02, $03, $24, $01, $56, $03, $2E, $FF
+000296 b402
+000297 3c00
+C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\tables.inc(70): warning: .cseg .db misalignment - padding zero byte
+C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\main.asm(11): 'C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\tables.inc' included form here
+000298 00ff                      GRAPHIC_BODY:		.db $02, $2E, $00, $60, $02, $24, $01, $12, $81, $10, $01, $3E, $03, $52, $FF
+000299 b403
+00029a 3c01
+C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\tables.inc(71): warning: .cseg .db misalignment - padding zero byte
+C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\main.asm(11): 'C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\tables.inc' included form here
+00029b 00ff                      GRAPHIC_LEFT_LEG:	.db $02, $52, $00, $3E, $87, $08, $01, $36, $03, $4A, $FF
+00029c 0a82
+00029d 0602
+C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\tables.inc(72): warning: .cseg .db misalignment - padding zero byte
+C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\main.asm(11): 'C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\tables.inc' included form here
+00029e 00ff                      GRAPHIC_RIGHT_LEG:	.db $02, $52, $00, $3E, $86, $08, $01, $36, $03, $5A, $FF
+00029f 1003
+C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\tables.inc(73): warning: .cseg .db misalignment - padding zero byte
+C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\main.asm(11): 'C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\tables.inc' included form here
+0002a0 00ff                      GRAPHIC_LEFT_ARM:	.db $02, $52, $00, $48, $85, $08, $01, $50, $03, $4A, $FF
+                                 GRAPHIC_RIGHT_ARM:	.db $02, $52, $00, $48, $84, $08, $01, $50, $03, $5A, $FF
+0002a1 b502
+0002a2 3e00
+C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\tables.inc(75): warning: .cseg .db misalignment - padding zero byte
+C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\main.asm(11): 'C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\tables.inc' included form here
+0002a3 00ff                      
+0002a4 b503
+0002a5 3e01
+C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\tables.inc(76): warning: .cseg .db misalignment - padding zero byte
+C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\main.asm(11): 'C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\tables.inc' included form here
+0002a6 00ff                      GRAPHICS_ALL: .dw  GRAPHIC_PLAT, GRAPHIC_PILLAR_1, GRAPHIC_PILLAR_2, GRAPHIC_PILLAR_3, GRAPHIC_PILLAR_4, GRAPHIC_HEAD, GRAPHIC_BODY, GRAPHIC_LEFT_LEG, GRAPHIC_RIGHT_LEG , GRAPHIC_LEFT_ARM, GRAPHIC_RIGHT_ARM, $FF
+0002a7 1002
+C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\tables.inc(77): warning: .cseg .db misalignment - padding zero byte
+C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\main.asm(11): 'C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\tables.inc' included form here
+0002a8 00ff                      
+0002a9 0802
+C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\tables.inc(78): warning: .cseg .db misalignment - padding zero byte
+C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\main.asm(11): 'C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\tables.inc' included form here
+0002aa 00ff                      LETTERS_SETUP_START_POS:	.db$02, $B4, $00, $3C, $FF
+0002ab 1003
+C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\tables.inc(79): warning: .cseg .db misalignment - padding zero byte
+C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\main.asm(11): 'C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\tables.inc' included form here
+0002ac 00ff                      LETTERS_SETUP_BACK_HOME:	.db$03, $B4, $01, $3C, $FF
+                                 LETTER_SUB:					.db$82, $0A, $02, $06, $FF
+0002ad b402
+C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\tables.inc(81): warning: .cseg .db misalignment - padding zero byte
+C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\main.asm(11): 'C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\tables.inc' included form here
+0002ae 00ff                      LETTER_SUB_BACK:			.db$03, $10, $FF
+0002af b403
+C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\tables.inc(82): warning: .cseg .db misalignment - padding zero byte
+C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\main.asm(11): 'C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\tables.inc' included form here
+0002b0 00ff                      
+0002b1 0c02
+C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\tables.inc(83): warning: .cseg .db misalignment - padding zero byte
+C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\main.asm(11): 'C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\tables.inc' included form here
+0002b2 00ff                      LETTERS_START_POS:			.db	$02, $B5, $00, $3E, $FF
+0002b3 1003
+C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\tables.inc(84): warning: .cseg .db misalignment - padding zero byte
+C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\main.asm(11): 'C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\tables.inc' included form here
+0002b4 00ff                      LETTERS_BACK_HOME:			.db	$03, $B5, $01, $3E, $FF
+0002b5 0803
+C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\tables.inc(85): warning: .cseg .db misalignment - padding zero byte
+C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\main.asm(11): 'C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\tables.inc' included form here
+0002b6 00ff                      LETTERS_MOVE_RIGHT:			.db $02, $10, $FF	
+                                 LETTERS_MOVE_RIGHT_LITTLE:	.db $02, $08, $FF	
+                                 	.include "drivers.inc"
+                                 
+                                  * drivers.inc
+                                  *
+                                  *  Created: 2019-02-19 15:48:52
+                                  *   Author: Jensg
+                                  */ 
+                                 
+                                 ;---------------------------------------------
+                                 ;Used for jumtables 
+                                 ;Starts whereever Z-pointer is
+                                 ;EX
+                                 ;			ldi		ZH, HIGH(ALPHA_ALL*2)
+                                 ;			ldi		ZL, LOW(ALPHA_ALL*2)
+                                 ;Parameter r16 decides index
+                                 ;------------------------------------------
+                                 JUMP_TABLE:
+0002b7 931f                      			push	r17
+0002b8 0f00                      			lsl		r16	
+0002b9 0fe0                      			add		ZL, r16
+0002ba f408                      			brcc	PC+2
+0002bb 5fff                      			subi	ZH, -1
+0002bc 9105                      			lpm		r16, Z+
+0002bd 9114                      			lpm		r17, Z
+0002be 0f11                      			lsl		r17
+0002bf 0f00                      			lsl		r16
+0002c0 f408                      			brcc	PC+2
+0002c1 5f1f                      			subi	r17, -1		
+0002c2 2ff1                      			mov		ZH, r17
+0002c3 2fe0                      			mov		ZL, r16
+0002c4 911f                      			pop		r17
+0002c5 9508                      			ret
+                                 
+                                 ;---------------------------------------------
+                                 ;STARTS DRAWING TO WHEREVER THE Z-POINTER POINTS TO, STOPS ON $FF
+                                 ;------------------------------------
+                                 DRAW_FUNC:	
+0002c6 93ff                      			push	ZH	
+0002c7 93ef                      			push	ZL
+0002c8 930f                      			push	r16
+0002c9 932f                      			push	r18
+                                 DRAW_FUNC_LOOP:
+0002ca 9105                      			lpm		r16, Z+
+0002cb 3f0f                      			cpi		r16, $FF
+0002cc f041                      			breq	DRAW_FUNC_DONE
+0002cd fd07                      			sbrc	r16, 7
+0002ce d024                      			rcall	LOWER_PEN
+0002cf ff07                      			sbrs	r16, 7
+0002d0 d027                      			rcall	RAISE_PEN
+0002d1 770f                      			andi	r16, $7F
+0002d2 9125                      			lpm		r18, Z+
+0002d3 d007                      			rcall	MOVE_FUNC
+0002d4 cff5                      			rjmp	DRAW_FUNC_LOOP					
+                                 DRAW_FUNC_DONE:
+0002d5 d022                      			rcall	RAISE_PEN
+0002d6 912f                      			pop		r18
+0002d7 910f                      			pop		r16
+0002d8 91ef                      			pop		ZL
+0002d9 91ff                      			pop		ZH
+0002da 9508                      			ret	
+                                 
+                                 
+                                 ;------ DRIVER FOR PLOTTER
+                                 ;------ parameter -  r16 direction, use consts NORTH, SOUTH .. etc
+                                 ;------ parameter - r18 how far to move (max 65 535)
+                                 MOVE_FUNC:
+0002db 93ff                      		push	ZH
+0002dc 93ef                      		push	ZL
+0002dd 931f                      		push	r17
+0002de 933f                      		push	r19
+0002df 2f30                      		mov		r19, r16
+                                 
+                                 MOVE_FUNC_SEQUENCE:
+0002e0 2f03                      		mov		r16, r19
+0002e1 e018                      		ldi		r17, 8
+0002e2 e0f0                      		ldi		ZH, HIGH(FIRST_PULSE*2)
+0002e3 e0e4                      		ldi		ZL, LOW(FIRST_PULSE*2)
+0002e4 0fe0                      		add		ZL, r16
+                                 MOVE_FUNC_LOOP:		
+0002e5 9104                      		lpm		r16, Z
+0002e6 bb0b                      		out		PORTA, r16
+0002e7 940e 0306                 		call	PULSE_DELAY
+0002e9 5fe8                      		subi	ZL, -8
+0002ea 951a                      		dec		r17
+0002eb f7c9                      		brne	MOVE_FUNC_LOOP
+0002ec 952a                      		dec		r18
+0002ed f791                      		brne	MOVE_FUNC_SEQUENCE
+0002ee 913f                      		pop		r19
+0002ef 911f                      		pop		r17
+0002f0 91ef                      		pop		ZL
+0002f1 91ff                      		pop		ZH
+0002f2 9508                      		ret
+                                 
+                                 
+                                 
+                                 LOWER_PEN:
+0002f3 99af                      		sbic	PORTC,7
+0002f4 c002                      		rjmp	LOWER_PEN_EXIT
+0002f5 9aaf                      		sbi		PORTC, 7
+0002f6 d006                      		rcall	PEN_DELAY
+                                 LOWER_PEN_EXIT:
+0002f7 9508                      		ret
+                                 
+                                 RAISE_PEN:
+0002f8 9baf                      		sbis	PORTC, 7
+0002f9 c002                      		rjmp	RAISE_PEN_EXIT
+0002fa 98af                      		cbi		PORTC, 7
+0002fb d001                      		rcall	PEN_DELAY
+                                 RAISE_PEN_EXIT:
+0002fc 9508                      		ret
+                                 
+                                 PEN_DELAY:
+0002fd 938f                      		push	r24
+0002fe 939f                      		push	r25
+0002ff ef9f                      		ldi		r25, $FF
+000300 ef8f                      		ldi		r24, $FF
+                                 PEN_DELAY_LOOP:
+000301 9701                      		sbiw	r25:r24, 1
+000302 f7f1                      		brne	PEN_DELAY_LOOP
+000303 919f                      		pop		r25
+000304 918f                      		pop		r24
+000305 9508                      		ret
+                                 
+                                 PULSE_DELAY:
+000306 938f                      		push	r24
+000307 939f                      		push	r25
+000308 e09a                      		ldi		r25, $0A
+000309 e080                      		ldi		r24, $00
+                                 PULSE_DELAY_LOOP:
+00030a 9701                      		sbiw	r25:r24, 1
+00030b f7f1                      		brne	PULSE_DELAY_LOOP
+00030c 919f                      		pop		r25
+00030d 918f                      		pop		r24
+00030e 9508                      		ret
+                                 	.include "words.inc"
+                                 
+00030f 0815
+000310 0f12
+000311 1106
+000312 031b
+000313 0403
+C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\words.inc(2): warning: .cseg .db misalignment - padding zero byte
+C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\main.asm(13): 'C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\words.inc' included form here
+000314 00ff                      EASY_WORD_0: .db $15, $08, $12, $0F, $06, $11, $1B, $03, $03, $04, $FF // Vispgrädde
+000315 0b00
+000316 0005
+000317 0401
+000318 0413
+000319 ff13                      EASY_WORD_1: .db $00, $0B, $05, $00, $01, $04, $13, $04, $13, $FF // Alfabetet
+00031a 000d
+00031b 0813
+00031c 0d0e
+00031d 0b00
+00031e 0d04
+00031f 1802
+000320 0b0a
+000321 0f0e
+000322 0304
+000323 0d08
+C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\words.inc(4): warning: .cseg .db misalignment - padding zero byte
+C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\main.asm(13): 'C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\words.inc' included form here
+000324 00ff                      EASY_WORD_2: .db $0D, $00, $13, $08, $0E, $0D, $00, $0B, $04, $0D, $02, $18, $0A, $0B, $0E, $0F, $04, $03, $08, $0D, $FF // Nationalencyklopedin
+000325 1b03
+000326 0606
+000327 0903
+000328 1114
+C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\words.inc(5): warning: .cseg .db misalignment - padding zero byte
+C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\main.asm(13): 'C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\words.inc' included form here
+000329 00ff                      EASY_WORD_3: .db $03, $1B, $06, $06, $03, $09, $14, $11, $FF // Däggdjur
+00032a 110e
+00032b 0503
+00032c 111c
+00032d 1a11
+00032e ff03                      EASY_WORD_4: .db $0E, $11, $03, $05, $1C, $11, $11, $1A, $03, $FF // Ordförråd
+00032f 1407
+000330 1415
+000331 1203
+000332 0013
+000333 ff03                      EASY_WORD_5: .db $07, $14, $15, $14, $03, $12, $13, $00, $03, $FF // Huvudstad
+000334 1c03
+000335 1111
+000336 000c
+000337 1313
+000338 ff00                      EASY_WORD_6: .db $03, $1C, $11, $11, $0C, $00, $13, $13, $00, $FF // Dörrmatta
+000339 0f00
+00033a ff00                      EASY_WORD_7: .db $00, $0F, $00, $FF // Apa
+00033b 0a12
+00033c 0308
+00033d 110e
+C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\words.inc(10): warning: .cseg .db misalignment - padding zero byte
+C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\main.asm(13): 'C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\words.inc' included form here
+00033e 00ff                      EASY_WORD_8: .db $12, $0A, $08, $03, $0E, $11, $FF // Skidor
+00033f 1312
+000340 0b1b
+000341 050b
+000342 111c
+000343 1304
+000344 1b11
+000345 0003
+000346 0411
+C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\words.inc(11): warning: .cseg .db misalignment - padding zero byte
+C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\main.asm(13): 'C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\words.inc' included form here
+000347 00ff                      EASY_WORD_9: .db $12, $13, $1B, $0B, $0B, $05, $1C, $11, $04, $13, $11, $1B, $03, $00, $11, $04, $FF // Ställföreträdare
+000348 0504
+000349 0413
+00034a 1311
+00034b 0d00
+00034c 040a
+C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\words.inc(12): warning: .cseg .db misalignment - padding zero byte
+C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\main.asm(13): 'C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\words.inc' included form here
+00034d 00ff                      EASY_WORD_10: .db $04, $05, $13, $04, $11, $13, $00, $0D, $0A, $04, $FF // Eftertanke
+00034e 040c
+00034f 0303
+000350 0b04
+000351 ff00                      EASY_WORD_11: .db $0C, $04, $03, $03, $04, $0B, $00, $FF // Meddela
+000352 0803
+000353 0b00
+000354 0a04
+000355 ff13                      EASY_WORD_12: .db $03, $08, $00, $0B, $04, $0A, $13, $FF // Dialekt
+000356 1312
+000357 1300
+000358 1508
+C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\words.inc(15): warning: .cseg .db misalignment - padding zero byte
+C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\main.asm(13): 'C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\words.inc' included form here
+000359 00ff                      EASY_WORD_13: .db $12, $13, $00, $13, $08, $15, $FF // Stativ
+00035a 0013
+00035b 0a0d
+00035c 0f12
+00035d 0811
+00035e 0303
+C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\words.inc(16): warning: .cseg .db misalignment - padding zero byte
+C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\main.asm(13): 'C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\words.inc' included form here
+00035f 00ff                      EASY_WORD_14: .db $13, $00, $0D, $0A, $12, $0F, $11, $08, $03, $03, $FF // Tankspridd
+000360 110f
+000361 0304
+000362 0a08
+000363 ff00                      EASY_WORD_15: .db $0F, $11, $04, $03, $08, $0A, $00, $FF // Predika
+000364 0d04
+000365 0e05
+000366 0c11
+000367 0608
+C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\words.inc(18): warning: .cseg .db misalignment - padding zero byte
+C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\main.asm(13): 'C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\words.inc' included form here
+000368 00ff                      EASY_WORD_16: .db $04, $0D, $05, $0E, $11, $0C, $08, $06, $FF // Enformig
+000369 1106
+00036a 0d00
+00036b 1300
+C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\words.inc(19): warning: .cseg .db misalignment - padding zero byte
+C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\main.asm(13): 'C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\words.inc' included form here
+00036c 00ff                      EASY_WORD_17: .db $06, $11, $00, $0D, $00, $13, $FF // Granat
+00036d 1b09
+00036e 0a0d
+00036f 1100
+000370 ff04                      EASY_WORD_18: .db $09, $1B, $0D, $0A, $00, $11, $04, $FF // Jänkare
+000371 0e0a
+000372 030d
+000373 0d04
+000374 0012
+000375 0e13
+000376 ff11                      EASY_WORD_19: .db $0A, $0E, $0D, $03, $04, $0D, $12, $00, $13, $0E, $11, $FF // Kondensator
+000377 151c
+000378 1104
+000379 1813
+00037a 0406
+00037b 120b
+00037c ff04                      EASY_WORD_20: .db $1C, $15, $04, $11, $13, $18, $06, $04, $0B, $12, $04, $FF // Övertygelse
+00037d 0d04
+00037e 0815
+00037f ff12                      EASY_WORD_21: .db $04, $0D, $15, $08, $12, $FF // Envis
+000380 1300
+000381 0813
+000382 1813
+000383 ff03                      EASY_WORD_22: .db $00, $13, $13, $08, $13, $18, $03, $FF // Attityd
+000384 0c08
+000385 140c
+000386 050d
+000387 111c
+000388 1512
+000389 1100
+C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\words.inc(25): warning: .cseg .db misalignment - padding zero byte
+C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\main.asm(13): 'C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\words.inc' included form here
+00038a 00ff                      EASY_WORD_23: .db $08, $0C, $0C, $14, $0D, $05, $1C, $11, $12, $15, $00, $11, $FF // Immunförsvar
+00038b 0805
+00038c 0e0b
+00038d 0e12
+00038e ff05                      EASY_WORD_24: .db $05, $08, $0B, $0E, $12, $0E, $05, $FF // Filosof
+00038f 0001
+000390 0a12
+000391 1104
+C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\words.inc(27): warning: .cseg .db misalignment - padding zero byte
+C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\main.asm(13): 'C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\words.inc' included form here
+000392 00ff                      EASY_WORD_25: .db $01, $00, $12, $0A, $04, $11, $FF // Basker
+000393 0401
+000394 1103
+000395 0600
+000396 1100
+000397 ff04                      EASY_WORD_26: .db $01, $04, $03, $11, $00, $06, $00, $11, $04, $FF // Bedragare
+000398 1500
+000399 1b0b
+00039a 1206
+00039b 000d
+C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\words.inc(29): warning: .cseg .db misalignment - padding zero byte
+C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\main.asm(13): 'C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\words.inc' included form here
+00039c 00ff                      EASY_WORD_27: .db $00, $15, $0B, $1B, $06, $12, $0D, $00, $FF // Avlägsna
+00039d 1512
+00039e 0600
+C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\words.inc(30): warning: .cseg .db misalignment - padding zero byte
+C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\main.asm(13): 'C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\words.inc' included form here
+00039f 00ff                      EASY_WORD_28: .db $12, $15, $00, $06, $FF // Svag
+0003a0 0015
+0003a1 0811
+0003a2 1300
+0003a3 0e08
+0003a4 ff0d                      EASY_WORD_29: .db $15, $00, $11, $08, $00, $13, $08, $0E, $0D, $FF // Variation
+0003a5 0d00
+0003a6 0815
+0003a7 0012
+C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\words.inc(32): warning: .cseg .db misalignment - padding zero byte
+C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\main.asm(13): 'C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\words.inc' included form here
+0003a8 00ff                      EASY_WORD_30: .db $00, $0D, $15, $08, $12, $00, $FF // anvisa
+0003a9 0813
+0003aa 0406
+0003ab ff11                      EASY_WORD_31: .db $13, $08, $06, $04, $11, $FF // Tiger
+                                 
+0003ac 030f
+0003ad 0315
+0003ae 031a
+0003af 0325
+0003b0 032a
+0003b1 032f
+0003b2 0334
+0003b3 0339
+0003b4 033b
+0003b5 033f
+0003b6 0348
+0003b7 034e                      EASY_ALL:	.dw EASY_WORD_0, EASY_WORD_1, EASY_WORD_2, EASY_WORD_3, EASY_WORD_4, EASY_WORD_5, EASY_WORD_6, EASY_WORD_7, EASY_WORD_8, EASY_WORD_9, EASY_WORD_10, EASY_WORD_11
+0003b8 0352
+0003b9 0356
+0003ba 035a
+0003bb 0360
+0003bc 0364
+0003bd 0369
+0003be 036d
+0003bf 0371
+0003c0 0377
+0003c1 037d
+0003c2 0380                      			.dw EASY_WORD_12, EASY_WORD_13, EASY_WORD_14, EASY_WORD_15, EASY_WORD_16, EASY_WORD_17, EASY_WORD_18, EASY_WORD_19, EASY_WORD_20, EASY_WORD_21, EASY_WORD_22
+0003c3 0384
+0003c4 038b
+0003c5 038f
+0003c6 0393
+0003c7 0398
+0003c8 039d
+0003c9 03a0
+0003ca 03a5
+0003cb 03a9                      			.dw EASY_WORD_23, EASY_WORD_24, EASY_WORD_25, EASY_WORD_26, EASY_WORD_27, EASY_WORD_28, EASY_WORD_29, EASY_WORD_30, EASY_WORD_31
+                                 
+0003cc 1318
+0003cd 0f12
+0003ce 0d1b
+0003cf 080d
+0003d0 060d
+C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\words.inc(39): warning: .cseg .db misalignment - padding zero byte
+C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\main.asm(13): 'C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\words.inc' included form here
+0003d1 00ff                      NORMAL_WORD_0: .db $18, $13, $12, $0F, $1B, $0D, $0D, $08, $0D, $06, $FF // Ytspänning
+0003d2 1312
+0003d3 0200
+0003d4 ff0a                      NORMAL_WORD_1: .db $12, $13, $00, $02, $0A, $FF // Stack
+0003d5 040f
+0003d6 000a
+0003d7 0411
+C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\words.inc(41): warning: .cseg .db misalignment - padding zero byte
+C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\main.asm(13): 'C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\words.inc' included form here
+0003d8 00ff                      NORMAL_WORD_2: .db $0F, $04, $0A, $00, $11, $04, $FF // Pekare
+0003d9 1300
+0003da 040c
+0003db ff0b                      NORMAL_WORD_3: .db $00, $13, $0C, $04, $0B, $FF // Atmel
+0003dc 000b
+0003dd 0f0c
+0003de ff00                      NORMAL_WORD_4: .db $0B, $00, $0C, $0F, $00, $FF // Lampa
+0003df 1801
+0003e0 0e17
+0003e1 ff11                      NORMAL_WORD_5: .db $01, $18, $17, $0E, $11, $FF // Byxor
+0003e2 0411
+0003e3 0a18
+0003e4 1500
+0003e5 0a08
+C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\words.inc(45): warning: .cseg .db misalignment - padding zero byte
+C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\main.asm(13): 'C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\words.inc' included form here
+0003e6 00ff                      NORMAL_WORD_6: .db $11, $04, $18, $0A, $00, $15, $08, $0A, $FF // Reykavik
+0003e7 0e0f
+0003e8 1312
+0003e9 1a0b
+0003ea 0003
+C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\words.inc(46): warning: .cseg .db misalignment - padding zero byte
+C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\main.asm(13): 'C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\words.inc' included form here
+0003eb 00ff                      NORMAL_WORD_7: .db $0F, $0E, $12, $13, $0B, $1A, $03, $00, $FF // Postlåda
+0003ec 0411
+0003ed 0a18
+0003ee 0009
+0003ef 0815
+0003f0 ff0a                      NORMAL_WORD_8: .db $11, $04, $18, $0A, $09, $00, $15, $08, $0A, $FF // Reykjavik
+0003f1 1c05
+0003f2 1311
+0003f3 0b00
+C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\words.inc(48): warning: .cseg .db misalignment - padding zero byte
+C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\main.asm(13): 'C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\words.inc' included form here
+0003f4 00ff                      NORMAL_WORD_9: .db $05, $1C, $11, $13, $00, $0B, $FF // Förtal
+0003f5 0e0a
+0003f6 140d
+0003f7 060d
+0003f8 0300
+0003f9 0c1c
+0003fa 1304
+C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\words.inc(49): warning: .cseg .db misalignment - padding zero byte
+C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\main.asm(13): 'C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\words.inc' included form here
+0003fb 00ff                      NORMAL_WORD_10: .db $0A, $0E, $0D, $14, $0D, $06, $00, $03, $1C, $0C, $04, $13, $FF // Konungadömet
+0003fc 040c
+0003fd 0403
+0003fe 0b0b
+0003ff 0d1b
+000400 0306
+C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\words.inc(50): warning: .cseg .db misalignment - padding zero byte
+C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\main.asm(13): 'C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\words.inc' included form here
+000401 00ff                      NORMAL_WORD_11: .db $0C, $04, $03, $04, $0B, $0B, $1B, $0D, $06, $03, $FF // Medellängd
+000402 1400
+000403 0e13
+000404 1106
+000405 0500
+C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\words.inc(51): warning: .cseg .db misalignment - padding zero byte
+C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\main.asm(13): 'C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\words.inc' included form here
+000406 00ff                      NORMAL_WORD_12: .db $00, $14, $13, $0E, $06, $11, $00, $05, $FF // Autograf
+000407 140a
+000408 120d
+000409 000a
+00040a ff0f                      NORMAL_WORD_13: .db $0A, $14, $0D, $12, $0A, $00, $0F, $FF // Kunskap
+00040b 1812
+00040c 120d
+00040d 131b
+00040e ff13                      NORMAL_WORD_14: .db $12, $18, $0D, $12, $1B, $13, $13, $FF // Synsätt
+00040f 1b11
+000410 1313
+000411 0815
+000412 ff12                      NORMAL_WORD_15: .db $11, $1B, $13, $13, $15, $08, $12, $FF // Rättvis
+000413 1a11
+000414 0503
+000415 1a11
+000416 0006
+C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\words.inc(55): warning: .cseg .db misalignment - padding zero byte
+C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\main.asm(13): 'C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\words.inc' included form here
+000417 00ff                      NORMAL_WORD_16: .db $11, $1A, $03, $05, $11, $1A, $06, $00, $FF // Rådfråga
+000418 0e05
+000419 0e0d
+00041a 0e0b
+00041b 0806
+C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\words.inc(56): warning: .cseg .db misalignment - padding zero byte
+C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\main.asm(13): 'C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\words.inc' included form here
+00041c 00ff                      NORMAL_WORD_17: .db $05, $0E, $0D, $0E, $0B, $0E, $06, $08, $FF // Fonologi
+00041d 1b11
+00041e 1203
+00041f 000b
+C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\words.inc(57): warning: .cseg .db misalignment - padding zero byte
+C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\main.asm(13): 'C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\words.inc' included form here
+000420 00ff                      NORMAL_WORD_18: .db $11, $1B, $03, $12, $0B, $00, $FF // Rädsla
+000421 0d0e
+000422 031c
+000423 0608
+C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\words.inc(58): warning: .cseg .db misalignment - padding zero byte
+C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\main.asm(13): 'C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\words.inc' included form here
+000424 00ff                      NORMAL_WORD_19: .db $0E, $0D, $1C, $03, $08, $06, $FF // Onödig
+000425 1500
+000426 0815
+000427 000a
+000428 030d
+000429 ff04                      NORMAL_WORD_20: .db $00, $15, $15, $08, $0A, $00, $0D, $03, $04, $FF // Avvikande
+00042a 1812
+00042b 0d0d
+00042c 1104
+00042d ff15                      NORMAL_WORD_21: .db $12, $18, $0D, $0D, $04, $11, $15, $FF // Synnerv
+00042e 0b01
+00042f 0618
+000430 0012
+000431 ff0c                      NORMAL_WORD_22: .db $01, $0B, $18, $06, $12, $00, $0C, $FF // Blygsam
+000432 010e
+000433 0b08
+000434 0003
+000435 ff03                      NORMAL_WORD_23: .db $0E, $01, $08, $0B, $03, $00, $03, $FF // Obildad
+000436 0e0f
+000437 1311
+000438 0e08
+000439 040d
+00043a 0011
+C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\words.inc(63): warning: .cseg .db misalignment - padding zero byte
+C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\main.asm(13): 'C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\words.inc' included form here
+00043b 00ff                      NORMAL_WORD_24: .db $0F, $0E, $11, $13, $08, $0E, $0D, $04, $11, $00, $FF // Portionera
+00043c 0f14
+00043d 0c0f
+00043e 0d14
+00043f 1113
+000440 ff00                      NORMAL_WORD_25: .db $14, $0F, $0F, $0C, $14, $0D, $13, $11, $00, $FF // Uppmuntra
+000441 0e0c
+000442 0011
+000443 080b
+000444 0412
+000445 0011
+C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\words.inc(65): warning: .cseg .db misalignment - padding zero byte
+C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\main.asm(13): 'C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\words.inc' included form here
+000446 00ff                      NORMAL_WORD_26: .db $0C, $0E, $11, $00, $0B, $08, $12, $04, $11, $00, $FF // Moralisera
+000447 0a0e
+000448 0b14
+000449 1100
+C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\words.inc(66): warning: .cseg .db misalignment - padding zero byte
+C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\main.asm(13): 'C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\words.inc' included form here
+00044a 00ff                      NORMAL_WORD_27: .db $0E, $0A, $14, $0B, $00, $11, $FF // Okular
+                                 
+00044b 000e
+00044c 130a
+00044d 0012
+00044e ff0c                      NORMAL_WORD_28: .db $0E, $00, $0A, $13, $12, $00, $0C, $FF // Oaktsam
+00044f 1405
+000450 0b0c
+000451 0608
+C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\words.inc(69): warning: .cseg .db misalignment - padding zero byte
+C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\main.asm(13): 'C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\words.inc' included form here
+000452 00ff                      NORMAL_WORD_29: .db $05, $14, $0C, $0B, $08, $06, $FF // Fumlig
+000453 000c
+000454 1214
+000455 0b0e
+000456 1404
+000457 ff0c                      NORMAL_WORD_30: .db $0C, $00, $14, $12, $0E, $0B, $04, $14, $0C, $FF // Mausoleum
+000458 1c05
+000459 0711
+00045a 0d00
+00045b ff03                      NORMAL_WORD_31: .db $05, $1C, $11, $07, $00, $0D, $03, $FF // Förhand
+                                 
+00045c 03cc
+00045d 03d2
+00045e 03d5
+00045f 03d9
+000460 03dc
+000461 03df
+000462 03e2
+000463 03e7
+000464 03ec
+000465 03f1
+000466 03f5                      NORMAL_ALL:	.dw NORMAL_WORD_0, NORMAL_WORD_1, NORMAL_WORD_2, NORMAL_WORD_3, NORMAL_WORD_4, NORMAL_WORD_5, NORMAL_WORD_6, NORMAL_WORD_7, NORMAL_WORD_8, NORMAL_WORD_9, NORMAL_WORD_10
+000467 03fc
+000468 0402
+000469 0407
+00046a 040b
+00046b 040f
+00046c 0413
+00046d 0418
+00046e 041d
+00046f 0421
+000470 0425                      			.dw	NORMAL_WORD_11, NORMAL_WORD_12, NORMAL_WORD_13, NORMAL_WORD_14, NORMAL_WORD_15, NORMAL_WORD_16, NORMAL_WORD_17, NORMAL_WORD_18, NORMAL_WORD_19, NORMAL_WORD_20
+000471 042a
+000472 042e
+000473 0432
+000474 0436
+000475 043c
+000476 0441
+000477 0447
+000478 044b
+000479 044f
+00047a 0453
+00047b 0458                      			.dw NORMAL_WORD_21, NORMAL_WORD_22, NORMAL_WORD_23, NORMAL_WORD_24, NORMAL_WORD_25, NORMAL_WORD_26, NORMAL_WORD_27, NORMAL_WORD_28, NORMAL_WORD_29, NORMAL_WORD_30, NORMAL_WORD_31
+                                 
+00047c 1718
+00047d ff00                      DIFFICULT_WORD_0: .db $18, $17, $00, $FF // Yxa
+00047e 0a14
+00047f 0b14
+000480 0b04
+000481 ff04                      DIFFICULT_WORD_1: .db $14, $0A, $14, $0B, $04, $0B, $04, $FF // Ukulele
+000482 1819
+000483 0e06
+000484 ff13                      DIFFICULT_WORD_2: .db $19, $18, $06, $0E, $13, $FF // Zygot
+000485 1817
+000486 0e0b
+000487 0e05
+000488 ff0d                      DIFFICULT_WORD_3: .db $17, $18, $0B, $0E, $05, $0E, $0D, $FF // Xylofon
+000489 0018
+00048a 1913
+00048b ff18                      DIFFICULT_WORD_4: .db $18, $00, $13, $19, $18, $FF // Yatzy
+00048c 0b1a
+C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\words.inc(82): warning: .cseg .db misalignment - padding zero byte
+C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\main.asm(13): 'C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\words.inc' included form here
+00048d 00ff                      DIFFICULT_WORD_5: .db $1A, $0B, $FF // Ål
+00048e 170e
+00048f ff04                      DIFFICULT_WORD_6: .db $0E, $17, $04, $FF // Oxe
+000490 1b07
+000491 1312
+C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\words.inc(84): warning: .cseg .db misalignment - padding zero byte
+C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\main.asm(13): 'C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\words.inc' included form here
+000492 00ff                      DIFFICULT_WORD_7: .db $07, $1B, $12, $13, $FF // Häst
+000493 0013
+000494 0817
+C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\words.inc(85): warning: .cseg .db misalignment - padding zero byte
+C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\main.asm(13): 'C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\words.inc' included form here
+000495 00ff                      DIFFICULT_WORD_8: .db $13, $00, $17, $08, $FF // Taxi
+000496 180c
+000497 0a12
+000498 170e
+000499 ff04                      DIFFICULT_WORD_9: .db $0C, $18, $12, $0A, $0E, $17, $04, $FF // Myskoxe
+00049a 1b07
+00049b 0017
+C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\words.inc(87): warning: .cseg .db misalignment - padding zero byte
+C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\main.asm(13): 'C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\words.inc' included form here
+00049c 00ff                      DIFFICULT_WORD_10: .db $07, $1B, $17, $00, $FF // Häxa
+00049d 1812
+00049e 1a0d
+00049f ff0b                      DIFFICULT_WORD_11: .db $12, $18, $0D, $1A, $0B, $FF // Synål
+0004a0 000a
+0004a1 1312
+0004a2 0d00
+0004a3 0409
+0004a4 1313
+C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\words.inc(89): warning: .cseg .db misalignment - padding zero byte
+C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\main.asm(13): 'C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\words.inc' included form here
+0004a5 00ff                      DIFFICULT_WORD_12: .db $0A, $00, $12, $13, $00, $0D, $09, $04, $13, $13, $FF // Kastanjett
+0004a6 0813
+0004a7 0b0b
+0004a8 0013
+C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\words.inc(90): warning: .cseg .db misalignment - padding zero byte
+C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\main.asm(13): 'C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\words.inc' included form here
+0004a9 00ff                      DIFFICULT_WORD_13: .db $13, $08, $0B, $0B, $13, $00, $FF // Tillta
+0004aa 0e01
+0004ab 1206
+0004ac 110f
+0004ad 131c
+C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\words.inc(91): warning: .cseg .db misalignment - padding zero byte
+C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\main.asm(13): 'C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\words.inc' included form here
+0004ae 00ff                      DIFFICULT_WORD_14: .db $01, $0E, $06, $12, $0F, $11, $1C, $13, $FF // Bogspröt
+0004af 1100
+0004b0 000b
+C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\words.inc(92): warning: .cseg .db misalignment - padding zero byte
+C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\main.asm(13): 'C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\words.inc' included form here
+0004b1 00ff                      DIFFICULT_WORD_15: .db $00, $11, $0B, $00, $FF // Arla
+0004b2 1a0c
+0004b3 1a05
+C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\words.inc(93): warning: .cseg .db misalignment - padding zero byte
+C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\main.asm(13): 'C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\words.inc' included form here
+0004b4 00ff                      DIFFICULT_WORD_16: .db $0C, $1A, $05, $1A, $FF // Måfå
+0004b5 110a
+0004b6 0b1b
+0004b7 0903
+0004b8 1114
+C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\words.inc(94): warning: .cseg .db misalignment - padding zero byte
+C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\main.asm(13): 'C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\words.inc' included form here
+0004b9 00ff                      DIFFICULT_WORD_17: .db $0A, $11, $1B, $0B, $03, $09, $14, $11, $FF // Kräldjur
+0004ba 0005
+0004bb 0d14
+0004bc ff00                      DIFFICULT_WORD_18: .db $05, $00, $14, $0D, $00, $FF // Fauna
+0004bd 1012
+0004be 0014
+0004bf 0712
+C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\words.inc(96): warning: .cseg .db misalignment - padding zero byte
+C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\main.asm(13): 'C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\words.inc' included form here
+0004c0 00ff                      DIFFICULT_WORD_19: .db $12, $10, $14, $00, $12, $07, $FF // Squash
+0004c1 0016
+0004c2 1211
+0004c3 0019
+0004c4 0016
+C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\words.inc(97): warning: .cseg .db misalignment - padding zero byte
+C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\main.asm(13): 'C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\words.inc' included form here
+0004c5 00ff                      DIFFICULT_WORD_20: .db $16, $00, $11, $12, $19, $00, $16, $00, $FF // Warszawa
+0004c6 0600
+0004c7 ff00                      DIFFICULT_WORD_21: .db $00, $06, $00, $FF // Aga
+0004c8 1a0f
+0004c9 040a
+C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\words.inc(99): warning: .cseg .db misalignment - padding zero byte
+C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\main.asm(13): 'C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\words.inc' included form here
+0004ca 00ff                      DIFFICULT_WORD_22: .db $0F, $1A, $0A, $04, $FF // Påke
+0004cb 110f
+0004cc 1208
+0004cd 000f
+0004ce 0b0b
+C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\words.inc(100): warning: .cseg .db misalignment - padding zero byte
+C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\main.asm(13): 'C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\words.inc' included form here
+0004cf 00ff                      DIFFICULT_WORD_23: .db $0F, $11, $08, $12, $0F, $00, $0B, $0B, $FF // Prispall
+0004d0 0212
+0004d1 0007
+0004d2 0b01
+0004d3 0d0e
+C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\words.inc(101): warning: .cseg .db misalignment - padding zero byte
+C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\main.asm(13): 'C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\words.inc' included form here
+0004d4 00ff                      DIFFICULT_WORD_24: .db $12, $02, $07, $00, $01, $0B, $0E, $0D, $FF // Schablon
+0004d5 0e07
+0004d6 1111
+0004d7 0108
+0004d8 0b04
+C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\words.inc(102): warning: .cseg .db misalignment - padding zero byte
+C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\main.asm(13): 'C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\words.inc' included form here
+0004d9 00ff                      DIFFICULT_WORD_25: .db $07, $0E, $11, $11, $08, $01, $04, $0B, $FF // Horribel
+0004da 0e06
+0004db 0611
+0004dc 0d0e
+0004dd 0e19
+0004de 000b
+C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\words.inc(103): warning: .cseg .db misalignment - padding zero byte
+C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\main.asm(13): 'C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\words.inc' included form here
+0004df 00ff                      DIFFICULT_WORD_26: .db $06, $0E, $11, $06, $0E, $0D, $19, $0E, $0B, $00, $FF // Gorgonzola
+0004e0 0e05
+0004e1 030d
+0004e2 0414
+C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\words.inc(104): warning: .cseg .db misalignment - padding zero byte
+C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\main.asm(13): 'C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\words.inc' included form here
+0004e3 00ff                      DIFFICULT_WORD_27: .db $05, $0E, $0D, $03, $14, $04, $FF // Fondue
+0004e4 140f
+0004e5 0811
+0004e6 0013
+0004e7 ff0d                      DIFFICULT_WORD_28: .db $0F, $14, $11, $08, $13, $00, $0D, $FF // Puritan
+0004e8 1403
+0004e9 0801
+0004ea 1104
+C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\words.inc(106): warning: .cseg .db misalignment - padding zero byte
+C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\main.asm(13): 'C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\words.inc' included form here
+0004eb 00ff                      DIFFICULT_WORD_29: .db $03, $14, $01, $08, $04, $11, $FF // Dubier
+0004ec 0b01
+0004ed 130e
+0004ee ff13                      DIFFICULT_WORD_30: .db $01, $0B, $0E, $13, $13, $FF // Blott
+0004ef 080d
+0004f0 0212
+0004f1 0007
+0004f2 ff03                      DIFFICULT_WORD_31: .db $0D, $08, $12, $02, $07, $00, $03, $FF // Nischad
+                                 
+0004f3 047c
+0004f4 047e
+0004f5 0482
+0004f6 0485
+0004f7 0489
+0004f8 048c
+0004f9 048e
+0004fa 0490
+0004fb 0493
+0004fc 0496
+0004fd 049a
+0004fe 049d                      DIFFICULT_ALL:	.dw DIFFICULT_WORD_0, DIFFICULT_WORD_1, DIFFICULT_WORD_2, DIFFICULT_WORD_3, DIFFICULT_WORD_4, DIFFICULT_WORD_5, DIFFICULT_WORD_6, DIFFICULT_WORD_7, DIFFICULT_WORD_8, DIFFICULT_WORD_9, DIFFICULT_WORD_10, DIFFICULT_WORD_11
+0004ff 04a0
+000500 04a6
+000501 04aa
+000502 04af
+000503 04b2
+000504 04b5
+000505 04ba
+000506 04bd
+000507 04c1
+000508 04c6
+000509 04c8
+00050a 04cb                      				.dw DIFFICULT_WORD_12, DIFFICULT_WORD_13, DIFFICULT_WORD_14, DIFFICULT_WORD_15, DIFFICULT_WORD_16, DIFFICULT_WORD_17, DIFFICULT_WORD_18, DIFFICULT_WORD_19, DIFFICULT_WORD_20, DIFFICULT_WORD_21, DIFFICULT_WORD_22, DIFFICULT_WORD_23
+00050b 04d0
+00050c 04d5
+00050d 04da
+00050e 04e0
+00050f 04e4
+000510 04e8
+000511 04ec
+000512 04ef                      				.dw DIFFICULT_WORD_24, DIFFICULT_WORD_25, DIFFICULT_WORD_26, DIFFICULT_WORD_27, DIFFICULT_WORD_28, DIFFICULT_WORD_29, DIFFICULT_WORD_30, DIFFICULT_WORD_31
+                                 
+                                 
+000513 03ac
+000514 045c
+000515 04f3                      	.dseg
+000060                           	WRONG_GUESS_INDEX: .byte 1
+000061                           	CURRENT_LETTER_INDEX: .byte 1
+000062                           	CURRENT_WORD_LENGTH: .byte 1
+000063                           	CURRENT_WORD_INDEX: .byte 1
+000064                           	WORD_TABLE_INDEX: .byte 1
+000065                           	RANDOM_SEED: .byte 1
+000066                           	RIGHT_GUESS_INDEX: .byte 1
+000067                           	OUTCOME_VALUE: .byte 1
+                                 	.cseg
+                                 	.equ	MAX_GUESSES = $0B
                                  
                                  INIT:
-000005 ef0f                      	ldi		r16,$FF
-000006 bb0a                      	out		DDRA,r16
-000007 e400                      	ldi		r16,$40
-000008 bb07                      	out		DDRB,r16
-000009 e800                      	ldi		r16,$80
-00000a bb24                      	out		DDRC,r18
-00000b e000                      	ldi		r16,$00
-00000c bb01                      	out		DDRD,r16
-00000d 9508                      	ret
+                                 		
+000516 e004                      			ldi		r16, HIGH(RAMEND)
+000517 bf0e                      			out		SPH, r16
+000518 e50f                      			ldi		r16, LOW(RAMEND)
+000519 bf0d                      			out		SPL, r16
+00051a ef0f                      			ldi		r16, $FF
+00051b bb0a                      			out		DDRA, r16
+00051c e800                      			ldi		r16, $80
+00051d bb04                      			out		DDRC, r16
+00051e e408                      			ldi		r16, $48
+00051f bb07                      			out		DDRB, r16
+                                 
+000520 e000                      			ldi		r16, $00
+000521 9300 0060                 			sts		WRONG_GUESS_INDEX, r16
+000523 9300 0061                 			sts		CURRENT_LETTER_INDEX, r16
+000525 9300 0063                 			sts		CURRENT_WORD_INDEX, r16
+000527 9300 0066                 			sts		RIGHT_GUESS_INDEX, r16
+000529 9300 0067                 			sts		OUTCOME_VALUE,r16
+                                 			//INIT för SPI.
+                                 			; Enable SPI
+00052b e400                      			ldi		r16,(1<<SPE)|(0<<MSTR)
+00052c b90d                      			out		SPCR,r16
+                                 						
+                                 
+                                 START:		
+00052d 98c3                      			cbi		PORTB,3	
+00052e d034                      			rcall	SPI_RECIEVE
+                                 
+00052f 9310 0064                 			sts		WORD_TABLE_INDEX, r17
+000531 9100 0065                 			lds		r16,RANDOM_SEED
+000533 9300 0063                 			sts		CURRENT_WORD_INDEX,r16
+000535 940e 057b                 			call	SETUP_GAME ; SÄTTER WORD LENGTH MED
+                                 
+000537 98c3                      			cbi		PORTB,3
+000538 d02a                      			rcall	SPI_RECIEVE 
+                                 
+                                 GAME_LOOP:
+000539 e010                      			ldi		r17,$00
+00053a 98c3                      			cbi		PORTB,3			
+00053b d027                      			rcall	SPI_RECIEVE		
+                                 				
+00053c d063                      			rcall	GUESS_LETTER
+00053d d00d                      			rcall	OUTCOME
+                                 		
+00053e d024                      			rcall	SPI_RECIEVE
+00053f cff9                      			rjmp	GAME_LOOP	
+                                 		
+                                 
+                                 
+                                 END:
+000540 940c 0540                 			jmp	end
+                                 
+                                 
+                                 RANDOM:
+000542 930f                      			push	r16
+000543 9100 0065                 			lds		r16,RANDOM_SEED
+000545 9503                      			inc		r16
+000546 710f                      			andi	r16, $1F
+000547 9300 0065                 			sts		RANDOM_SEED,r16
+000549 910f                      			pop		r16
+00054a 9508                      			ret
+                                 OUTCOME:
+00054b 930f                      			push	r16
+00054c 931f                      			push	r17
+00054d e00b                      			ldi		r16, MAX_GUESSES
+00054e 9110 0060                 			lds		r17,WRONG_GUESS_INDEX
+000550 1701                      			cp		r16,r17
+000551 f429                      			brne	NOT_WRONG
+000552 d04d                      			rcall	GUESS_LETTER
+000553 e008                      			ldi		r16,$08
+000554 9300 0067                 			sts		OUTCOME_VALUE,r16
+000556 c009                      			rjmp	OUTCOME_EXIT
+                                 NOT_WRONG:
+000557 9100 0062                 			lds		r16,CURRENT_WORD_LENGTH
+000559 9110 0066                 			lds		r17,RIGHT_GUESS_INDEX
+00055b 1701                      			cp		r16,r17
+00055c f419                      			brne	OUTCOME_EXIT
+00055d e004                      			ldi		r16,$04
+00055e 9300 0067                 			sts		OUTCOME_VALUE,r16
+                                 OUTCOME_EXIT:
+000560 911f                      			pop		r17
+000561 910f                      			pop		r16
+000562 9508                      			ret
+                                 			
+                                 SPI_RECIEVE:
+000563 dfde                      			rcall		RANDOM
+000564 9ac3                      			sbi			PORTB,3
+000565 9110 0067                 			lds			r17,OUTCOME_VALUE
+000567 b91f                      			out			SPDR, r17
+                                 			; Wait for reception compete
+000568 9b77                      			sbis		SPSR,SPIF
+000569 cff9                      			rjmp		SPI_RECIEVE
+                                 			; Read recieve data and return
+00056a b11f                      			in			r17,SPDR
+00056b 98c3                      			cbi			PORTB,3			
+00056c e000                      			ldi			r16, $00
+00056d 9300 0067                 			sts			OUTCOME_VALUE, r16
+00056f 9508                      			ret
+                                 
+                                 
+                                 GET_CURRENT_WORD:
+000570 930f                      			push	r16
+000571 e0fa                      			ldi		ZH, HIGH(ALL_WORDS*2)
+000572 e2e6                      			ldi		ZL, LOW(ALL_WORDS*2)
+000573 9100 0064                 			lds		r16,WORD_TABLE_INDEX
+000575 dd41                      			rcall	JUMP_TABLE
+000576 9100 0063                 			lds		r16, CURRENT_WORD_INDEX
+000578 dd3e                      			rcall	JUMP_TABLE
+000579 910f                      			pop		r16
+00057a 9508                      			ret
+                                 
+                                 
+                                 SETUP_GAME:
+00057b 93ff                      			push	ZH
+00057c 93ef                      			push	ZL
+00057d 930f                      			push	r16
+00057e 932f                      			push	r18
+00057f 2722                      			clr		r18
+000580 e0f5                      			ldi		ZH, HIGH(LETTERS_SETUP_START_POS*2)
+000581 e2ec                      			ldi		ZL, LOW(LETTERS_SETUP_START_POS*2)
+000582 dd43                      			rcall	DRAW_FUNC
+000583 dfec                      			rcall	GET_CURRENT_WORD
+                                 SETUP_GAME_LOOP:
+000584 9105                      			lpm		r16, Z+
+000585 3f0f                      			cpi		r16, $FF
+000586 f049                      			breq	SETUP_GAME_LOOP_DONE
+000587 93ff                      			push	ZH
+000588 93ef                      			push	ZL
+000589 e0f5                      			ldi		ZH, HIGH(LETTER_SUB*2)
+00058a e3e8                      			ldi		ZL, LOW(LETTER_SUB*2)
+00058b dd3a                      			rcall	DRAW_FUNC
+00058c 91ef                      			pop		ZL
+00058d 91ff                      			pop		ZH
+00058e 9523                      			inc		r18 ; COUNT WORD LENGTH
+00058f cff4                      			rjmp	SETUP_GAME_LOOP
+                                 SETUP_GAME_LOOP_DONE:					
+000590 dfdf                      			rcall	GET_CURRENT_WORD ; SET WORD LENGTH
+000591 9320 0062                 			sts		CURRENT_WORD_LENGTH, r18
+000593 2f02                      			mov		r16, r18
+000594 e0f5                      			ldi		ZH, HIGH(LETTER_SUB_BACK*2)
+000595 e3ee                      			ldi		ZL, LOW(LETTER_SUB_BACK*2)
+000596 d04f                      			rcall	GO_BACK_FUNCTION		
+000597 e001                      			ldi		r16, $01
+000598 e0f5                      			ldi		ZH, HIGH(LETTERS_SETUP_BACK_HOME*2)
+000599 e3e2                      			ldi		ZL, LOW(LETTERS_SETUP_BACK_HOME*2)
+00059a d04b                      			rcall	GO_BACK_FUNCTION
+00059b 912f                      			pop		r18
+00059c 910f                      			pop		r16
+00059d 91ef                      			pop		ZL
+00059e 91ff                      			pop		ZH
+00059f 9508                      			ret
+                                 
+                                 
+                                 //R17 is what letter to guess
+                                 GUESS_LETTER:
+0005a0 932f                      			push	r18
+0005a1 711f                      			andi	r17, $1F //för att fixa en bugg
+0005a2 9310 0061                 			sts		CURRENT_LETTER_INDEX, r17
+0005a4 2722                      			clr		r18
+0005a5 93ff                      			push	ZH
+0005a6 93ef                      			push	ZL
+0005a7 e002                      			ldi		r16,$02
+0005a8 9300 0067                 			sts		OUTCOME_VALUE,r16
+0005aa e0f5                      			ldi		ZH, HIGH(LETTERS_START_POS*2)
+0005ab e4e2                      			ldi		ZL, LOW(LETTERS_START_POS*2)
+0005ac dd19                      			rcall	DRAW_FUNC
+0005ad dfc2                      			rcall	GET_CURRENT_WORD
+                                 GUESS_LETTER_LOOP:
+0005ae 9105                      			lpm		r16, Z+
+0005af 3f0f                      			cpi		r16, $FF
+0005b0 f0f1                      			breq	GUESS_LETTER_LOOP_DONE
+0005b1 93ff                      			push	ZH
+0005b2 93ef                      			push	ZL		
+                                 				
+0005b3 9140 0060                 			lds		r20, WRONG_GUESS_INDEX
+0005b5 304b                      			cpi		r20, MAX_GUESSES
+0005b6 f419                      			brne	CHECK
+0005b7 9300 0061                 			sts		CURRENT_LETTER_INDEX, r16
+0005b9 c002                      			rjmp	DONT_CHECK
+                                 CHECK:		
+0005ba 1701                      			cp		r16, r17
+0005bb f469                      			brne	NO_MATCH
+                                 DONT_CHECK:
+0005bc d055                      			rcall	DRAW_LETTER
+0005bd ef2f                      			ldi		r18, $FF
+0005be 9100 0066                 			lds		r16,RIGHT_GUESS_INDEX
+0005c0 9503                      			inc		r16
+0005c1 9300 0066                 			sts		RIGHT_GUESS_INDEX,r16
+0005c3 e001                      			ldi		r16,$01
+0005c4 9300 0067                 			sts		OUTCOME_VALUE,r16
+0005c6 e0f5                      			ldi		ZH, HIGH(LETTERS_MOVE_RIGHT_LITTLE*2)
+0005c7 e5e2                      			ldi		ZL, LOW(LETTERS_MOVE_RIGHT_LITTLE*2)
+0005c8 c002                      			rjmp	GUESS_CONTINUE_LOOP
+                                 NO_MATCH:
+0005c9 e0f5                      			ldi		ZH, HIGH(LETTERS_MOVE_RIGHT*2)
+0005ca e4ee                      			ldi		ZL, LOW(LETTERS_MOVE_RIGHT*2)			
+                                 GUESS_CONTINUE_LOOP:
+0005cb dcfa                      			rcall	DRAW_FUNC
+0005cc 91ef                      			pop		ZL
+0005cd 91ff                      			pop		ZH
+0005ce cfdf                      			rjmp	GUESS_LETTER_LOOP
+                                 GUESS_LETTER_LOOP_DONE:
+0005cf dfa0                      			rcall	GET_CURRENT_WORD
+                                 			
+0005d0 9100 0062                 			lds		r16, CURRENT_WORD_LENGTH
+0005d2 e0f5                      			ldi		ZH, HIGH(LETTERS_MOVE_LEFT*2)
+0005d3 e5e6                      			ldi		ZL, LOW(LETTERS_MOVE_LEFT*2)
+0005d4 d011                      			rcall	GO_BACK_FUNCTION			
+0005d5 e001                      			ldi		r16, 1
+0005d6 e0f5                      			ldi		ZH, HIGH(LETTERS_BACK_HOME*2)
+0005d7 e4e8                      			ldi		ZL, LOW(LETTERS_BACK_HOME*2)
+0005d8 dced                      			rcall	DRAW_FUNC
+0005d9 3f2f                      			cpi		r18, $FF
+0005da f039                      			breq	GUESS_EXIT
+0005db e0f5                      			ldi		ZH, HIGH(GRAPHICS_ALL*2)
+0005dc e1e4                      			ldi		ZL, LOW(GRAPHICS_ALL*2)
+0005dd 9100 0060                 			lds		r16, WRONG_GUESS_INDEX
+0005df dcd7                      			rcall	JUMP_TABLE
+0005e0 dce5                      			rcall	DRAW_FUNC
+0005e1 d012                      			rcall	WRITE_WRONG_LETTER
+                                 GUESS_EXIT:
+0005e2 91ef                      			pop		ZL
+0005e3 91ff                      			pop		ZH
+0005e4 912f                      			pop		r18
+0005e5 9508                      			ret
+                                 
+                                 
+                                 
+                                 
+                                 
+                                 ;r16 för hur många i loopen
+                                 GO_BACK_FUNCTION:
+0005e6 3000                      			cpi		r16, $00
+0005e7 f059                      			breq	GO_BACK_FUNCTION_EXIT
+0005e8 931f                      			push	r17
+0005e9 932f                      			push	r18
+0005ea 2f1f                      			mov		r17, ZH
+0005eb 2f2e                      			mov		r18, ZL
+                                 GO_BACK_FUNCTION_LOOP:
+0005ec 2ff1                      			mov		ZH, r17
+0005ed 2fe2                      			mov		ZL, r18
+0005ee dcd7                      			rcall	DRAW_FUNC
+0005ef 950a                      			dec		r16
+0005f0 f7d9                      			brne	GO_BACK_FUNCTION_LOOP
+0005f1 912f                      			pop		r18
+0005f2 911f                      			pop		r17
+                                 GO_BACK_FUNCTION_EXIT:
+0005f3 9508                      			ret
+                                 
+                                 
+                                 
+                                 
+                                 
+                                 
+                                 
+                                 WRITE_WRONG_LETTER:
+0005f4 93ff                      			push	ZH
+0005f5 93ef                      			push	ZL
+0005f6 e0f5                      			ldi		ZH, HIGH(WRONG_LETTERS_START_POS*2)
+0005f7 e5ea                      			ldi		ZL, LOW(WRONG_LETTERS_START_POS*2)
+0005f8 dccd                      			rcall	DRAW_FUNC			
+                                 		
+0005f9 e0f5                      			ldi		ZH, HIGH(LETTERS_MOVE_RIGHT*2)
+0005fa e4ee                      			ldi		ZL, LOW(LETTERS_MOVE_RIGHT*2)
+0005fb 9100 0060                 			lds		r16, WRONG_GUESS_INDEX
+0005fd dfe8                      			rcall	GO_BACK_FUNCTION
+                                 
+                                 			//lds		r16, CURRENT_LETTER_INDEX
+0005fe d013                      			rcall	DRAW_LETTER
+                                 			
+0005ff e0f5                      			ldi		ZH, HIGH(WRONG_LETTERS_MOVE_LITTLE_LEFT*2)
+000600 e6ea                      			ldi		ZL, LOW(WRONG_LETTERS_MOVE_LITTLE_LEFT*2)
+000601 dcc4                      			rcall	DRAW_FUNC
+                                 			
+000602 9100 0060                 			lds		r16, WRONG_GUESS_INDEX
+000604 e0f5                      			ldi		ZH, HIGH(WRONG_LETTERS_MOVE_LEFT*2)
+000605 e6e6                      			ldi		ZL, LOW(WRONG_LETTERS_MOVE_LEFT*2)
+000606 dfdf                      			rcall	GO_BACK_FUNCTION
+                                 			
+000607 e0f5                      			ldi		ZH, HIGH(WRONG_LETTERS_BACK_HOME*2)
+000608 e5ee                      			ldi		ZL, LOW(WRONG_LETTERS_BACK_HOME*2)
+000609 dcbc                      			rcall	DRAW_FUNC
+                                 
+00060a 9100 0060                 			lds		r16, WRONG_GUESS_INDEX
+00060c 9503                      			inc		r16
+00060d 9300 0060                 			sts		WRONG_GUESS_INDEX, r16
+                                 
+00060f 91ef                      			pop		ZL
+000610 91ff                      			pop		ZH
+000611 9508                      			ret
+                                 
+                                 
+                                 DRAW_LETTER:
+000612 93ff                      			push	ZH
+000613 93ef                      			push	ZL
+000614 930f                      			push	r16
+                                 
+000615 e0f3                      			ldi		ZH, HIGH(ALPHA_ALL*2)
+000616 e1e0                      			ldi		ZL, LOW(ALPHA_ALL*2)
+000617 9100 0061                 			lds		r16, CURRENT_LETTER_INDEX
+000619 dc9d                      			rcall	JUMP_TABLE
+00061a dcab                      			rcall	DRAW_FUNC
+00061b 910f                      			pop		r16
+00061c 91ff                      			pop		ZH
+00061d 91ef                      			pop		ZL	
+00061e 9508                      			ret
+                                 
+                                 
+                                 
                                  
                                  
                                  
@@ -916,40 +2805,40 @@ counted separately from r26..r31 here.
 .dseg memory usage only counts static data declared with .byte
 
 "ATmega16A" register use summary:
-x  :   0 y  :   0 z  :   0 r0 :   0 r1 :   0 r2 :   0 r3 :   0 r4 :   0 
+x  :   0 y  :   0 z  :   7 r0 :   0 r1 :   0 r2 :   0 r3 :   0 r4 :   0 
 r5 :   0 r6 :   0 r7 :   0 r8 :   0 r9 :   0 r10:   0 r11:   0 r12:   0 
-r13:   0 r14:   0 r15:   0 r16:  11 r17:   0 r18:   1 r19:   0 r20:   0 
-r21:   0 r22:   0 r23:   0 r24:   0 r25:   0 r26:   0 r27:   0 r28:   0 
-r29:   0 r30:   0 r31:   0 
-Registers used: 2 out of 35 (5.7%)
+r13:   0 r14:   0 r15:   0 r16:  89 r17:  28 r18:  19 r19:   4 r20:   2 
+r21:   0 r22:   0 r23:   0 r24:   8 r25:   8 r26:   0 r27:   0 r28:   0 
+r29:   0 r30:  40 r31:  38 
+Registers used: 10 out of 35 (28.6%)
 
 "ATmega16A" instruction use summary:
-.lds  :   0 .sts  :   0 adc   :   0 add   :   0 adiw  :   0 and   :   0 
-andi  :   0 asr   :   0 bclr  :   0 bld   :   0 brbc  :   0 brbs  :   0 
-brcc  :   0 brcs  :   0 break :   0 breq  :   0 brge  :   0 brhc  :   0 
+.lds  :   0 .sts  :   0 adc   :   0 add   :   2 adiw  :   0 and   :   0 
+andi  :   3 asr   :   0 bclr  :   0 bld   :   0 brbc  :   0 brbs  :   0 
+brcc  :   2 brcs  :   0 break :   0 breq  :   5 brge  :   0 brhc  :   0 
 brhs  :   0 brid  :   0 brie  :   0 brlo  :   0 brlt  :   0 brmi  :   0 
-brne  :   0 brpl  :   0 brsh  :   0 brtc  :   0 brts  :   0 brvc  :   0 
-brvs  :   0 bset  :   0 bst   :   0 call  :   0 cbi   :   0 cbr   :   0 
-clc   :   0 clh   :   0 cli   :   0 cln   :   0 clr   :   0 cls   :   0 
-clt   :   0 clv   :   0 clz   :   0 com   :   0 cp    :   0 cpc   :   0 
-cpi   :   0 cpse  :   0 dec   :   0 eor   :   0 fmul  :   0 fmuls :   0 
-fmulsu:   0 icall :   0 ijmp  :   0 in    :   0 inc   :   0 jmp   :   0 
-ld    :   0 ldd   :   0 ldi   :   6 lds   :   0 lpm   :   0 lsl   :   0 
-lsr   :   0 mov   :   0 movw  :   0 mul   :   0 muls  :   0 mulsu :   0 
-neg   :   0 nop   :   0 or    :   0 ori   :   0 out   :   6 pop   :   0 
-push  :   0 rcall :   1 ret   :   1 reti  :   0 rjmp  :   0 rol   :   0 
-ror   :   0 sbc   :   0 sbci  :   0 sbi   :   0 sbic  :   0 sbis  :   0 
-sbiw  :   0 sbr   :   0 sbrc  :   0 sbrs  :   0 sec   :   0 seh   :   0 
+brne  :   9 brpl  :   0 brsh  :   0 brtc  :   0 brts  :   0 brvc  :   0 
+brvs  :   0 bset  :   0 bst   :   0 call  :   2 cbi   :   5 cbr   :   0 
+clc   :   0 clh   :   0 cli   :   0 cln   :   0 clr   :   2 cls   :   0 
+clt   :   0 clv   :   0 clz   :   0 com   :   0 cp    :   3 cpc   :   0 
+cpi   :   6 cpse  :   0 dec   :   3 eor   :   0 fmul  :   0 fmuls :   0 
+fmulsu:   0 icall :   0 ijmp  :   0 in    :   1 inc   :   4 jmp   :   2 
+ld    :   0 ldd   :   0 ldi   :  58 lds   :  16 lpm   :   9 lsl   :   3 
+lsr   :   0 mov   :   9 movw  :   0 mul   :   0 muls  :   0 mulsu :   0 
+neg   :   0 nop   :   0 or    :   0 ori   :   0 out   :   8 pop   :  35 
+push  :  35 rcall :  41 ret   :  16 reti  :   0 rjmp  :  10 rol   :   0 
+ror   :   0 sbc   :   0 sbci  :   0 sbi   :   2 sbic  :   1 sbis  :   2 
+sbiw  :   2 sbr   :   0 sbrc  :   1 sbrs  :   1 sec   :   0 seh   :   0 
 sei   :   0 sen   :   0 ser   :   0 ses   :   0 set   :   0 sev   :   0 
-sez   :   0 sleep :   0 spm   :   0 st    :   0 std   :   0 sts   :   0 
-sub   :   0 subi  :   0 swap  :   0 tst   :   0 wdr   :   0 
-Instructions used: 4 out of 113 (3.5%)
+sez   :   0 sleep :   0 spm   :   0 st    :   0 std   :   0 sts   :  18 
+sub   :   0 subi  :   3 swap  :   0 tst   :   0 wdr   :   0 
+Instructions used: 33 out of 113 (29.2%)
 
 "ATmega16A" memory use summary [bytes]:
 Segment   Begin    End      Code   Data   Used    Size   Use%
 ---------------------------------------------------------------
-[.cseg] 0x000000 0x00001c     28      0     28   16384   0.2%
-[.dseg] 0x000060 0x000060      0      0      0    1024   0.0%
+[.cseg] 0x000000 0x000c3e    710   2424   3134   16384  19.1%
+[.dseg] 0x000060 0x000068      0      8      8    1024   0.8%
 [.eseg] 0x000000 0x000000      0      0      0     512   0.0%
 
-Assembly complete, 0 errors, 0 warnings
+Assembly complete, 0 errors, 104 warnings

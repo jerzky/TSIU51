@@ -44,7 +44,7 @@ NORMAL_WORD_4: .db $0B, $00, $0C, $0F, $00, $FF // Lampa
 NORMAL_WORD_5: .db $01, $18, $17, $0E, $11, $FF // Byxor
 NORMAL_WORD_6: .db $11, $04, $18, $0A, $00, $15, $08, $0A, $FF // Reykavik
 NORMAL_WORD_7: .db $0F, $0E, $12, $13, $0B, $1A, $03, $00, $FF // Postlåda
-NORMAL_WORD_8: .db $11, $04, $18, $0A, $00, $15, $08, $0A, $FF // Reykavik
+NORMAL_WORD_8: .db $11, $04, $18, $0A, $09, $00, $15, $08, $0A, $FF // Reykjavik
 NORMAL_WORD_9: .db $05, $1C, $11, $13, $00, $0B, $FF // Förtal
 NORMAL_WORD_10: .db $0A, $0E, $0D, $14, $0D, $06, $00, $03, $1C, $0C, $04, $13, $FF // Konungadömet
 NORMAL_WORD_11: .db $0C, $04, $03, $04, $0B, $0B, $1B, $0D, $06, $03, $FF // Medellängd
@@ -64,6 +64,7 @@ NORMAL_WORD_24: .db $0F, $0E, $11, $13, $08, $0E, $0D, $04, $11, $00, $FF // Por
 NORMAL_WORD_25: .db $14, $0F, $0F, $0C, $14, $0D, $13, $11, $00, $FF // Uppmuntra
 NORMAL_WORD_26: .db $0C, $0E, $11, $00, $0B, $08, $12, $04, $11, $00, $FF // Moralisera
 NORMAL_WORD_27: .db $0E, $0A, $14, $0B, $00, $11, $FF // Okular
+
 NORMAL_WORD_28: .db $0E, $00, $0A, $13, $12, $00, $0C, $FF // Oaktsam
 NORMAL_WORD_29: .db $05, $14, $0C, $0B, $08, $06, $FF // Fumlig
 NORMAL_WORD_30: .db $0C, $00, $14, $12, $0E, $0B, $04, $14, $0C, $FF // Mausoleum
