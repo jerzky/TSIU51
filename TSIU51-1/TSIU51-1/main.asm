@@ -63,7 +63,6 @@ START:
 	rcall	START_FUNCTION
 	rcall	START_MENU
 	lds		r16,DIFFICULTY_CHOICE
-	ldi		r16,$00
 	rcall	DRAW
 	rcall	PRINT_LETTER
 	rcall	CLEAR_INTERRUPT
@@ -307,7 +306,7 @@ RIGHT_CHECK_2:
 RIGHT_DONE:
 	ret	
 		
-	//ÖKA ELLER SÄNK NUVARANDE BOKSTAV-------------------------
+//ÖKA ELLER SÄNK NUVARANDE BOKSTAV-------------------------
 LETTER_CHANGE_CHECK:
 	lds		r16,ROTARY_STATUS
 	sbrc	r16,0
