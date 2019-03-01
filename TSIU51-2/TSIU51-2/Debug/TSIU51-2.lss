@@ -1,5 +1,5 @@
 
-AVRASM ver. 2.2.7  C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\main.asm Fri Mar 01 11:03:24 2019
+AVRASM ver. 2.2.7  C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\main.asm Fri Mar 01 11:23:52 2019
 
 [builtin](2): Including file 'C:/Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.2.209\avrasm\inc\m16adef.inc'
 C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\main.asm(11): Including file 'C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\tables.inc'
@@ -1273,6 +1273,7 @@ C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\main.asm(11):
 C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\tables.inc(46): warning: .cseg .db misalignment - padding zero byte
 C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\main.asm(11): 'C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\tables.inc' included form here
 000144 00ff                      ALPHA_Z: .db $80, $02, $82, $01, $80, $02, $82, $01, $80, $02, $82, $01, $80, $02, $82, $01, $80, $02, $82, $01, $80, $02, $82, $01, $80, $02, $82, $01, $80, $02, $82, $01, $83, $08, $01, $10, $82, $08, $FF
+                                 
 000145 0e80
 000146 0284
 000147 0182
@@ -1289,9 +1290,10 @@ C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\main.asm(11):
 000152 0803
 000153 0882
 000154 0881
-C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\tables.inc(47): warning: .cseg .db misalignment - padding zero byte
+C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\tables.inc(48): warning: .cseg .db misalignment - padding zero byte
 C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\main.asm(11): 'C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\tables.inc' included form here
 000155 00ff                      ALPHA_OH:.db $80, $0E, $84, $02, $82, $01, $00, $02, $82, $04, $80, $03, $83, $04, $81, $03, $02, $01, $01, $02, $82, $03, $86, $02, $81, $06, $03, $08, $82, $08, $81, $08, $FF
+                                 
 000156 0e80
 000157 0284
 000158 0182
@@ -1314,9 +1316,10 @@ C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\main.asm(11):
 000169 0803
 00016a 0882
 00016b 0881
-C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\tables.inc(48): warning: .cseg .db misalignment - padding zero byte
+C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\tables.inc(50): warning: .cseg .db misalignment - padding zero byte
 C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\main.asm(11): 'C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\tables.inc' included form here
 00016c 00ff                      ALPHA_EH:.db $80, $0E, $84, $02, $82, $01, $05, $02, $03, $01, $82, $02, $80, $02, $83, $02, $81, $02, $02, $07, $82, $02, $80, $02, $83, $02, $81, $02, $03, $04, $01, $02, $82, $04, $86, $02, $81, $06, $03, $08, $82, $08, $81, $08, $FF
+                                 
 00016d 0200
 00016e 0c80
 00016f 0284
@@ -1343,7 +1346,7 @@ C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\main.asm(11):
 000184 0206
 000185 0602
 000186 0101
-C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\tables.inc(49): warning: .cseg .db misalignment - padding zero byte
+C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\tables.inc(52): warning: .cseg .db misalignment - padding zero byte
 C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\main.asm(11): 'C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\tables.inc' included form here
 000187 00ff                      ALPHA_OE:.db $00, $02, $80, $0C, $84, $02, $82, $01, $05, $02, $03, $01, $82, $02, $80, $02, $83, $02, $81, $02, $02, $06, $82, $02, $80, $02, $83, $02, $81, $02, $03, $03, $01, $02, $82, $03, $86, $02, $81, $0C, $87, $02, $83, $04, $85, $02, $06, $02, $0                                 2, $06, $01, $01, $FF
                                  
@@ -1512,7 +1515,7 @@ C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\main.asm(11):
 000228 0182
 000229 0381
 00022a 5c03
-C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\tables.inc(56): warning: .cseg .db misalignment - padding zero byte
+C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\tables.inc(59): warning: .cseg .db misalignment - padding zero byte
 C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\main.asm(11): 'C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\tables.inc' included form here
 00022b 00ff                      
 00022c 2e02
@@ -1520,7 +1523,7 @@ C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\main.asm(11):
 00022e 3480
 00022f 6001
 000230 2e03
-C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\tables.inc(57): warning: .cseg .db misalignment - padding zero byte
+C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\tables.inc(60): warning: .cseg .db misalignment - padding zero byte
 C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\main.asm(11): 'C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\tables.inc' included form here
 000231 00ff                      //Tabellen för kullen var ca 400 bytes- är ca 270 nu 
 000232 2e02
@@ -1530,7 +1533,7 @@ C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\main.asm(11):
 000236 2403
 000237 6001
 000238 2e03
-C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\tables.inc(58): warning: .cseg .db misalignment - padding zero byte
+C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\tables.inc(61): warning: .cseg .db misalignment - padding zero byte
 C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\main.asm(11): 'C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\tables.inc' included form here
 000239 00ff                      GRAPHIC_PLAT:		.db $80, $03, $82, $01, $80, $03, $82, $01, $80, $03, $82, $01, $80, $02, $82, $01, $80, $02, $82, $01, $80, $02, $82, $01, $80, $01, $82, $01, $80, $02, $82, $01, $80, $01, $82, $01, $80, $01, $82, $01, $80, $02, $82, $01, $80, $01, $82, $00023a 2e02
 00023b 2c00
@@ -1539,7 +1542,7 @@ C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\main.asm(11):
 00023e 0a07
 00023f 5601
 000240 2e03
-C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\tables.inc(59): warning: .cseg .db misalignment - padding zero byte
+C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\tables.inc(62): warning: .cseg .db misalignment - padding zero byte
 C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\main.asm(11): 'C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\tables.inc' included form here
 000241 00ff                      01, $80, $01, $82, $01, $80, $01, $82, $01, $80, $01, $82, $01, $80, $01, $82, $01, $80, $01, $82, $01, $80, $01, $82, $01, $80, $01, $82, $01, $80, $01, $82, $01, $80, $01, $82, $01, $80, $01, $82, $01, $80, $01, $82, $02, $80, $01, $82, $01, $80, $01, $000242 2e02
 000243 2c00
@@ -1549,7 +1552,7 @@ C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\main.asm(11):
 000247 2403
 000248 5601
 000249 2e03
-C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\tables.inc(60): warning: .cseg .db misalignment - padding zero byte
+C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\tables.inc(63): warning: .cseg .db misalignment - padding zero byte
 C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\main.asm(11): 'C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\tables.inc' included form here
 00024a 00ff                      82, $02, $80, $01, $82, $01, $80, $01, $82, $02, $80, $01, $82, $01, $80, $01, $82, $02, $80, $01, $82, $02, $80, $01, $82, $02, $80, $01, $82, $02, $80, $01, $82, $07, $82, $07, $81, $01, $82, $02, $81, $01, $82, $02, $81, $01, $82, $02, $81, $01, $82, $00024b 2e02
 00024c 2c00
@@ -1581,7 +1584,7 @@ C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\main.asm(11):
 000266 2403
 000267 5601
 000268 2e03
-C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\tables.inc(61): warning: .cseg .db misalignment - padding zero byte
+C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\tables.inc(64): warning: .cseg .db misalignment - padding zero byte
 C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\main.asm(11): 'C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\tables.inc' included form here
 000269 00ff                      02, $81, $01, $82, $01, $81, $01, $82, $02, $81, $01, $82, $01, $81, $01, $82, $02, $81, $01, $82, $01, $81, $01, $82, $02, $81, $01, $82, $01, $81, $01, $82, $01, $81, $01, $82, $01, $81, $01, $82, $01, $81, $01, $82, $01, $81, $01, $82, $01, $81, $01, $00026a 2e02
 00026b 6000
@@ -1590,14 +1593,14 @@ C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\main.asm(11):
 00026e 1081
 00026f 3e01
 000270 5203
-C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\tables.inc(62): warning: .cseg .db misalignment - padding zero byte
+C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\tables.inc(65): warning: .cseg .db misalignment - padding zero byte
 C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\main.asm(11): 'C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\tables.inc' included form here
 000271 00ff                      82, $01, $81, $01, $82, $01, $81, $01, $82, $01, $81, $01, $82, $01, $81, $01, $82, $01, $81, $01, $82, $01, $81, $02, $82, $01, $81, $01, $82, $01, $81, $01, $82, $01, $81, $02, $82, $01, $81, $01, $82, $01, $81, $02, $82, $01, $81, $02, $82, $01, $81, $000272 5202
 000273 3e00
 000274 0887
 000275 3601
 000276 4a03
-C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\tables.inc(63): warning: .cseg .db misalignment - padding zero byte
+C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\tables.inc(66): warning: .cseg .db misalignment - padding zero byte
 C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\main.asm(11): 'C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\tables.inc' included form here
 000277 00ff                      02, $82, $01, $81, $03, $82, $01, $81, $03, $82, $01, $81, $03, $03, $5C, $FF
 000278 5202
@@ -1605,7 +1608,7 @@ C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\main.asm(11):
 00027a 0886
 00027b 3601
 00027c 5a03
-C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\tables.inc(64): warning: .cseg .db misalignment - padding zero byte
+C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\tables.inc(67): warning: .cseg .db misalignment - padding zero byte
 C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\main.asm(11): 'C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\tables.inc' included form here
 00027d 00ff                      GRAPHIC_PILLAR_1:	.db $02, $2E, $00, $2C, $80, $34, $01, $60, $03, $2E, $FF
 00027e 5202
@@ -1613,7 +1616,7 @@ C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\main.asm(11):
 000280 0885
 000281 5001
 000282 4a03
-C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\tables.inc(65): warning: .cseg .db misalignment - padding zero byte
+C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\tables.inc(68): warning: .cseg .db misalignment - padding zero byte
 C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\main.asm(11): 'C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\tables.inc' included form here
 000283 00ff                      GRAPHIC_PILLAR_2:	.db $02, $2E, $00, $2C, $00, $34, $82, $24, $03, $24, $01, $60, $03, $2E, $FF
 000284 5202
@@ -1621,7 +1624,7 @@ C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\main.asm(11):
 000286 0884
 000287 5001
 000288 5a03
-C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\tables.inc(66): warning: .cseg .db misalignment - padding zero byte
+C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\tables.inc(69): warning: .cseg .db misalignment - padding zero byte
 C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\main.asm(11): 'C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\tables.inc' included form here
 000289 00ff                      GRAPHIC_PILLAR_3:	.db $02, $2E, $00, $2C, $00, $2A, $84, $0A, $07, $0A, $01, $56, $03, $2E, $FF
                                  GRAPHIC_PILLAR_4:	.db $02, $2E, $00, $2C, $00, $34, $02, $24, $81, $0A, $03, $24, $01, $56, $03, $2E, $FF
@@ -1639,65 +1642,65 @@ C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\main.asm(11):
 000295 00ff                      GRAPHIC_HEAD:		.db $02, $2E, $00, $2C, $00, $34, $02, $24, $01, $0A, $82, $02, $81, $01, $82, $01, $81, $01, $82, $01, $81, $04, $83, $01, $81, $01, $83, $01, $81, $01, $83, $04, $80, $01, $83, $01, $80, $01, $83, $01, $80, $03, $80, $01, $82, $01, $80, $                                 01, $82, $01, $80, $01, $82, $02, $03, $24, $01, $56, $03, $2E, $FF
 000296 b402
 000297 3c00
-C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\tables.inc(70): warning: .cseg .db misalignment - padding zero byte
+C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\tables.inc(73): warning: .cseg .db misalignment - padding zero byte
 C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\main.asm(11): 'C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\tables.inc' included form here
 000298 00ff                      GRAPHIC_BODY:		.db $02, $2E, $00, $60, $02, $24, $01, $12, $81, $10, $01, $3E, $03, $52, $FF
 000299 b403
 00029a 3c01
-C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\tables.inc(71): warning: .cseg .db misalignment - padding zero byte
+C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\tables.inc(74): warning: .cseg .db misalignment - padding zero byte
 C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\main.asm(11): 'C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\tables.inc' included form here
 00029b 00ff                      GRAPHIC_LEFT_LEG:	.db $02, $52, $00, $3E, $87, $08, $01, $36, $03, $4A, $FF
 00029c 0a82
 00029d 0602
-C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\tables.inc(72): warning: .cseg .db misalignment - padding zero byte
+C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\tables.inc(75): warning: .cseg .db misalignment - padding zero byte
 C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\main.asm(11): 'C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\tables.inc' included form here
 00029e 00ff                      GRAPHIC_RIGHT_LEG:	.db $02, $52, $00, $3E, $86, $08, $01, $36, $03, $5A, $FF
 00029f 1003
-C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\tables.inc(73): warning: .cseg .db misalignment - padding zero byte
+C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\tables.inc(76): warning: .cseg .db misalignment - padding zero byte
 C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\main.asm(11): 'C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\tables.inc' included form here
 0002a0 00ff                      GRAPHIC_LEFT_ARM:	.db $02, $52, $00, $48, $85, $08, $01, $50, $03, $4A, $FF
                                  GRAPHIC_RIGHT_ARM:	.db $02, $52, $00, $48, $84, $08, $01, $50, $03, $5A, $FF
 0002a1 b502
 0002a2 3e00
-C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\tables.inc(75): warning: .cseg .db misalignment - padding zero byte
+C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\tables.inc(78): warning: .cseg .db misalignment - padding zero byte
 C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\main.asm(11): 'C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\tables.inc' included form here
 0002a3 00ff                      
 0002a4 b503
 0002a5 3e01
-C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\tables.inc(76): warning: .cseg .db misalignment - padding zero byte
+C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\tables.inc(79): warning: .cseg .db misalignment - padding zero byte
 C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\main.asm(11): 'C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\tables.inc' included form here
 0002a6 00ff                      GRAPHICS_ALL: .dw  GRAPHIC_PLAT, GRAPHIC_PILLAR_1, GRAPHIC_PILLAR_2, GRAPHIC_PILLAR_3, GRAPHIC_PILLAR_4, GRAPHIC_HEAD, GRAPHIC_BODY, GRAPHIC_LEFT_LEG, GRAPHIC_RIGHT_LEG , GRAPHIC_LEFT_ARM, GRAPHIC_RIGHT_ARM, $FF
 0002a7 1002
-C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\tables.inc(77): warning: .cseg .db misalignment - padding zero byte
+C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\tables.inc(80): warning: .cseg .db misalignment - padding zero byte
 C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\main.asm(11): 'C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\tables.inc' included form here
 0002a8 00ff                      
 0002a9 0802
-C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\tables.inc(78): warning: .cseg .db misalignment - padding zero byte
+C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\tables.inc(81): warning: .cseg .db misalignment - padding zero byte
 C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\main.asm(11): 'C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\tables.inc' included form here
 0002aa 00ff                      LETTERS_SETUP_START_POS:	.db$02, $B4, $00, $3C, $FF
 0002ab 1003
-C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\tables.inc(79): warning: .cseg .db misalignment - padding zero byte
+C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\tables.inc(82): warning: .cseg .db misalignment - padding zero byte
 C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\main.asm(11): 'C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\tables.inc' included form here
 0002ac 00ff                      LETTERS_SETUP_BACK_HOME:	.db$03, $B4, $01, $3C, $FF
                                  LETTER_SUB:					.db$82, $0A, $02, $06, $FF
 0002ad b402
-C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\tables.inc(81): warning: .cseg .db misalignment - padding zero byte
+C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\tables.inc(84): warning: .cseg .db misalignment - padding zero byte
 C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\main.asm(11): 'C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\tables.inc' included form here
 0002ae 00ff                      LETTER_SUB_BACK:			.db$03, $10, $FF
 0002af b403
-C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\tables.inc(82): warning: .cseg .db misalignment - padding zero byte
+C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\tables.inc(85): warning: .cseg .db misalignment - padding zero byte
 C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\main.asm(11): 'C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\tables.inc' included form here
 0002b0 00ff                      
 0002b1 0c02
-C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\tables.inc(83): warning: .cseg .db misalignment - padding zero byte
+C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\tables.inc(86): warning: .cseg .db misalignment - padding zero byte
 C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\main.asm(11): 'C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\tables.inc' included form here
 0002b2 00ff                      LETTERS_START_POS:			.db	$02, $B5, $00, $3E, $FF
 0002b3 1003
-C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\tables.inc(84): warning: .cseg .db misalignment - padding zero byte
+C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\tables.inc(87): warning: .cseg .db misalignment - padding zero byte
 C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\main.asm(11): 'C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\tables.inc' included form here
 0002b4 00ff                      LETTERS_BACK_HOME:			.db	$03, $B5, $01, $3E, $FF
 0002b5 0803
-C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\tables.inc(85): warning: .cseg .db misalignment - padding zero byte
+C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\tables.inc(88): warning: .cseg .db misalignment - padding zero byte
 C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\main.asm(11): 'C:\Users\Jensg\Documents\Atmel Studio\7.0\TSIU51\TSIU51-2\TSIU51-2\tables.inc' included form here
 0002b6 00ff                      LETTERS_MOVE_RIGHT:			.db $02, $10, $FF	
                                  LETTERS_MOVE_RIGHT_LITTLE:	.db $02, $08, $FF	
