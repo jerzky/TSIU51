@@ -21,7 +21,7 @@
 	RIGHT_GUESS_INDEX: .byte 1
 	OUTCOME_VALUE: .byte 1
 	.cseg
-
+	.equ	MAX_GUESSES = $0B
 
 INIT:
 		
@@ -41,7 +41,7 @@ INIT:
 			sts		CURRENT_LETTER_INDEX, r16
 			sts		CURRENT_WORD_INDEX, r16
 			sts		RIGHT_GUESS_INDEX, r16
-
+			sts		OUTCOME_VALUE,r16
 			//INIT för SPI.
 			; Enable SPI
 			ldi		r16,(1<<SPE)|(0<<MSTR)
@@ -49,21 +49,25 @@ INIT:
 						
 
 START:		
-			cbi		PORTB,3
-			rcall	RANDOM
+			cbi		PORTB,3	
+			rcall	SPI_RECIEVE
+
+			sts		WORD_TABLE_INDEX, r17
 			lds		r16,RANDOM_SEED
 			sts		CURRENT_WORD_INDEX,r16
 			call	SETUP_GAME ; SÄTTER WORD LENGTH MED
 
+			cbi		PORTB,3
+			rcall	SPI_RECIEVE 
 
 GAME_LOOP:
-			cbi		PORTB,3
 			ldi		r17,$00
-			rcall	SPI_RECIEVE			
+			cbi		PORTB,3			
+			rcall	SPI_RECIEVE		
+				
 			rcall	GUESS_LETTER
 			rcall	OUTCOME
-			lds		r17,OUTCOME_VALUE
-			sbi		PORTB, 3
+		
 			rcall	SPI_RECIEVE
 			rjmp	GAME_LOOP	
 		
@@ -77,17 +81,18 @@ RANDOM:
 			push	r16
 			lds		r16,RANDOM_SEED
 			inc		r16
-			andi	r16,$3F
+			andi	r16, $1F
 			sts		RANDOM_SEED,r16
 			pop		r16
 			ret
 OUTCOME:
 			push	r16
 			push	r17
-			ldi		r16,$0B
+			ldi		r16, MAX_GUESSES
 			lds		r17,WRONG_GUESS_INDEX
 			cp		r16,r17
 			brne	NOT_WRONG
+			rcall	GUESS_LETTER
 			ldi		r16,$08
 			sts		OUTCOME_VALUE,r16
 			rjmp	OUTCOME_EXIT
@@ -104,14 +109,18 @@ OUTCOME_EXIT:
 			ret
 			
 SPI_RECIEVE:
+			rcall		RANDOM
 			sbi			PORTB,3
-			out			SPDR,r17
+			lds			r17,OUTCOME_VALUE
+			out			SPDR, r17
 			; Wait for reception compete
 			sbis		SPSR,SPIF
 			rjmp		SPI_RECIEVE
 			; Read recieve data and return
 			in			r17,SPDR
-			cbi			PORTB,3
+			cbi			PORTB,3			
+			ldi			r16, $00
+			sts			OUTCOME_VALUE, r16
 			ret
 
 
@@ -119,8 +128,7 @@ GET_CURRENT_WORD:
 			push	r16
 			ldi		ZH, HIGH(ALL_WORDS*2)
 			ldi		ZL, LOW(ALL_WORDS*2)
-			ldi		r16,$00
-			//lds		r16,WORD_TABLE_INDEX
+			lds		r16,WORD_TABLE_INDEX
 			rcall	JUMP_TABLE
 			lds		r16, CURRENT_WORD_INDEX
 			rcall	JUMP_TABLE
@@ -172,6 +180,7 @@ SETUP_GAME_LOOP_DONE:
 //R17 is what letter to guess
 GUESS_LETTER:
 			push	r18
+			andi	r17, $1F //för att fixa en bugg
 			sts		CURRENT_LETTER_INDEX, r17
 			clr		r18
 			push	ZH
@@ -187,9 +196,17 @@ GUESS_LETTER_LOOP:
 			cpi		r16, $FF
 			breq	GUESS_LETTER_LOOP_DONE
 			push	ZH
-			push	ZL
+			push	ZL		
+				
+			lds		r20, WRONG_GUESS_INDEX
+			cpi		r20, MAX_GUESSES
+			brne	CHECK
+			sts		CURRENT_LETTER_INDEX, r16
+			rjmp	DONT_CHECK
+CHECK:		
 			cp		r16, r17
 			brne	NO_MATCH
+DONT_CHECK:
 			rcall	DRAW_LETTER
 			ldi		r18, $FF
 			lds		r16,RIGHT_GUESS_INDEX
@@ -274,7 +291,7 @@ WRITE_WRONG_LETTER:
 			lds		r16, WRONG_GUESS_INDEX
 			rcall	GO_BACK_FUNCTION
 
-			lds		r16, CURRENT_LETTER_INDEX
+			//lds		r16, CURRENT_LETTER_INDEX
 			rcall	DRAW_LETTER
 			
 			ldi		ZH, HIGH(WRONG_LETTERS_MOVE_LITTLE_LEFT*2)
