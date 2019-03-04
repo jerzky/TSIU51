@@ -24,9 +24,7 @@ EASY_MESSAGE:	.db "  L",$15,"TT  "
 NORMAL_MESSAGE: .db " NORMAL "
 HARD_MESSAGE:	.db "  SV",$13,"R  "
 LEVEL_MESSAGE:	.db	"NIV",$13,"VAL?  "
-
 RAINBOW:		.db $01,$03,$02,$06,$04,$05
-
 
 //SRAM-----------------------------------------------------------
 	.dseg 
@@ -34,8 +32,6 @@ USED:
 	.byte		29		//Lista över använda bokstäver, 0 = inte använd, 1 = använd
 CURRENT_LETTER:		
 	.byte		1		//Nuvarande bokstav att visa på display samt välja
-START_STATUS:		
-	.byte		1		//0 innan start, 1 sedan
 BLINK_COLOURS:
 	.byte		1		//Ska laddas med de två blinkande färgerna på låg respektive hög nibble
 BUTTON_STATUS:
@@ -77,7 +73,7 @@ MAIN_LOOP:
 MAIN_DONE:
 	rjmp	MAIN_LOOP
 
-//STARTUP--------------------------------------------------------
+//STARTUP--------------------------------------------
 START_FUNCTION:
 	ldi		ZH,HIGH(START_MESSAGE*2)
 	ldi		ZL,LOW(START_MESSAGE*2)
@@ -195,22 +191,15 @@ USED_CHECK_PRINT_LOOP:
 
 //SKRIV NUVARANDE BOKSTAV SAMT ANVÄNDSTATUS--------------------------------
 PRINT_LETTER:
-	//push	r16
-	//push	r17
-	//push	r18
 	ldi		r16,$00
 	lds		r18,CURRENT_LETTER
 	rcall	LOAD_LETTER								
 	rcall	PRINT_DISPLAY
 	rcall	USED_CHECK
-	//pop		r18
-	//pop		r17
-	//pop		r16
 	ret
 
 //SKRIV ETT TECKEN-------------------------------------------------
 PRINT_DISPLAY:
-	//push	r19
 	ldi		r19,PINB
 	andi	r19,$F8
 	or		r16,r19
@@ -222,7 +211,6 @@ PRINT_DISPLAY:
 	rcall	SHORT_DELAY
 	sbi		PORTC,7 //ce hög
 	rcall	SHORT_DELAY
-	//pop		r19
 	ret
 
 //SKRIV ALLA ÅTTA TECKEN PÅ DISPLAYEN--------------------------------
@@ -353,7 +341,7 @@ BUTTON_PRESSED:
 	pop		r16
 	out		SREG,r16
 	pop		r16
-	reti	
+	reti
 
 
 
@@ -429,8 +417,6 @@ DRAW_STALL:
 	rcall	INITIATE_SPI_TRANSFER
 	rcall	PLOTTER_RESPONSE_CHECK
 	ret
-
-
 
 //STARTA SPI-ÖVERFÖRING------------------------------------
 INITIATE_SPI_TRANSFER:
@@ -532,7 +518,6 @@ WIN_COLOUR_CHECK_DONE:
 	pop		r16
 	ret
 
-
 //FÖRLUSTMEDDELANDE--------------------------------
 LOSE:
 	push	r16
@@ -573,7 +558,7 @@ CLEAR_SRAM:
 	ldi		r16,$0
 	ldi		YH,HIGH(USED)
 	ldi		YL,LOW(USED)
-	ldi		r17,$23
+	ldi		r17,$22
 CLEAR_LOOP:
 	st		Y+,r16
 	dec		r17
@@ -597,7 +582,6 @@ INIT:
 	out		DDRC,r16
 	ldi		r16,$37
 	out		DDRD,r16
-	
 
 	//konfigurera SPI
 	ldi		r16,(1<<SPE)|(1<<MSTR)|(1<<SPR0)
