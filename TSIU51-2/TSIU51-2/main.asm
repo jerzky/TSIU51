@@ -45,8 +45,7 @@ INIT:
 			//INIT för SPI.
 			; Enable SPI
 			ldi		r16,(1<<SPE)|(0<<MSTR)
-			out		SPCR,r16
-						
+			out		SPCR,r16		
 
 START:		
 			cbi		PORTB,3	
